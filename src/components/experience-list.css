@@ -1,0 +1,3 @@
+.experience-point {
+    background-image: attr('data-bg');
+}
