@@ -1,47 +1,47 @@
 {
-   "1": {
-      "name": "Halloween på DOKK1",
-      "steps": {
-         "1": {
-            "id": "dokk1",
-            "name": "DOKK1",
-            "image": "https://dokk1.dk/sites/default/files/styles/page_content_image/public/images/dokk1_aften_2000x800.jpg?itok=ZiTB5wXw",
-            "coordinates": {
-               "lat": 56.15325828214098,
-               "long": 10.213791241196889
-            },
-            "media": "/lib/journey-roa.mp3"
-         },
-         "2": {
-            "id": "poseidon",
-            "name": "Poseidon statue",
-            "image": "https://images.jfmedier.dk/images/8/82/82a/82a60c61-5651-4158-84f1-7a024b11de42_1_90_0_0_1920_1080_1440_810_9e063d95.jpg",
-            "coordinates": {
-               "lat": 56.154539317692176,
-               "long": 10.213345592966261
-            },
-            "media": "/lib/infinity.mp3"
-         },
-         "3": {
-            "id": "madklubben",
-            "name": "Madklubben",
-            "image": "https://spiseguidenaarhus.dk/wp-content/uploads/2021/02/Madklubben-Aarhus_-2.jpg",
-            "coordinates": {
-               "lat": 56.15524095664057,
-               "long": 10.212822759955772
-            },
-            "media": "/lib/tuesday.mp3"
-         },
-         "4": {
-            "id": "endlessconnection",
-            "name": "Endless Connection",
-            "image": "https://files.guidedanmark.org/files/484/171137_Springvand-Endless-Connection-Aarhus-foto-Runi-Photopop.jpg",
-            "coordinates": {
-               "lat": 56.15659431446728,
-               "long": 10.214022776951696
-            },
-            "media": "/lib/weekends.mp3"
-         }
+  "1": {
+    "name": "Halloween på DOKK1",
+    "steps": {
+      "1": {
+        "id": "dokk1",
+        "name": "DOKK1",
+        "image": "https://dokk1.dk/sites/default/files/styles/page_content_image/public/images/dokk1_aften_2000x800.jpg?itok=ZiTB5wXw",
+        "coordinates": {
+          "lat": 56.15325828214098,
+          "long": 10.213791241196889
+        },
+        "media": "/lib/journey-roa.mp3"
+      },
+      "2": {
+        "id": "poseidon",
+        "name": "Poseidon statue",
+        "image": "https://images.jfmedier.dk/images/8/82/82a/82a60c61-5651-4158-84f1-7a024b11de42_1_90_0_0_1920_1080_1440_810_9e063d95.jpg",
+        "coordinates": {
+          "lat": 56.154539317692176,
+          "long": 10.213345592966261
+        },
+        "media": "/lib/infinity.mp3"
+      },
+      "3": {
+        "id": "madklubben",
+        "name": "Madklubben",
+        "image": "https://spiseguidenaarhus.dk/wp-content/uploads/2021/02/Madklubben-Aarhus_-2.jpg",
+        "coordinates": {
+          "lat": 56.15524095664057,
+          "long": 10.212822759955772
+        },
+        "media": "/lib/tuesday.mp3"
+      },
+      "4": {
+        "id": "endlessconnection",
+        "name": "Endless Connection",
+        "image": "https://files.guidedanmark.org/files/484/171137_Springvand-Endless-Connection-Aarhus-foto-Runi-Photopop.jpg",
+        "coordinates": {
+          "lat": 56.15659431446728,
+          "long": 10.214022776951696
+        },
+        "media": "/lib/weekends.mp3"
       }
-   }
+    }
+  }
 }
