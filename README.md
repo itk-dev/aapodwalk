@@ -61,6 +61,18 @@ npm run check-coding-standards
 npm run apply-coding-standards
 ```
 
+## JSON server
+
+How nifty!
+
+https://github.com/typicode/json-server
+
+Runs `db.json` as a server on http://localhost:3004
+
+```bash
+npm run server
+```
+
 ## Learn More
 
 You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).

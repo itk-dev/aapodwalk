@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import testdata from "../data/data.json";
+import useFetch from "../util/useFetch";
 import ExperienceList from "./experience-list";
 
 function Experience({
@@ -13,20 +13,24 @@ function Experience({
   geolocationAvailable,
 }) {
   const [currentExperience, setCurrentExperience] = useState(null);
+  const { data } = useFetch(
+    `http://localhost:3004/experiences/${experienceId}`
+  );
 
   useEffect(() => {
-    if (testdata) {
-      const data = testdata[experienceId];
+    if (data) {
       setCurrentExperience(data);
     }
-  }, [testdata, experienceId]);
+  }, [data, experienceId]);
 
   const returnToMainMenu = () => {
     setView("Hjem");
   };
 
+  if (!currentExperience) return null;
+
   return (
-    <div>
+    <>
       <button
         type="button"
         className="bg-blue-700 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded mr-auto mt-5"
@@ -35,18 +39,14 @@ function Experience({
         ← Tilbage
       </button>
       <div>
-        <br />
-        <h1 className="text-3xl text-white">
-          {currentExperience && currentExperience.name}
-        </h1>
+        <h1 className="text-3xl text-white">{currentExperience.name}</h1>
         <p className="text-white px-2">
           Bevæg dig tæt nok på oplevelsens checkpoints for at låse op for en ny
           lydbid 🤠
         </p>
-        <br />
         <ExperienceList
           experienceId={experienceId}
-          steps={currentExperience && currentExperience.steps}
+          steps={currentExperience.steps}
           lat={lat}
           long={long}
           storedData={storedData}
@@ -55,7 +55,7 @@ function Experience({
           geolocationAvailable={geolocationAvailable}
         />
       </div>
-    </div>
+    </>
   );
 }
 export default Experience;
