@@ -1,3 +1,4 @@
+import { useCallback, MouseEvent } from "react";
 import getDistanceBetweenCoordinates from "../util/helper";
 import "./cards.css";
 
@@ -15,11 +16,11 @@ function Cards({ lat, long, handleExperienceClick }) {
     return distance;
   };
 
-  const experienceClick = (event) => {
+  const experienceClick = useCallback((event) => {
     const experienceId = event.target.getAttribute("data-experienceid");
     const experienceName = event.target.getAttribute("data-experiencename");
     handleExperienceClick(experienceId, experienceName);
-  };
+  }, []);
 
   const experiences = [
     {
@@ -47,20 +48,21 @@ function Cards({ lat, long, handleExperienceClick }) {
           className={`flex m-5 border border-gray-900 justify-center ${
             !id ? "grayscale" : ""
           } `}
+          key={id}
         >
           <div
-            className="h-30 h-auto w-30 flex-none bg-cover rounded-t rounded-t-none rounded-l text-center overflow-hidden pointer-events-none"
+            className="h-30 h-auto w-30 flex-none bg-cover rounded-t rounded-t-none rounded-l text-center overflow-hidden"
             title="test"
           />
-          <div className="py-20 flex flex-col justify-between leading-normal pointer-events-none">
+          <div className="py-20 flex flex-col justify-between leading-normal">
             <div>
               {id && (
                 <button
                   type="button"
-                  onClick={() => experienceClick()}
-                  data-experiencename={id}
+                  onClick={experienceClick}
+                  data-experiencename={name}
                   data-experienceid={id}
-                  className="flex font-bold text-lg text-white pointer-events-none flex-col"
+                  className="flex font-bold text-lg text-white cursor-pointer flex-col"
                 >
                   {name}
                 </button>
