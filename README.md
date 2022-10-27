@@ -1,3 +1,15 @@
+# aapodwalk
+
+```sh
+docker-compose up --detach
+docker-compose run node npm install
+docker-compose run node npm run build
+open "http://$(docker-compose port nginx 8080)"
+
+# Alternatively
+itkdev-docker-compose open
+```
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
