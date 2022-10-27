@@ -1,5 +1,4 @@
-# itk-version: 2.0.2
-version: "3"
+version: "3.4"
 
 networks:
   frontend:
@@ -10,28 +9,48 @@ networks:
 
 services:
   nginx:
-    image: nginxinc/nginx-unprivileged:alpine
+    image: nginx:latest
     networks:
       - app
       - frontend
     depends_on:
       - node
     ports:
-      - '8080'
+      - "80"
     volumes:
       - ${PWD}/.docker/vhost.conf:/etc/nginx/conf.d/default.conf:ro
-      - .:/app:delegated
+      - ./:/app:delegated
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-#      HTTPS config - uncomment to enable redirect from :80 to :443
-#      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
-#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      #      HTTPS config - uncomment to enable redirect from :80 to :443
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
-    # Node LTS (cf. https://nodejs.org/en/about/releases/)
-    image: node:16
-    volumes:
-      - ./:/app:delegated
+    image: node:18
+    command: npm start
+    networks:
+      - app
     working_dir: /app
+    environment:
+      - NODE_ENV=development
+      - DB_HOST=json-server
+    volumes:
+      - .:/app:delegated
+    ports:
+      - "3000:3000"
+
+  json-server:
+    image: node:18
+    command: npm run server
+    ports:
+      - "3004:3004"
+    networks:
+      - app
+    working_dir: /app
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app:delegated
