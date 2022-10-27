@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import getDistanceBetweenCoordinates from "../util/helper";
+import "./experience-list.css";
 
 function ExperienceList({
   steps,
