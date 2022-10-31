@@ -5,7 +5,7 @@ import "./cards.css";
 
 function Cards({ lat, long, handleExperienceClick }) {
   const [experiences, setExperiences] = useState(null);
-  const { data } = useFetch(`http://localhost:3004/experiences`);
+  const { data } = useFetch(`https://api.aapodwalk.local.itkdev.dk/experiences`);
 
   useEffect(() => {
     if (data) {

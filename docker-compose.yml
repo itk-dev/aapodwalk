@@ -24,33 +24,39 @@ services:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-      #      HTTPS config - uncomment to enable redirect from :80 to :443
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
     image: node:18
-    command: npm start
+    command: npm run start
+    working_dir: /app
     networks:
       - app
-    working_dir: /app
+    ports:
+      - "3000"
     environment:
       - NODE_ENV=development
       - DB_HOST=json-server
     volumes:
       - .:/app:delegated
-    ports:
-      - "3000:3000"
 
   json-server:
     image: node:18
     command: npm run server
-    ports:
-      - "3004:3004"
+    working_dir: /app
     networks:
       - app
-    working_dir: /app
+      - frontend
+    ports:
+      - "80"
     environment:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=frontend"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_api.rule=Host(`api.${COMPOSE_DOMAIN}`)"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_api.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"

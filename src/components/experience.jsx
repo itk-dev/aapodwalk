@@ -14,7 +14,7 @@ function Experience({
 }) {
   const [currentExperience, setCurrentExperience] = useState(null);
   const { data } = useFetch(
-    `http://localhost:3004/experiences/${experienceId}`
+    `https://api.aapodwalk.local.itkdev.dk/experiences/${experienceId}`
   );
 
   useEffect(() => {
