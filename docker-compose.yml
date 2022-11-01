@@ -37,7 +37,6 @@ services:
       - "3000"
     environment:
       - NODE_ENV=development
-      - DB_HOST=json-server
     volumes:
       - .:/app:delegated
 
