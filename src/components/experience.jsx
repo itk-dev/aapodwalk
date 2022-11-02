@@ -14,6 +14,7 @@ function Experience({
 }) {
   const [currentExperience, setCurrentExperience] = useState(null);
   // todo promise this will be changed
+
   const { data } = useFetch(
     `${process.env.REACT_APP_API}/experiences/${experienceId}`
   );
