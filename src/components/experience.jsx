@@ -13,8 +13,8 @@ function Experience({
   geolocationAvailable,
 }) {
   const [currentExperience, setCurrentExperience] = useState(null);
-  // todo promise this will be changed
 
+  // todo promise this will be changed
   const { data } = useFetch(
     `${process.env.REACT_APP_API}/experiences/${experienceId}`
   );

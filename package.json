@@ -12,7 +12,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start-dev": "REACT_APP_API=https://api.aapodwalk.local.itkdev.dk npm run start",
+    "start-dev": "REACT_APP_API=http://api.aapodwalk.local.itkdev.dk npm run start",
     "start-prod": "REACT_APP_API=https://api.aapodwalk.itkdev.dk npm run start",
     "start": "react-scripts start",
     "build": "react-scripts build",
