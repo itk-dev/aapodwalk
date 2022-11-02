@@ -1,9 +1,8 @@
 # aapodwalk
 
 ```sh
-docker-compose up --detach
 docker-compose run node npm install
-docker-compose run node npm run build
+docker-compose up --detach
 open "http://$(docker-compose port nginx 8080)"
 
 # Alternatively
