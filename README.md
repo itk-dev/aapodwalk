@@ -1,9 +1,8 @@
 # aapodwalk
 
 ```sh
-docker-compose up --detach
 docker-compose run node npm install
-docker-compose run node npm run build
+docker-compose up --detach
 open "http://$(docker-compose port nginx 8080)"
 
 # Alternatively
@@ -59,6 +58,18 @@ npm run check-coding-standards
 
 ```bash
 npm run apply-coding-standards
+```
+
+## JSON server
+
+How nifty!
+
+https://github.com/typicode/json-server
+
+Runs `db.json` as a server on http://localhost:3004
+
+```bash
+npm run server
 ```
 
 ## Learn More

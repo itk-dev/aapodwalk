@@ -1,5 +1,4 @@
-# itk-version: 2.0.2
-version: "3"
+version: "3.4"
 
 networks:
   frontend:
@@ -17,21 +16,46 @@ services:
     depends_on:
       - node
     ports:
-      - '8080'
+      - "8080"
     volumes:
       - ${PWD}/.docker/vhost.conf:/etc/nginx/conf.d/default.conf:ro
-      - .:/app:delegated
+      - ./:/app:delegated
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-#      HTTPS config - uncomment to enable redirect from :80 to :443
-#      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
-#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      # - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
+      # - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
-    # Node LTS (cf. https://nodejs.org/en/about/releases/)
-    image: node:16
-    volumes:
-      - ./:/app:delegated
+    image: node:18
+    command: npm run start-dev
     working_dir: /app
+    networks:
+      - app
+    ports:
+      - "3000"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app:delegated
+
+  json-server:
+    image: node:18
+    command: npm run server
+    working_dir: /app
+    networks:
+      - app
+      - frontend
+    ports:
+      - "80"
+    environment:
+      - NODE_ENV=development
+    volumes:
+      - .:/app:delegated
+    labels:
+      - "traefik.enable=true"
+      - "traefik.docker.network=frontend"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_api.rule=Host(`api.${COMPOSE_DOMAIN}`)"
+      # - "traefik.http.routers.${COMPOSE_PROJECT_NAME}_api.middlewares=redirect-to-https"
+      # - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
