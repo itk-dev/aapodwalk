@@ -12,6 +12,8 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
+    "start-dev": "REACT_APP_API=https://api.aapodwalk.local.itkdev.dk/experiences yarn start",
+    "build-prod": "REACT_APP_API=https://api.aapodwalk.itkdev.dk/experiences yarn start",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",

@@ -13,8 +13,9 @@ function Experience({
   geolocationAvailable,
 }) {
   const [currentExperience, setCurrentExperience] = useState(null);
+  // todo promise this will be changed
   const { data } = useFetch(
-    `https://api.aapodwalk.local.itkdev.dk/experiences/${experienceId}`
+    `${process.env.REACT_APP_API}/experiences/${experienceId}`
   );
 
   useEffect(() => {

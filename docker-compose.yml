@@ -29,7 +29,7 @@ services:
 
   node:
     image: node:18
-    command: npm run start
+    command: npm run start-dev
     working_dir: /app
     networks:
       - app
