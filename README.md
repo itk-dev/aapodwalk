@@ -1,5 +1,7 @@
 # aapodwalk
 
+## Running this app in docker
+
 ```sh
 docker-compose run node npm install
 docker-compose up --detach
@@ -9,9 +11,27 @@ open "http://$(docker-compose port nginx 8080)"
 itkdev-docker-compose open
 ```
 
-# Getting Started with Create React App
+### JSON-server
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+The above script starts a [json server](https://github.com/typicode/json-server), on the compose domain defined in the .env-file
+
+## Linting
+
+```bash
+npm run check-coding-standards
+```
+
+```bash
+npm run apply-coding-standards
+```
+
+## .env
+```bash
+COMPOSE_PROJECT_NAME=aapodwalk 
+COMPOSE_DOMAIN=aapodwalk.local.itkdev.dk
+# The location of the api
+REACT_APP_API=api.aapodwalk.local.itkdev.dk 
+```
 
 ## Available Scripts
 
@@ -50,27 +70,6 @@ Instead, it will copy all the configuration files and the transitive dependencie
 
 You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Linting
-
-```bash
-npm run check-coding-standards
-```
-
-```bash
-npm run apply-coding-standards
-```
-
-## JSON server
-
-How nifty!
-
-https://github.com/typicode/json-server
-
-Runs `db.json` as a server on http://localhost:3004
-
-```bash
-npm run server
-```
 
 ## Learn More
 
