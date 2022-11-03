@@ -30,7 +30,7 @@ npm run apply-coding-standards
 COMPOSE_PROJECT_NAME=aapodwalk 
 COMPOSE_DOMAIN=aapodwalk.local.itkdev.dk
 # The location of the api
-REACT_APP_API=api.aapodwalk.local.itkdev.dk 
+REACT_APP_API_BASE_URL=api.aapodwalk.local.itkdev.dk 
 ```
 
 ## Available Scripts

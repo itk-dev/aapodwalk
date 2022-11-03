@@ -16,7 +16,7 @@ function Experience({
 
   // todo promise this will be changed
   const { data } = useFetch(
-    `${process.env.REACT_APP_API}/experiences/${experienceId}`
+    `${process.env.REACT_APP_API_BASE_URL}/experiences/${experienceId}`
   );
 
   useEffect(() => {

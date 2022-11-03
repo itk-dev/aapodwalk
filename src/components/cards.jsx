@@ -7,7 +7,7 @@ function Cards({ lat, long, handleExperienceClick }) {
   const [experiences, setExperiences] = useState(null);
   
   // todo promise this will be changed
-  const { data } = useFetch(`${process.env.REACT_APP_API}/experiences`);
+  const { data } = useFetch(`${process.env.REACT_APP_API_BASE_URL}/experiences`);
   useEffect(() => {
     if (data) {
       setExperiences(data);
