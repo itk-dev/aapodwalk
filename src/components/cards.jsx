@@ -5,9 +5,9 @@ import "./cards.css";
 
 function Cards({ lat, long, handleExperienceClick }) {
   const [experiences, setExperiences] = useState(null);
+  
   // todo promise this will be changed
   const { data } = useFetch(`${process.env.REACT_APP_API}/experiences`);
-
   useEffect(() => {
     if (data) {
       setExperiences(data);
