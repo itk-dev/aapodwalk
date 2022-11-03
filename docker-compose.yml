@@ -29,12 +29,12 @@ services:
 
   node:
     image: node:18
-    command: npm run start-dev
+    command: npm run start
     working_dir: /app
     networks:
       - app
     ports:
-      - "3000"
+      - "3000:3000"
     environment:
       - NODE_ENV=development
     volumes:
@@ -48,7 +48,7 @@ services:
       - app
       - frontend
     ports:
-      - "80"
+      - "3004:80"
     environment:
       - NODE_ENV=development
     volumes:
