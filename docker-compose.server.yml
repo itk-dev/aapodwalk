@@ -34,7 +34,7 @@ services:
 
   node:
     image: node:18
-    command: npm run start-prod
+    command: npm run start
     working_dir: /app
     networks:
       - app
