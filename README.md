@@ -25,12 +25,10 @@ npm run check-coding-standards
 npm run apply-coding-standards
 ```
 
-## .env
+## .env.local
 ```bash
-COMPOSE_PROJECT_NAME=aapodwalk 
-COMPOSE_DOMAIN=aapodwalk.local.itkdev.dk
 # The location of the api
-REACT_APP_API_BASE_URL=api.aapodwalk.local.itkdev.dk 
+REACT_APP_API_BASE_URL=API_URL_HERE
 ```
 
 ## Available Scripts
