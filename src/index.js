@@ -1,13 +1,22 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import "./index.css";
-import App from "./App";
+import { BrowserRouter } from "react-router-dom";
+import ApiEndpointContext from "./context/api-endpoint-context";
 import reportWebVitals from "./reportWebVitals";
+import App from "./App";
+import "./index.css";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
+
 root.render(
   <React.StrictMode>
-    <App />
+    <BrowserRouter>
+      <ApiEndpointContext.Provider
+        value={{ url: process.env.REACT_APP_API_BASE_URL }}
+      >
+        <App />
+      </ApiEndpointContext.Provider>
+    </BrowserRouter>
   </React.StrictMode>
 );
 
