@@ -64,7 +64,7 @@ function Step({ step }) {
       setPrevUnlocked(true);
     }
   }, []);
-
+  console.log(proximity);
   return (
     <button
       type="button"

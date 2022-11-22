@@ -22,7 +22,7 @@ function Experience({ experience }) {
         experienceLong
       );
       setProximity(distance);
-      setUnlockableDistance(distance < 0); // todo magic number
+      setUnlockableDistance(distance < 50); // todo magic number
     }
   }, [experience, lat, long, geolocationAvailable]);
 
