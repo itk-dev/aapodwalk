@@ -80,7 +80,7 @@ function Step({ step }) {
         src={step.image}
         alt="" // todo
       />
-      <div className="py-6 z-10 absolute w-full h-full flex flex-col pointer-events-none">
+      <div className="z-10 absolute w-full h-full flex flex-col pointer-events-none top-0 p-0">
         {(unlockableDistance || prevUnlocked) === true && (
           <p className="m-auto text-white pointer-events-none">
             <b>{step.name}</b>
@@ -102,7 +102,7 @@ function Step({ step }) {
               </p>
             )}
             {!proximity && (
-              <div role="status" className="max-w-sm animate-pulse">
+              <div role="status" className="max-w-sm animate-pulse mt-1 mr-auto ml-auto mb-auto">
                 <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4" />
                 <span className="sr-only">
                   Beregner afstand til {step.name}
