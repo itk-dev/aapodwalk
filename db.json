@@ -46,25 +46,7 @@
       ]
     },
     {
-      "lat": 56.12287382586223,
-      "long": 10.218102110686793,
-      "name": "Dyrehaven!",
       "id": 2,
-      "steps": [
-        {
-          "id": "kirke",
-          "name": "Kirke",
-          "image": "https://images.unsplash.com/photo-1599024549287-fe717b971fdd?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=927&q=80",
-          "coordinates": {
-            "lat": 56.15325828214098,
-            "long": 10.213791241196889
-          },
-          "media": "/lib/journey-roa.mp3"
-        }
-      ]
-    },
-    {
-      "id": 3,
       "steps": [
         {
           "id": "dyr1",
@@ -103,21 +85,14 @@
     {
       "lat": 56.153249691363776,
       "long": 10.214202802135777,
-      "name": "Halloween på DOKK1",
+      "name": "DOKK1",
       "id": 1,
       "stepsId": 1
     },
     {
-      "lat": 56.12287382586223,
-      "long": 10.218102110686793,
-      "name": "Rød panda",
+      "name": "AROS",
       "id": 2,
-      "stepsId": 2
-    },
-    {
-      "name": "Fortællinger om domkirken",
-      "id": 3,
-      "stepsId": 3,
+      "stepsId": 2,
       "lat": 56.156999232502145,
       "long": 10.21090265635068
     }

@@ -96,12 +96,12 @@ function Experience({ experience }) {
           )}
         </div>
         {/* todo skeleton component */}
-        {proximity && (
+        {proximity && !prevUnlocked && (
           <p className="m-auto mt-px text-white pointer-events-none">
             {proximity} meter
           </p>
         )}
-        {!proximity && (
+        {!proximity && (!unlockableDistance || !prevUnlocked) && (
           <div role="status" className="max-w-sm animate-pulse">
             <div className="h-2.5 bg-gray-200 rounded-full dark:bg-gray-700 w-48 mb-4" />
             <span className="sr-only">Beregner afstand til {name}</span>

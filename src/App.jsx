@@ -116,12 +116,14 @@ function App() {
       </LatLongContext.Provider>
       {/* todo */}
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      {audioRef && source && (
+      {/* {audioRef && source && ( */}
+      <div className="fixed bottom-0 left-0 right-0 h-20 flex bg-gray-400">
         <audio className="m-auto" ref={audioRef} controls>
           <source src={source} type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
-      )}
+      </div>
+      {/* )} */}
     </div>
   );
 }

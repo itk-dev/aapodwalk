@@ -44,3 +44,7 @@
     transform: rotate(360deg);
   }
 }
+
+.step-name:last-child {
+  margin: auto !important;
+}
