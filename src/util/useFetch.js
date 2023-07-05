@@ -2,10 +2,14 @@ import { useContext, useEffect, useReducer, useRef } from "react";
 import ApiEndpointContext from "../context/api-endpoint-context";
 // discriminated union type
 
-function useFetch(restUrl, options) {
+function useFetch(restUrl) {
   const cache = useRef({});
-  const { url: baseUrl } = useContext(ApiEndpointContext);
-
+  const { url: baseUrl, token } = useContext(ApiEndpointContext);
+  const options = {
+    headers: {
+      authorization: `Bearer ${token}`,
+    },
+  };
   // Used to prevent state update if the component is unmounted
   const cancelRequest = useRef(false);
 
