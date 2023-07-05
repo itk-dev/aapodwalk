@@ -1,12 +1,13 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
 import { Routes, Navigate, Route } from "react-router-dom";
-import ExperienceList from "./components/experience-list";
-import ExperiencePage from "./components/experience-page";
+import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
 import AudioContext from "./context/audio-context";
 import PermissionContext from "./context/permission-context";
 import Info from "./components/info";
-import "./App.css";
+import TagsList from "./components/tags/TagsList";
+import RoutePage from "./components/routes/RoutePage";
+// import "./App.css";
 
 function App() {
   const [geolocationAvailable, setGeolocationAvailable] = useState();
@@ -38,7 +39,7 @@ function App() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.load();
-      audioRef.current.play();
+      // audioRef.current.play();
     }
   }, [source]);
 
@@ -76,11 +77,6 @@ function App() {
         updateLocation();
       } else if (state === "prompt") {
         updateLocation();
-      } else {
-        // eslint-disable-next-line no-console
-        console.log(permissions);
-        // eslint-disable-next-line no-console
-        console.log("Ingen tilladelse");
       }
     } else {
       // apple
@@ -103,8 +99,10 @@ function App() {
         <AudioContext.Provider value={audio}>
           <PermissionContext.Provider value={geolocationAvailableContext}>
             <Routes>
-              <Route path="/" element={<ExperienceList />} />
-              <Route path="experience/:id" element={<ExperiencePage />} />
+              <Route path="/" element={<TagsList />} />
+              {/* <Route path="/" element={<ExperienceList />} /> */}
+              <Route path="tag/:id" element={<TagPage />} />
+              <Route path="route/:id" element={<RoutePage />} />
               <Route
                 path="info"
                 element={<Info geolocationAvailable={geolocationAvailable} />}
@@ -117,12 +115,12 @@ function App() {
       {/* todo */}
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
       {/* {audioRef && source && ( */}
-      <div className="fixed bottom-0 left-0 right-0 h-20 flex bg-gray-400">
+      {/* <div className="fixed bottom-0 left-0 right-0 h-20 flex bg-gray-400">
         <audio className="m-auto" ref={audioRef} controls>
           <source src={source} type="audio/mpeg" />
           Your browser does not support the audio element.
         </audio>
-      </div>
+      </div> */}
       {/* )} */}
     </div>
   );

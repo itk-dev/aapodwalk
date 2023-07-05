@@ -7,8 +7,8 @@ function Info() {
   const { lat, long } = useContext(LatLongContext);
   const { geolocationAvailable } = useContext(PermissionContext);
   const [distance, setDistance] = useState(null);
-console.log(lat)
-console.log(long)
+  // console.log(lat)
+  // console.log(long)
   useEffect(() => {
     if (lat !== null && long !== null) {
       // todoo
@@ -27,10 +27,7 @@ console.log(long)
     <div className="text-white">
       <h1 className="text-pink-800 text-5xl">Info</h1>
       <br />
-      <p>
-        geolocation available:{" "}
-        {geolocationAvailable === "granted"}
-      </p>
+      <p>geolocation available: {geolocationAvailable === "granted"}</p>
       <p>lat: {lat}</p>
       <p>long: {long}</p>
 
