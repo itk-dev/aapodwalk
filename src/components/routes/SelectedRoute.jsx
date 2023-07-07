@@ -29,18 +29,18 @@ function SelectedRoute({ id }) {
   };
 
   if (selectedRoute === null) return null;
-
   return (
     <>
-      {pointsOfInterest.length > 0 && (
-        <MapWrapper
-          config={{
-            df_map_username: mapUsername,
-            df_map_password: mapPassword,
-          }}
-          mapData={getFeaturesForMap(pointsOfInterest)}
-        />
-      )}
+      {pointsOfInterest.length > 0 &&
+        selectedRoute.pointsOfInterest.length === pointsOfInterest.length && (
+          <MapWrapper
+            config={{
+              df_map_username: mapUsername,
+              df_map_password: mapPassword,
+            }}
+            mapData={getFeaturesForMap(pointsOfInterest)}
+          />
+        )}
       {selectedRoute.pointsOfInterest.map((POI) => (
         <PointOfInterestFetcher
           latLongCallBack={latLongCallBack}

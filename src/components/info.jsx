@@ -1,14 +1,13 @@
 import { useContext, useEffect, useState } from "react";
 import LatLongContext from "../context/latitude-longitude-context";
 import PermissionContext from "../context/permission-context";
-import getDistanceBetweenCoordinates from "../util/helper";
+import { getDistanceBetweenCoordinates } from "../util/helper";
 
 function Info() {
   const { lat, long } = useContext(LatLongContext);
   const { geolocationAvailable } = useContext(PermissionContext);
   const [distance, setDistance] = useState(null);
-  // console.log(lat)
-  // console.log(long)
+
   useEffect(() => {
     if (lat !== null && long !== null) {
       // todoo

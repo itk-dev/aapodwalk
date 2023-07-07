@@ -21,7 +21,10 @@ function RoutePage() {
     <>
       <h1>{selectedRoute.name}</h1>
       {selectedRoute.pointsOfInterest.map((pointOfInterest) => (
-        <PointOfInterest id={getIdFromApiEndpoint(pointOfInterest)} />
+        <PointOfInterest
+          key={pointOfInterest}
+          id={getIdFromApiEndpoint(pointOfInterest)}
+        />
       ))}
     </>
   );

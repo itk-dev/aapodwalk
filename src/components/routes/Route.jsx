@@ -1,6 +1,7 @@
 import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../util/useFetch";
+import Image from "../Image";
 
 function Route({ id }) {
   const { data } = useFetch(`routes/${id}`);
@@ -20,7 +21,7 @@ function Route({ id }) {
         {route.name}
       </Link>
       <div>{route.description}</div>
-      <div>{route.image}</div>
+      <Image src={route.image} />
     </span>
   );
 }

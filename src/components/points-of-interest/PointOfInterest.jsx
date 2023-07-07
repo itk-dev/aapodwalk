@@ -2,14 +2,13 @@ import { React, useState, useEffect, useContext } from "react";
 import useFetch from "../../util/useFetch";
 import LatLongContext from "../../context/latitude-longitude-context";
 import { getDistanceBetweenCoordinates } from "../../util/helper";
-import ApiEndpointContext from "../../context/api-endpoint-context";
 import PermissionContext from "../../context/permission-context";
+import Image from "../Image";
 
 function PointOfInterest({ id }) {
   const [pointOfInterest, setPointOfInterest] = useState(null);
   const { data } = useFetch(`point_of_interests/${id}`);
   const { lat, long } = useContext(LatLongContext);
-  const { fileUrl } = useContext(ApiEndpointContext);
 
   const [proximity, setProximity] = useState(null);
   const [unlocked, setUnlocked] = useState(false);
@@ -24,7 +23,7 @@ function PointOfInterest({ id }) {
         pointOfInterest.longitude
       );
       setProximity(distance);
-      setUnlocked(distance < 50); // todo magic number
+      setUnlocked(distance < 10050); // todo magic number
     }
   }, [pointOfInterest, lat, long, geolocationAvailable]);
 
@@ -78,14 +77,16 @@ function PointOfInterest({ id }) {
   return (
     <>
       <h2>{pointOfInterest.name}</h2>
-      <img src={`${fileUrl}${pointOfInterest.image}`} alt="" />
+      <Image src={pointOfInterest.image} />
       <div>
         <label htmlFor="distance">
           afstand
+          {/* todo this is slow and would benefit from loading screen / skeleton componenet */}
           <div id="distance">{proximity} m</div>
         </label>
       </div>
-      {unlocked && <div>kan tilgås</div>}
+      {unlocked && <button type="button">Play</button>}
+      {unlocked && <button type="button">Se tekst</button>}
       {!unlocked && <div>kan ikke tilgås</div>}
     </>
   );
