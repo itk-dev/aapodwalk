@@ -34,8 +34,9 @@ npm run apply-coding-standards
 COMPOSE_PROJECT_NAME=aapodwalk
 COMPOSE_DOMAIN=aapodwalk.local.itkdev.dk
 
-REACT_APP_API_BASE_URL=API_URL_HERE # most probably https://aapodwalk-api.local.itkdev.dk/api/v1/
-REACT_APP_TOKEN=token_stuff_here # created in api
+REACT_APP_API_BASE=API_URL_HERE # most probably https://aapodwalk-api.local.itkdev.dk/
+REACT_APP_API_ROUTE=api/v1/
+REACT_APP_TOKEN=token_stuff_here # created in api (123?)
 
 REACT_APP_DF_MAP_USERNAME=username_here
 REACT_APP_DF_MAP_PASSWORD=password_here
