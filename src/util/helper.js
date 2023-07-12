@@ -36,6 +36,18 @@ export function getIdFromApiEndpoint(endpoint) {
   return idFound[0];
 }
 
+export function getIdsFromApiEndpoints(endpoints) {
+  const regex = /[^\/]+$/;
+  const result = [];
+
+  endpoints.forEach((e) => {
+    const res = e ? e.toString().match(regex) : null;
+    result.push(res[0]);
+  });
+
+  return result;
+}
+
 export function uniqueArrayById(list) {
   const mapOfList = new Map(list.map((item) => [item.id, item]));
   const uniqueArrayToReturn = [...mapOfList.values()];
