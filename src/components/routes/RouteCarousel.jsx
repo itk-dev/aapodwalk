@@ -5,14 +5,13 @@ import { getIdFromApiEndpoint } from "../../util/helper";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 function RouteCarousel({ routes, onCarouselChange }) {
-;
   return (
     <Carousel
       showThumbs={false}
       showStatus={false}
       autoplay
       infiniteLoop
-      showArrows 
+      showArrows
       swipeable
       useKeyboardArrows
       emulateTouch
