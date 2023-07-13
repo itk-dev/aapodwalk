@@ -33,6 +33,7 @@ function SelectedRoute({ id }) {
     <>
       {pointsOfInterest.length > 0 &&
         selectedRoute.pointsOfInterest.length === pointsOfInterest.length && (
+          // todo this needs a load component, it makes the page jump around,jump around,jump around, jump up jump up and get down
           <MapWrapper
             config={{
               df_map_username: mapUsername,

@@ -20,6 +20,7 @@ function TagPage() {
       setIdArray(getIdsFromApiEndpoints(displayedRoutes));
     }
   }, [displayedRoutes]);
+
   useEffect(() => {
     if (data) {
       setDisplayedRoutes(data.routes);

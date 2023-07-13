@@ -39,16 +39,14 @@ function useFetch(restUrl) {
     if (!baseUrl) return;
 
     cancelRequest.current = false;
-
     const fetchData = async () => {
       dispatch({ type: "loading" });
 
       // If a cache exists for this url, return it
-      if (cache.current[baseUrl]) {
+      if (cache.current[`${baseUrl}${restUrl}`]) {
         dispatch({ type: "fetched", payload: cache.current[baseUrl] });
         return;
       }
-
       try {
         const response = await fetch(`${baseUrl}${restUrl}`, options);
         if (!response.ok) {
@@ -56,7 +54,7 @@ function useFetch(restUrl) {
         }
 
         const data = await response.json();
-        cache.current[baseUrl] = data;
+        cache.current[`${baseUrl}${restUrl}`] = data;
         if (cancelRequest.current) return;
 
         dispatch({ type: "fetched", payload: data });
@@ -68,7 +66,7 @@ function useFetch(restUrl) {
     };
 
     fetchData();
-  }, [baseUrl]);
+  }, [baseUrl, restUrl]);
 
   return state;
 }

@@ -17,11 +17,10 @@ function RouteCarousel({ routes, onCarouselChange }) {
       emulateTouch
       onChange={(index) => onCarouselChange(index)}
     >
-      {routes.map((route) => (
-        <div data-id={getIdFromApiEndpoint(route)}>
-          <Route key={route} id={getIdFromApiEndpoint(route)} />
-        </div>
-      ))}
+      {routes.map((route) => {
+        const id = getIdFromApiEndpoint(route);
+        return <Route key={id} id={id} />;
+      })}
     </Carousel>
   );
 }
