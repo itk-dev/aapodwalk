@@ -12,13 +12,21 @@ import {
 function SelectedRoute({ id }) {
   const { data } = useFetch(`routes/${id}`);
   const [selectedRoute, setSelectedRoute] = useState(null);
+  const [featuresForMap, setFeaturesForMap] = useState([]);
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
 
   useEffect(() => {
     if (data) {
       setSelectedRoute(data);
+      setPointsOfInterest([]);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (pointsOfInterest.length > 0) {
+      setFeaturesForMap(getFeaturesForMap(pointsOfInterest));
+    }
+  }, [pointsOfInterest]);
 
   const { mapUsername, mapPassword } = useContext(ApiEndpointContext);
 
@@ -30,18 +38,15 @@ function SelectedRoute({ id }) {
   if (selectedRoute === null) return null;
   return (
     <>
-      {pointsOfInterest.length > 0 && (
-        // && selectedRoute.pointsOfInterest.length === pointsOfInterest.length && (
-        // todo this needs a load component, it makes the page jump around,jump around,jump around, jump up jump up and get down
-        <MapWrapper
-          config={{
-            df_map_username: mapUsername,
-            df_map_password: mapPassword,
-          }}
-          mapData={getFeaturesForMap(pointsOfInterest)}
-          goToView={selectedRoute}
-        />
-      )}
+      <MapWrapper
+        config={{
+          df_map_username: mapUsername,
+          df_map_password: mapPassword,
+        }}
+        mapData={featuresForMap}
+        goToView={selectedRoute}
+      />
+
       {selectedRoute.pointsOfInterest.map((POI) => (
         <PointOfInterestFetcher
           latLongCallBack={latLongCallBack}

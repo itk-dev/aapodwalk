@@ -24,8 +24,8 @@ function MapWrapper({ mapData, config, goToView }) {
     code: "EPSG:25832",
     extent: [-1877994.66, 3638086.74, 3473041.38, 9494203.2],
   });
-  const northingInitial = mapData ? mapData[0].northing : 574969.6851;
-  const eastingInitial = mapData ? mapData[0].easting : 6223950.2116;
+  const northingInitial = mapData.length > 0 ? mapData[0].northing : 574969.6851;
+  const eastingInitial = mapData.length > 0 ? mapData[0].easting : 6223950.2116;
   const view = new View({
     minZoom: 6,
     maxZoom: 20,
