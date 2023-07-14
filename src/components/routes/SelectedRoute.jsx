@@ -27,21 +27,21 @@ function SelectedRoute({ id }) {
     copyPointsOfInterest.push({ id: poiId, lat, long, name });
     setPointsOfInterest(uniqueArrayById(copyPointsOfInterest));
   };
-
   if (selectedRoute === null) return null;
   return (
     <>
-      {pointsOfInterest.length > 0 &&
-        selectedRoute.pointsOfInterest.length === pointsOfInterest.length && (
-          // todo this needs a load component, it makes the page jump around,jump around,jump around, jump up jump up and get down
-          <MapWrapper
-            config={{
-              df_map_username: mapUsername,
-              df_map_password: mapPassword,
-            }}
-            mapData={getFeaturesForMap(pointsOfInterest)}
-          />
-        )}
+      {pointsOfInterest.length > 0 && (
+        // && selectedRoute.pointsOfInterest.length === pointsOfInterest.length && (
+        // todo this needs a load component, it makes the page jump around,jump around,jump around, jump up jump up and get down
+        <MapWrapper
+          config={{
+            df_map_username: mapUsername,
+            df_map_password: mapPassword,
+          }}
+          mapData={getFeaturesForMap(pointsOfInterest)}
+          goToView={selectedRoute}
+        />
+      )}
       {selectedRoute.pointsOfInterest.map((POI) => (
         <PointOfInterestFetcher
           latLongCallBack={latLongCallBack}

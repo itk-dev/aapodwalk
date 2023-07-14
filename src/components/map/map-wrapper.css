@@ -2,7 +2,7 @@
 
 .map-container,
 .map {
-	height: 600px;
+	height: 400px;
 	width: 100%;
 	display: block;
 	/* filter: brightness(55%); */

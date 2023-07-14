@@ -15,10 +15,65 @@ import { register } from "ol/proj/proj4";
 import "./map-wrapper.css";
 
 // Todo style this......
-function MapWrapper({ mapData, config }) {
+function MapWrapper({ mapData, config, goToView }) {
   const [map, setMap] = useState();
   const [vectorLayer, setVectorLayer] = useState(null);
   const mapElement = useRef();
+  const dkprojection = new Projection({
+    // Projection settings for Denmark
+    code: "EPSG:25832",
+    extent: [-1877994.66, 3638086.74, 3473041.38, 9494203.2],
+  });
+  const northingInitial = mapData ? mapData[0].northing : 574969.6851;
+  const eastingInitial = mapData ? mapData[0].easting : 6223950.2116;
+  const view = new View({
+    minZoom: 6,
+    maxZoom: 20,
+    center: [northingInitial, eastingInitial],
+    zoom: 6,
+    resolutions: [
+      1638.4, 819.2, 409.6, 204.8, 102.4, 51.2, 25.6, 12.8, 6.4, 3.2, 1.6, 0.8,
+      0.4, 0.2, 0.1,
+    ],
+    projection: dkprojection,
+  });
+  const layers = [
+    new TileLayer({
+      // Map tiles
+      title: "WMS skærmkort (DAF)",
+      type: "base",
+      visible: true,
+      source: new TileWMS({
+        url: `https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?username=${config.df_map_username}&password=${config.df_map_password}`,
+        params: {
+          LAYERS: "dtk_skaermkort",
+          VERSION: "1.1.1",
+          TRANSPARENT: "FALSE",
+          FORMAT: "image/png",
+          STYLES: "",
+        },
+        attributions:
+          '<p>Kort fra <a href="https://datafordeler.dk" target="_blank">Datafordeleren</a>.',
+      }),
+    }),
+  ];
+
+  useEffect(() => {
+    if (goToView && map) {
+      if (goToView.id === 1) {
+        map.getView().animate({
+          center: [574969.6851, 6224950.2116],
+          duration: 800,
+        });
+      }
+      if (goToView.id === 2) {
+        map.getView().animate({
+          center: [574969.6851, 6223950.2116],
+          duration: 800,
+        });
+      }
+    }
+  }, [goToView]);
 
   useEffect(() => {
     if (!mapData) {
@@ -74,7 +129,6 @@ function MapWrapper({ mapData, config }) {
             map.removeLayer(value);
           }
         });
-
       map.addLayer(vectorLayer); // Add newly defined vectorLayer
     }
   }, [vectorLayer, map]);
@@ -106,51 +160,11 @@ function MapWrapper({ mapData, config }) {
 
       register(Proj4);
 
-      // Projection settings for Denmark
-      const dkprojection = new Projection({
-        code: "EPSG:25832",
-        extent: [-1877994.66, 3638086.74, 3473041.38, 9494203.2],
-      });
-
-      const layers = [
-        new TileLayer({
-          // Map tiles
-          title: "WMS skærmkort (DAF)",
-          type: "base",
-          visible: true,
-          source: new TileWMS({
-            url: `https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?username=${config.df_map_username}&password=${config.df_map_password}`,
-            params: {
-              LAYERS: "dtk_skaermkort",
-              VERSION: "1.1.1",
-              TRANSPARENT: "FALSE",
-              FORMAT: "image/png",
-              STYLES: "",
-            },
-            attributions:
-              '<p>Kort fra <a href="https://datafordeler.dk" target="_blank">Datafordeleren</a>.',
-          }),
-        }),
-      ];
-
-      const northingInitial = mapData ? mapData[0].northing : 574969.6851;
-      const eastingInitial = mapData ? mapData[0].easting : 6223950.2116;
-
       // Map definition
       const initialMap = new Map({
         layers,
         target: mapElement.current,
-        view: new View({
-          minZoom: 10,
-          maxZoom: 20,
-          center: [northingInitial, eastingInitial],
-          zoom: 5.2,
-          resolutions: [
-            1638.4, 819.2, 409.6, 204.8, 102.4, 51.2, 25.6, 12.8, 6.4, 3.2, 1.6,
-            0.8, 0.4, 0.2, 0.1,
-          ],
-          projection: dkprojection,
-        }),
+        view,
       });
 
       // save map and vector layer references to state

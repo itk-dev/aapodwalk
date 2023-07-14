@@ -44,7 +44,10 @@ function useFetch(restUrl) {
 
       // If a cache exists for this url, return it
       if (cache.current[`${baseUrl}${restUrl}`]) {
-        dispatch({ type: "fetched", payload: cache.current[baseUrl] });
+        dispatch({
+          type: "fetched",
+          payload: cache.current[`${baseUrl}${restUrl}`],
+        });
         return;
       }
       try {
