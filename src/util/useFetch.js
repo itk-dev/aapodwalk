@@ -1,9 +1,10 @@
-import { useContext, useEffect, useReducer, useRef } from "react";
+import { useEffect, useReducer, useRef, useContext } from "react";
 import ApiEndpointContext from "../context/api-endpoint-context";
-// discriminated union type
+import CacheContext from "../context/cache-context";
 
 function useFetch(restUrl) {
-  const cache = useRef({});
+  // const cache = useRef({});
+  const { cache, setCache } = useContext(CacheContext);
   const { url: baseUrl, token } = useContext(ApiEndpointContext);
   const options = {
     headers: {
@@ -37,16 +38,14 @@ function useFetch(restUrl) {
   useEffect(() => {
     // Do nothing if the url is not given
     if (!baseUrl) return;
-
     cancelRequest.current = false;
     const fetchData = async () => {
       dispatch({ type: "loading" });
-
       // If a cache exists for this url, return it
-      if (cache.current[`${baseUrl}${restUrl}`]) {
+      if (cache[`${restUrl}`]) {
         dispatch({
           type: "fetched",
-          payload: cache.current[`${baseUrl}${restUrl}`],
+          payload: cache[`${restUrl}`],
         });
         return;
       }
@@ -57,7 +56,10 @@ function useFetch(restUrl) {
         }
 
         const data = await response.json();
-        cache.current[`${baseUrl}${restUrl}`] = data;
+        const cacheCopy = { ...cache };
+        cacheCopy[`${restUrl}`] = data;
+        setCache(cacheCopy);
+
         if (cancelRequest.current) return;
 
         dispatch({ type: "fetched", payload: data });

@@ -3,6 +3,7 @@ import { Routes, Navigate, Route } from "react-router-dom";
 import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
 import AudioContext from "./context/audio-context";
+import CacheContext from "./context/cache-context";
 import PermissionContext from "./context/permission-context";
 import Info from "./components/info";
 import TagsList from "./components/tags/TagsList";
@@ -14,6 +15,7 @@ function App() {
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
   const [source, setSource] = useState(null);
+  const [cache, setCache] = useState({});
   const audioRef = useRef();
   const contextLatLong = useMemo(
     () => ({
@@ -96,21 +98,23 @@ function App() {
   return (
     <div className="App">
       <LatLongContext.Provider value={contextLatLong}>
-        <AudioContext.Provider value={audio}>
-          <PermissionContext.Provider value={geolocationAvailableContext}>
-            <Routes>
-              <Route path="/" element={<TagsList />} />
-              {/* <Route path="/" element={<ExperienceList />} /> */}
-              <Route path="tag/:id" element={<TagPage />} />
-              <Route path="route/:id" element={<RoutePage />} />
-              <Route
-                path="info"
-                element={<Info geolocationAvailable={geolocationAvailable} />}
-              />
-              <Route path="*" element={<Navigate to="/" />} />
-            </Routes>
-          </PermissionContext.Provider>
-        </AudioContext.Provider>
+        <CacheContext.Provider value={{ cache, setCache }}>
+          <AudioContext.Provider value={audio}>
+            <PermissionContext.Provider value={geolocationAvailableContext}>
+              <Routes>
+                <Route path="/" element={<TagsList />} />
+                {/* <Route path="/" element={<ExperienceList />} /> */}
+                <Route path="tag/:id" element={<TagPage />} />
+                <Route path="route/:id" element={<RoutePage />} />
+                <Route
+                  path="info"
+                  element={<Info geolocationAvailable={geolocationAvailable} />}
+                />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </PermissionContext.Provider>
+          </AudioContext.Provider>
+        </CacheContext.Provider>
       </LatLongContext.Provider>
       {/* todo */}
       {/* eslint-disable-next-line jsx-a11y/media-has-caption */}

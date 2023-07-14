@@ -3,9 +3,9 @@
 ## Running this app in docker
 
 ```sh
-docker-compose run node npm install
-docker-compose up --detach
-open "http://$(docker-compose port nginx 8080)"
+docker compose run node npm install
+docker compose up --detach
+open "http://$(docker compose port nginx 8080)"
 
 # Alternatively
 itkdev-docker-compose open
