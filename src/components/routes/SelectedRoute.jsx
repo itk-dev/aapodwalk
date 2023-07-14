@@ -14,7 +14,6 @@ function SelectedRoute({ id }) {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [featuresForMap, setFeaturesForMap] = useState([]);
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
-
   useEffect(() => {
     if (data) {
       setSelectedRoute(data);

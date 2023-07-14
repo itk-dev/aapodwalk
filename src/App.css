@@ -48,3 +48,7 @@
 .step-name:last-child {
   margin: auto !important;
 }
+
+.poi-image {
+  max-width: 300px;
+}

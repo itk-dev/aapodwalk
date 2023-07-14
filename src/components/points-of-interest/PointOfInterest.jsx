@@ -23,7 +23,7 @@ function PointOfInterest({ id }) {
         pointOfInterest.longitude
       );
       setProximity(distance);
-      setUnlocked(distance < 10050); // todo magic number
+      setUnlocked(distance < 100); // todo magic number
     }
   }, [pointOfInterest, lat, long, geolocationAvailable]);
 
@@ -79,11 +79,13 @@ function PointOfInterest({ id }) {
       <h2>{pointOfInterest.name}</h2>
       <Image src={pointOfInterest.image} />
       <div>
-        <label htmlFor="distance">
-          afstand
-          {/* todo this is slow and would benefit from loading screen / skeleton componenet */}
-          <div id="distance">{proximity} m</div>
-        </label>
+        {!unlocked && (
+          <label htmlFor="distance">
+            afstand
+            {/* todo this is slow and would benefit from loading screen / skeleton componenet */}
+            <div id="distance">{proximity} m</div>
+          </label>
+        )}
       </div>
       {unlocked && <button type="button">Play</button>}
       {unlocked && <button type="button">Se tekst</button>}

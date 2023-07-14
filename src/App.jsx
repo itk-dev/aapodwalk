@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef } from "react";
-import { Routes, Navigate, Route } from "react-router-dom";
+import { Routes, Navigate, Route, useNavigate } from "react-router-dom";
 import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
 import AudioContext from "./context/audio-context";
@@ -14,15 +14,20 @@ function App() {
   const [geolocationAvailable, setGeolocationAvailable] = useState();
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
+  const [heading, setHeading] = useState(null);
+  const [speed, setSpeed] = useState(null);
   const [source, setSource] = useState(null);
   const [cache, setCache] = useState({});
   const audioRef = useRef();
+  const navigate = useNavigate();
   const contextLatLong = useMemo(
     () => ({
       lat,
       long,
+      heading,
+      speed,
     }),
-    [lat, long]
+    [lat, long, heading, speed]
   );
   const audio = useMemo(
     () => ({
@@ -50,12 +55,16 @@ function App() {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
+        setHeading(position.coords.heading);
+        setSpeed(position.coords.speed);
       });
     }
     setTimeout(() => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
+        setHeading(position.coords.heading);
+        setSpeed(position.coords.speed);
       });
       updateLocation();
     }, 2000);
@@ -94,9 +103,13 @@ function App() {
     // todo some sort of spinner or some indication that something is happening
     requestPermissions();
   }, []);
-
   return (
     <div className="App">
+      <div>
+        <button type="button" onClick={() => navigate(-1)}>
+          go back
+        </button>
+      </div>
       <LatLongContext.Provider value={contextLatLong}>
         <CacheContext.Provider value={{ cache, setCache }}>
           <AudioContext.Provider value={audio}>
