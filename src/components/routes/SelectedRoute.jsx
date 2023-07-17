@@ -32,14 +32,16 @@ function SelectedRoute({ selectedRoute }) {
 
   return (
     <>
-      {/* <MapWrapper mapData={featuresForMap} goToView={selectedRoute} /> */}
-      {selectedRoute.pointsOfInterest.map((pointOfInterestRoute) => (
-        <PointOfInterestFetcher
-          latLongCallBack={latLongCallBack}
-          key={pointOfInterestRoute}
-          id={getIdFromApiEndpoint(pointOfInterestRoute)}
-        />
-      ))}
+      <MapWrapper mapData={featuresForMap} goToView={selectedRoute} />
+      {selectedRoute.pointsOfInterest &&
+        selectedRoute.pointsOfInterest.length > 0 &&
+        selectedRoute.pointsOfInterest.map((pointOfInterestRoute) => (
+          <PointOfInterestFetcher
+            latLongCallBack={latLongCallBack}
+            key={pointOfInterestRoute}
+            id={getIdFromApiEndpoint(pointOfInterestRoute)}
+          />
+        ))}
       <h1>{selectedRoute.name}</h1>
       <div>
         <label htmlFor="distance">
