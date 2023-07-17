@@ -17,7 +17,7 @@ function SelectedRoute({ selectedRoute }) {
 
   return (
     <>
-      <MapWrapper mapData={featuresForMap} goToView={selectedRoute} />
+      <MapWrapper mapData={featuresForMap} goToView={featuresForMap[0]} />
       <h1>{selectedRoute.name}</h1>
       <div>
         <label htmlFor="distance">

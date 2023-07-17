@@ -63,18 +63,11 @@ function MapWrapper({ mapData, goToView }) {
 
   useEffect(() => {
     if (goToView && map) {
-      if (goToView.id === 1) {
-        map.getView().animate({
-          center: [574969.6851, 6224950.2116],
-          duration: 800,
-        });
-      }
-      if (goToView.id === 2) {
-        map.getView().animate({
-          center: [574969.6851, 6223950.2116],
-          duration: 800,
-        });
-      }
+      const { easting, northing } = goToView;
+      map.getView().animate({
+        center: [northing, easting],
+        duration: 800,
+      });
     }
   }, [goToView]);
 
