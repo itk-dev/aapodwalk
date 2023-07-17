@@ -32,7 +32,7 @@ function SelectedRoute({ selectedRoute }) {
 
   return (
     <>
-      <MapWrapper mapData={featuresForMap} goToView={selectedRoute} />
+      {/* <MapWrapper mapData={featuresForMap} goToView={selectedRoute} /> */}
       {selectedRoute.pointsOfInterest.map((pointOfInterestRoute) => (
         <PointOfInterestFetcher
           latLongCallBack={latLongCallBack}
