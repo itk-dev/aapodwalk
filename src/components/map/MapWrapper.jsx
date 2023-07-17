@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import Map from "ol/Map";
 import View from "ol/View";
 import TileLayer from "ol/layer/Tile";
@@ -11,11 +11,12 @@ import TileWMS from "ol/source/TileWMS";
 import Projection from "ol/proj/Projection";
 import Proj4 from "proj4";
 import { register } from "ol/proj/proj4";
-
+import ApiEndpointContext from "../../context/api-endpoint-context";
 import "./map-wrapper.css";
 
 // Todo style this......
-function MapWrapper({ mapData, config, goToView }) {
+function MapWrapper({ mapData, goToView }) {
+  const { mapUsername, mapPassword } = useContext(ApiEndpointContext);
   const [map, setMap] = useState();
   const [vectorLayer, setVectorLayer] = useState(null);
   const mapElement = useRef();
@@ -46,7 +47,7 @@ function MapWrapper({ mapData, config, goToView }) {
       type: "base",
       visible: true,
       source: new TileWMS({
-        url: `https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?username=${config.df_map_username}&password=${config.df_map_password}`,
+        url: `https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?username=${mapUsername}&password=${mapPassword}`,
         params: {
           LAYERS: "dtk_skaermkort",
           VERSION: "1.1.1",

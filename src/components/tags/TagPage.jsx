@@ -2,24 +2,21 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import SelectedRoute from "../routes/SelectedRoute";
-import RouteCarousel from "../routes/RouteCarousel";
 import {
   getIdFromApiEndpoint,
   getIdsFromApiEndpoints,
 } from "../../util/helper";
+import RouteCarousel from "../routes/RouteCarousel";
 
+// A tag page displays routes connected to the tag-id
 function TagPage() {
   const { id } = useParams();
-  const [displayedRoutes, setDisplayedRoutes] = useState(null);
   const [selectedRouteId, setSelectedRouteId] = useState(null);
-  const [idArray, setIdArray] = useState(null);
+  const { data: selectedRouteData } = useFetch(`routes/${selectedRouteId}`);
+  const [selectedRoute, setSelectedRoute] = useState(null);
   const { data } = useFetch(`tags/${id}`);
-
-  useEffect(() => {
-    if (displayedRoutes) {
-      setIdArray(getIdsFromApiEndpoints(displayedRoutes));
-    }
-  }, [displayedRoutes]);
+  const [displayedRoutes, setDisplayedRoutes] = useState(null);
+  const [idArray, setIdArray] = useState(null);
 
   useEffect(() => {
     if (data) {
@@ -28,16 +25,31 @@ function TagPage() {
     }
   }, [data]);
 
-  const onCarouselChange = (carouselIndex) => {
-    const selectedId = idArray[carouselIndex];
-    setSelectedRouteId(selectedId);
+  useEffect(() => {
+    if (selectedRouteData) {
+      setSelectedRoute(selectedRouteData);
+    }
+  }, [selectedRouteData]);
+
+  const onCarouselChange = (newId) => {
+    setSelectedRouteId(idArray[newId]);
   };
 
-  if (selectedRouteId === null) return null;
+  useEffect(() => {
+    if (displayedRoutes) {
+      setIdArray(getIdsFromApiEndpoints(displayedRoutes));
+    }
+  }, [displayedRoutes]);
+
+  if (selectedRoute === null) return null;
 
   return (
     <>
-      <SelectedRoute id={selectedRouteId} />
+      <SelectedRoute
+        displayedRoutes={displayedRoutes}
+        onCarouselChange={onCarouselChange}
+        selectedRoute={selectedRoute}
+      />
       <RouteCarousel
         routes={displayedRoutes}
         onCarouselChange={onCarouselChange}

@@ -3,7 +3,6 @@ import ApiEndpointContext from "../context/api-endpoint-context";
 import CacheContext from "../context/cache-context";
 
 function useFetch(restUrl) {
-  // const cache = useRef({});
   const { cache, setCache } = useContext(CacheContext);
   const { url: baseUrl, token } = useContext(ApiEndpointContext);
   const options = {
@@ -38,6 +37,7 @@ function useFetch(restUrl) {
   useEffect(() => {
     // Do nothing if the url is not given
     if (!baseUrl) return;
+
     cancelRequest.current = false;
     const fetchData = async () => {
       dispatch({ type: "loading" });

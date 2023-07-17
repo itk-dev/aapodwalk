@@ -1,7 +1,5 @@
-import { React, useEffect, useState, useContext } from "react";
-import useFetch from "../../util/useFetch";
+import { React, useEffect, useState } from "react";
 import MapWrapper from "../map/MapWrapper";
-import ApiEndpointContext from "../../context/api-endpoint-context";
 import PointOfInterestFetcher from "../points-of-interest/PointOfInterestFetcher";
 import {
   getIdFromApiEndpoint,
@@ -9,48 +7,37 @@ import {
   getFeaturesForMap,
 } from "../../util/helper";
 
-function SelectedRoute({ id }) {
-  const { data } = useFetch(`routes/${id}`);
-  const [selectedRoute, setSelectedRoute] = useState(null);
+function SelectedRoute({ selectedRoute }) {
   const [featuresForMap, setFeaturesForMap] = useState([]);
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
-  useEffect(() => {
-    if (data) {
-      setSelectedRoute(data);
-      setPointsOfInterest([]);
-    }
-  }, [data]);
 
   useEffect(() => {
-    if (pointsOfInterest.length > 0) {
+    if (selectedRoute) {
       setFeaturesForMap(getFeaturesForMap(pointsOfInterest));
     }
   }, [pointsOfInterest]);
 
-  const { mapUsername, mapPassword } = useContext(ApiEndpointContext);
-
   const latLongCallBack = (lat, long, poiId, name) => {
-    const copyPointsOfInterest = [...pointsOfInterest];
+    const pointOfInterstIds = selectedRoute.pointsOfInterest.map((e) =>
+      getIdFromApiEndpoint(e)
+    );
+    const copyPointsOfInterest = [...pointsOfInterest].filter((poi) =>
+      pointOfInterstIds.includes(poi.id)
+    );
     copyPointsOfInterest.push({ id: poiId, lat, long, name });
     setPointsOfInterest(uniqueArrayById(copyPointsOfInterest));
   };
+
   if (selectedRoute === null) return null;
+
   return (
     <>
-      <MapWrapper
-        config={{
-          df_map_username: mapUsername,
-          df_map_password: mapPassword,
-        }}
-        mapData={featuresForMap}
-        goToView={selectedRoute}
-      />
-
-      {selectedRoute.pointsOfInterest.map((POI) => (
+      <MapWrapper mapData={featuresForMap} goToView={selectedRoute} />
+      {selectedRoute.pointsOfInterest.map((pointOfInterestRoute) => (
         <PointOfInterestFetcher
           latLongCallBack={latLongCallBack}
-          key={POI}
-          id={getIdFromApiEndpoint(POI)}
+          key={pointOfInterestRoute}
+          id={getIdFromApiEndpoint(pointOfInterestRoute)}
         />
       ))}
       <h1>{selectedRoute.name}</h1>

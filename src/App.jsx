@@ -20,6 +20,15 @@ function App() {
   const [cache, setCache] = useState({});
   const audioRef = useRef();
   const navigate = useNavigate();
+
+  const cacheContext = useMemo(
+    () => ({
+      setCache,
+      cache,
+    }),
+    [setCache, cache]
+  );
+
   const contextLatLong = useMemo(
     () => ({
       lat,
@@ -29,6 +38,7 @@ function App() {
     }),
     [lat, long, heading, speed]
   );
+
   const audio = useMemo(
     () => ({
       setSource,
@@ -111,12 +121,11 @@ function App() {
         </button>
       </div>
       <LatLongContext.Provider value={contextLatLong}>
-        <CacheContext.Provider value={{ cache, setCache }}>
+        <CacheContext.Provider value={cacheContext}>
           <AudioContext.Provider value={audio}>
             <PermissionContext.Provider value={geolocationAvailableContext}>
               <Routes>
                 <Route path="/" element={<TagsList />} />
-                {/* <Route path="/" element={<ExperienceList />} /> */}
                 <Route path="tag/:id" element={<TagPage />} />
                 <Route path="route/:id" element={<RoutePage />} />
                 <Route
