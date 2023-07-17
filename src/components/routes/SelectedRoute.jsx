@@ -59,7 +59,8 @@ function SelectedRoute({ selectedRoute }) {
         {/* todo how to sum up podcasts */}
         <label htmlFor="length">
           Afspilningstid
-          <div id="length">{selectedRoute.pointsOfInterest.length}</div>
+          {/* todo */}
+          <div id="length" />
         </label>
       </div>
     </>
