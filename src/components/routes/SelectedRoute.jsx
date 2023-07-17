@@ -48,10 +48,13 @@ function SelectedRoute({ selectedRoute }) {
           Distance
           <div id="distance">{selectedRoute.distance}</div>
         </label>
-        <label htmlFor="poi">
-          Dele
-          <div id="poi">{selectedRoute.pointsOfInterest.length}</div>
-        </label>
+        {selectedRoute.pointsOfInterest &&
+          selectedRoute.pointsOfInterest.length > 0 && (
+            <label htmlFor="poi">
+              Dele
+              <div id="poi">{selectedRoute.pointsOfInterest.length}</div>
+            </label>
+          )}
         {/* todo skeleton screen (I think I recall tailwind having these ootb) or some wait indication */}
         {/* todo how to sum up podcasts */}
         <label htmlFor="length">
