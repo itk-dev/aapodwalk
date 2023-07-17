@@ -8,7 +8,7 @@ import {
 } from "../../util/helper";
 
 function SelectedRoute({ selectedRoute }) {
-  const [featuresForMap, setFeaturesForMap] = useState([]);
+  const [featuresForMap, setFeaturesForMap] = useState(null);
   const [pointsOfInterest, setPointsOfInterest] = useState([]);
 
   useEffect(() => {
@@ -28,7 +28,7 @@ function SelectedRoute({ selectedRoute }) {
     setPointsOfInterest(uniqueArrayById(copyPointsOfInterest));
   };
 
-  if (selectedRoute === null) return null;
+  if (selectedRoute === null || featuresForMap === null) return null;
 
   return (
     <>
