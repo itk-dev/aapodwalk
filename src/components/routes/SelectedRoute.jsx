@@ -13,7 +13,7 @@ function SelectedRoute({ selectedRoute }) {
     }
   }, [selectedRoute]);
 
-  if (selectedRoute === null) return null;
+  if (selectedRoute === null || featuresForMap === null) return null;
 
   return (
     <>
