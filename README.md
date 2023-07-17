@@ -11,12 +11,6 @@ open "http://$(docker compose port nginx 8080)"
 itkdev-docker-compose open
 ```
 
-### JSON-server
-
-Does not work, todo
-
-The above script starts a [json server](https://github.com/typicode/json-server), on the compose domain defined in the .env-file
-
 ## Linting
 
 ```bash
