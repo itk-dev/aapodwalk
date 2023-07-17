@@ -20,16 +20,12 @@ function RoutePage() {
   return (
     <>
       <h1>{selectedRoute.name}</h1>
-      {selectedRoute.pointsOfInterest &&
-        selectedRoute.pointsOfInterest.length > 0 &&
-        selectedRoute.pointsOfInterest
-          .toReversed()
-          .map((pointOfInterest) => (
-            <PointOfInterest
-              key={pointOfInterest}
-              id={getIdFromApiEndpoint(pointOfInterest)}
-            />
-          ))}
+      {selectedRoute.pointsOfInterest.toReversed().map((pointOfInterest) => (
+        <PointOfInterest
+          key={pointOfInterest}
+          id={getIdFromApiEndpoint(pointOfInterest)}
+        />
+      ))}
     </>
   );
 }

@@ -66,8 +66,8 @@ function latlngToUTM(lat, long) {
 
 export function getFeaturesForMap(resources) {
   const locations = [];
-  resources.forEach(({ lat, long }) => {
-    const utmCoordinates = latlngToUTM(Number(lat), Number(long));
+  resources.forEach(({ latitude, longitude }) => {
+    const utmCoordinates = latlngToUTM(Number(latitude), Number(longitude));
     locations.push({
       northing: utmCoordinates[0],
       easting: utmCoordinates[1],
