@@ -1,5 +1,5 @@
 import { React, useEffect, useState } from "react";
-import { useParams, useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import { getIdFromApiEndpoint } from "../../util/helper";
 import PointOfInterest from "../points-of-interest/PointOfInterest";
@@ -8,7 +8,6 @@ function RoutePage() {
   const { id } = useParams();
   const { data } = useFetch(`routes/${id}`);
   const [selectedRoute, setSelectedRoute] = useState(null);
-  const navigate = useNavigate();
 
   useEffect(() => {
     if (data) {
@@ -20,14 +19,17 @@ function RoutePage() {
 
   return (
     <>
-     
       <h1>{selectedRoute.name}</h1>
-      {selectedRoute.pointsOfInterest.toReversed().map((pointOfInterest) => (
-        <PointOfInterest
-          key={pointOfInterest}
-          id={getIdFromApiEndpoint(pointOfInterest)}
-        />
-      ))}
+      {selectedRoute.pointsOfInterest &&
+        selectedRoute.pointsOfInterest.length > 0 &&
+        selectedRoute.pointsOfInterest
+          .toReversed()
+          .map((pointOfInterest) => (
+            <PointOfInterest
+              key={pointOfInterest}
+              id={getIdFromApiEndpoint(pointOfInterest)}
+            />
+          ))}
     </>
   );
 }
