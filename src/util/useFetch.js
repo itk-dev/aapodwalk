@@ -36,7 +36,7 @@ function useFetch(restUrl) {
 
   useEffect(() => {
     // Do nothing if the url is not given
-    if (!baseUrl || restUrl === null) return;
+    if (!baseUrl || restUrl.indexOf("/null") > 0) return;
 
     cancelRequest.current = false;
     const fetchData = async () => {

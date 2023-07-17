@@ -1,31 +1,38 @@
 import { React, useState, useEffect, useContext } from "react";
-import useFetch from "../../util/useFetch";
 import LatLongContext from "../../context/latitude-longitude-context";
 import { getDistanceBetweenCoordinates } from "../../util/helper";
 import PermissionContext from "../../context/permission-context";
+import AudioContext from "../../context/audio-context";
 import Image from "../Image";
 
-function PointOfInterest({ id }) {
-  const [pointOfInterest, setPointOfInterest] = useState(null);
-  const { data } = useFetch(`point_of_interests/${id}`);
+function PointOfInterest({
+  pointOfInterest: { latitude, longitude, name, image, id, subtitles, podcast },
+}) {
   const { lat, long } = useContext(LatLongContext);
-
+  const { setSource } = useContext(AudioContext);
   const [proximity, setProximity] = useState(null);
   const [unlocked, setUnlocked] = useState(false);
+  const [viewSubtitles, setViewSubtitles] = useState(false);
   const { geolocationAvailable } = useContext(PermissionContext);
 
   useEffect(() => {
-    if (pointOfInterest && lat && long && geolocationAvailable === "granted") {
+    if (
+      latitude &&
+      longitude &&
+      lat &&
+      long &&
+      geolocationAvailable === "granted"
+    ) {
       const distance = getDistanceBetweenCoordinates(
         lat,
         long,
-        pointOfInterest.latitude,
-        pointOfInterest.longitude
+        latitude,
+        longitude
       );
       setProximity(distance);
-      setUnlocked(distance < 100); // todo magic number
+      setUnlocked(distance < 10000); // todo magic number/get from config
     }
-  }, [pointOfInterest, lat, long, geolocationAvailable]);
+  }, [latitude, longitude, lat, long, geolocationAvailable]);
 
   function isExperienceIdInLocalstorage() {
     const currentLocalStorage = localStorage.getItem("unlocked-experiences");
@@ -66,18 +73,10 @@ function PointOfInterest({ id }) {
     }
   }, []);
 
-  useEffect(() => {
-    if (data) {
-      setPointOfInterest(data);
-    }
-  }, [data]);
-
-  if (pointOfInterest === null) return null;
-
   return (
     <>
-      <h2>{pointOfInterest.name}</h2>
-      <Image src={pointOfInterest.image} />
+      <h2>{name}</h2>
+      <Image src={image} />
       <div>
         {!unlocked && (
           <label htmlFor="distance">
@@ -87,9 +86,18 @@ function PointOfInterest({ id }) {
           </label>
         )}
       </div>
-      {unlocked && <button type="button">Play</button>}
-      {unlocked && <button type="button">Se tekst</button>}
+      {unlocked && (
+        <button type="button" onClick={() => setSource(podcast)}>
+          Play
+        </button>
+      )}
+      {unlocked && (
+        <button type="button" onClick={() => setViewSubtitles(!viewSubtitles)}>
+          Se tekst
+        </button>
+      )}
       {!unlocked && <div>kan ikke tilgås</div>}
+      {viewSubtitles && <div>{subtitles}</div>}
     </>
   );
 }

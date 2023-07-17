@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useRef } from "react";
+import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
 import { Routes, Navigate, Route, useNavigate } from "react-router-dom";
 import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
@@ -8,6 +8,8 @@ import PermissionContext from "./context/permission-context";
 import Info from "./components/info";
 import TagsList from "./components/tags/TagsList";
 import RoutePage from "./components/routes/RoutePage";
+import ApiEndpointContext from "./context/api-endpoint-context";
+
 // import "./App.css";
 
 function App() {
@@ -56,7 +58,7 @@ function App() {
     if (audioRef.current) {
       audioRef.current.pause();
       audioRef.current.load();
-      // audioRef.current.play();
+      audioRef.current.play();
     }
   }, [source]);
 
@@ -113,6 +115,9 @@ function App() {
     // todo some sort of spinner or some indication that something is happening
     requestPermissions();
   }, []);
+
+  const { fileUrl } = useContext(ApiEndpointContext);
+
   return (
     <div className="App">
       <div>
@@ -138,16 +143,10 @@ function App() {
           </AudioContext.Provider>
         </CacheContext.Provider>
       </LatLongContext.Provider>
-      {/* todo */}
-      {/* eslint-disable-next-line jsx-a11y/media-has-caption */}
-      {/* {audioRef && source && ( */}
-      {/* <div className="fixed bottom-0 left-0 right-0 h-20 flex bg-gray-400">
-        <audio className="m-auto" ref={audioRef} controls>
-          <source src={source} type="audio/mpeg" />
-          Your browser does not support the audio element.
-        </audio>
-      </div> */}
-      {/* )} */}
+      {audioRef && source && (
+        // eslint-disable-next-line jsx-a11y/media-has-caption
+        <audio ref={audioRef} controls src={`${fileUrl}${source}`} />
+      )}
     </div>
   );
 }
