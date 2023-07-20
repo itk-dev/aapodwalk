@@ -64,10 +64,12 @@ function PointOfInterest({
     }
   }
   useEffect(() => {
-    console.log(angle);
-    console.log(compass);
     if (compass && angle) {
-      setRotation(compass - angle);
+      let arrowRotation = compass - angle;
+      if (arrowRotation < 0) {
+        arrowRotation %= 180;
+      }
+      setRotation(arrowRotation);
     }
   }, [compass, angle]);
   useEffect(() => {
