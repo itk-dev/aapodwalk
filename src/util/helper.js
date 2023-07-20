@@ -29,6 +29,25 @@ export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   return d;
 }
 
+export function getAngleFromLocationToDestination(lat1, long1, lat2, long2) {
+  const startX = (lat1 * Math.PI) / 180;
+  const startY = (long1 * Math.PI) / 180;
+  const endX = (lat2 * Math.PI) / 180;
+  const endY = (long2 * Math.PI) / 180;
+
+  let bearing = Math.atan2(
+    Math.sin(endY - startY) * Math.cos(endX),
+    Math.cos(startX) * Math.sin(endX) -
+      Math.sin(startX) * Math.cos(endX) * Math.cos(endY - startY)
+  );
+
+  bearing *= 57.2957795;
+
+  bearing = (bearing + 360) % 360;
+
+  return bearing;
+}
+
 export function getIdFromApiEndpoint(endpoint) {
   const regex = /[^\/]+$/;
   // Todo create utils file
@@ -66,13 +85,15 @@ function latlngToUTM(lat, long) {
 
 export function getFeaturesForMap(resources) {
   const locations = [];
-  resources.forEach(({ latitude, longitude }) => {
-    const utmCoordinates = latlngToUTM(Number(latitude), Number(longitude));
-    locations.push({
-      northing: utmCoordinates[0],
-      easting: utmCoordinates[1],
+  if (resources) {
+    resources.forEach(({ latitude, longitude }) => {
+      const utmCoordinates = latlngToUTM(Number(latitude), Number(longitude));
+      locations.push({
+        northing: utmCoordinates[0],
+        easting: utmCoordinates[1],
+      });
     });
-  });
+  }
   return locations;
 }
 
