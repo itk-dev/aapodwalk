@@ -51,9 +51,6 @@ function PointOfInterest({
         longitude
       )
     );
-    console.log(angle);
-    console.log(compass);
-    setRotation(compass - angle);
   }
   function startCompass() {
     if (isIOS) {
@@ -66,6 +63,13 @@ function PointOfInterest({
         .catch();
     }
   }
+  useEffect(() => {
+    console.log(angle);
+    console.log(compass);
+    if (compass && angle) {
+      setRotation(compass - angle);
+    }
+  }, [compass, angle]);
   useEffect(() => {
     if (
       latitude &&
