@@ -12,7 +12,7 @@ function RoutePage() {
   useEffect(() => {
     if (data) {
       setSelectedRoute(data);
-      setPointsOfInterest(data.pointsOfInterest);
+      setPointsOfInterest(data.pointsOfInterest["hydra:member"]);
     }
   }, [data]);
 
