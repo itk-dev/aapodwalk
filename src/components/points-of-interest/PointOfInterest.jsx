@@ -33,7 +33,6 @@ function PointOfInterest({
     setTimeout(() => {
       handlerAvailable = true;
     }, 750);
-    console.log("inside handler");
     navigator.geolocation.getCurrentPosition(locationHandler);
     const cmps = e.webkitCompassHeading || Math.abs(e.alpha - 360);
     setCompass(cmps);
@@ -44,7 +43,6 @@ function PointOfInterest({
     setTimeout(() => {
       locationHandlerAvailable = true;
     }, 750);
-    console.log("inside location handler");
     setAngle(
       getAngleFromLocationToDestination(
         pos.coords.latitude,
@@ -53,6 +51,8 @@ function PointOfInterest({
         longitude
       )
     );
+    console.log(angle);
+    console.log(compass);
     setRotation(compass - angle);
   }
   function startCompass() {
