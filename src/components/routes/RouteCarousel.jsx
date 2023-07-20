@@ -7,6 +7,7 @@ import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a lo
 function RouteCarousel({ routes, onCarouselChange }) {
   return (
     <Carousel
+      className="absolute left-0 bottom-0 right-0 m-5 rounded-lg overflow-hidden max-h-96 md:max-w-xs"
       showThumbs={false}
       showStatus={false}
       autoplay

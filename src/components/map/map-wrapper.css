@@ -2,7 +2,7 @@
 
 .map-container,
 .map {
-	height: 400px;
+	height: 100%;
 	width: 100%;
 	display: block;
 	/* filter: brightness(55%); */
@@ -389,7 +389,7 @@
 	padding: 0 15px;
     height: 40px;
 	align-items: center;
-	justify-content: center; 
+	justify-content: center;
 }
 
 .tooltip:not(:empty) .tooltip-btn {

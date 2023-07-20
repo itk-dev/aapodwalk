@@ -16,13 +16,13 @@ function Route({ id }) {
   if (route === null) return null;
 
   return (
-    <span>
-      <Link className="" to={`/route/${id}`}>
-        {route.name}
-      </Link>
-      <div>{route.description}</div>
-      <Image src={route.image} />
-    </span>
+    <Link className="bg-zinc-100 dark:bg-zinc-700 flex" to={`/route/${id}`}>
+      <Image className="flex-1 w-32" src={route.image} />
+      <div className="flex-initial text-left leading-none p-3">
+        <span className="block mb-1">{route.name}</span>
+        <span className="text-xs ">{route.description}</span>
+      </div>
+    </Link>
   );
 }
 

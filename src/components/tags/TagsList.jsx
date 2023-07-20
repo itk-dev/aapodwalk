@@ -16,7 +16,7 @@ function TagsList() {
 
   return (
     <div>
-      <h1>Kategorier</h1>
+      <h1 className="mb-3">Kategorier</h1>
       {tags.map(({ name, routes, id }) => (
         <Tag key={name} numberOfRoutes={routes.length} name={name} id={id} />
       ))}

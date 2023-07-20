@@ -168,11 +168,14 @@ function MapWrapper({ mapData, goToView }) {
     }
   }, [mapData]);
 
+  // TODO: Remove zoom and info btn
+
   return (
-    <div className="map-container">
-      <div ref={mapElement} className="map" id="map">
+    <div className="map-container absolute left-0 top-0 h-screen px-3 pt-12 pb-3">
+      <div ref={mapElement} className="map rounded-xl overflow-hidden" id="map">
         <div id="tooltip" className="tooltip" />
       </div>
+      <div className="map-color-overlay absolute left-0 top-0 bottom-0 right-0 w-screen h-screen bg-zinc-400 dark:bg-zinc-800 opacity-70 dark:opacity-80" />
     </div>
   );
 }

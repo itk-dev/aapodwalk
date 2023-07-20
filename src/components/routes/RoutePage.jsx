@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import PointOfInterest from "../points-of-interest/PointOfInterest";
 import { getAngleFromLocationToDestination } from "../../util/helper";
+import BackButton from "../BackButton";
 
 function RoutePage() {
   const { id } = useParams();
@@ -91,7 +92,8 @@ function RoutePage() {
   if (selectedRoute === null) return null;
   return (
     <>
-      <h1>{selectedRoute.name}</h1>
+      <BackButton>Afslut</BackButton>
+      <h1 className="text-xl font-bold my-3">{selectedRoute.name}</h1>
       {pointsOfInterest &&
         pointsOfInterest
           .toReversed()

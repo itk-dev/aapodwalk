@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
-import { Routes, Navigate, Route, useNavigate } from "react-router-dom";
+import { Routes, Navigate, Route } from "react-router-dom";
 import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
 import AudioContext from "./context/audio-context";
@@ -21,7 +21,6 @@ function App() {
   const [source, setSource] = useState(null);
   const [cache, setCache] = useState({});
   const audioRef = useRef();
-  const navigate = useNavigate();
 
   const cacheContext = useMemo(
     () => ({
@@ -119,12 +118,7 @@ function App() {
   const { fileUrl } = useContext(ApiEndpointContext);
 
   return (
-    <div className="App">
-      <div>
-        <button type="button" onClick={() => navigate(-1)}>
-          go back
-        </button>
-      </div>
+    <div className="App h-full min-h-screen w-screen p-3 text-zinc-800 dark:text-white bg-zinc-100 dark:bg-zinc-800">
       <LatLongContext.Provider value={contextLatLong}>
         <CacheContext.Provider value={cacheContext}>
           <AudioContext.Provider value={audio}>
