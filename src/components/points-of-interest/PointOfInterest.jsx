@@ -28,31 +28,23 @@ function PointOfInterest({
     navigator.userAgent.match(/AppleWebKit/);
 
   function handler(e) {
-    console.log("inside handler");
     if (handlerAvailable === false) return;
     handlerAvailable = false;
     setTimeout(() => {
       handlerAvailable = true;
     }, 750);
-    console.log("settings cmps");
+    console.log("inside handler");
+    navigator.geolocation.getCurrentPosition(locationHandler);
     const cmps = e.webkitCompassHeading || Math.abs(e.alpha - 360);
-    console.log(cmps);
     setCompass(cmps);
   }
   function locationHandler(pos) {
-    console.log("inside locationhandler")
     if (locationHandlerAvailable === false) return;
     locationHandlerAvailable = false;
     setTimeout(() => {
       locationHandlerAvailable = true;
     }, 750);
-    console.log("setting angle");
-    console.log(getAngleFromLocationToDestination(
-        pos.coords.latitude,
-        pos.coords.longitude,
-        latitude,
-        longitude
-      ));
+    console.log("inside location handler");
     setAngle(
       getAngleFromLocationToDestination(
         pos.coords.latitude,
@@ -61,14 +53,9 @@ function PointOfInterest({
         longitude
       )
     );
-    console.log("compass:");
-    console.log(compass);
-    console.log(compas - angle);
     setRotation(compass - angle);
   }
   function startCompass() {
-    console.log("startCompass");
-    console.log(isIOS);
     if (isIOS) {
       DeviceOrientationEvent.requestPermission()
         .then((response) => {
@@ -135,9 +122,7 @@ function PointOfInterest({
     if (isExperienceIdInLocalstorage()) {
       setUnlocked(true);
     }
-    console.log("getcurrentposition locationhandler")
     startBtn.addEventListener("click", startCompass);
-    navigator.geolocation.getCurrentPosition(locationHandler);
 
     if (!isIOS) {
       window.addEventListener("deviceorientationabsolute", handler, true);
