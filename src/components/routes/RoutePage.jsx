@@ -29,12 +29,7 @@ function RoutePage() {
 
   useEffect(() => {
     if (orientation && angle) {
-      let arrowRotation = orientation - angle;
-
-      if (arrowRotation < 0) {
-        arrowRotation = (3600000 + arrowRotation) % 180;
-      }
-      setRotation(arrowRotation);
+      setRotation(orientation - angle);
     }
   }, [orientation, angle]);
 
