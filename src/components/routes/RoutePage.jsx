@@ -12,10 +12,10 @@ function RoutePage() {
   const [orientation, setOrientation] = useState(0);
   const [rotation, setRotation] = useState(0);
   const [angle, setAngle] = useState(0);
-  const [latitude, setLatitude] = useState(null);
-  const [longitude, setLongitude] = useState(null);
-  const [userLatitude, setUserLatitude] = useState(null);
-  const [userLongitude, setUserLongitude] = useState(null);
+  const [latitude, setLatitude] = useState(0);
+  const [longitude, setLongitude] = useState(0);
+  const [userLatitude, setUserLatitude] = useState(0);
+  const [userLongitude, setUserLongitude] = useState(0);
   let handlerAvailable = true;
   let locationHandlerAvailable = true;
   const isIOS =
@@ -81,6 +81,16 @@ function RoutePage() {
   }
 
   useEffect(() => {
+    if (!isIOS) {
+      window.addEventListener(
+        "deviceorientationabsolute",
+        deviceOrientationHandler,
+        true
+      );
+    }
+  }, []);
+
+  useEffect(() => {
     if (pointsOfInterest) {
       setLatitude(
         Object.values(pointsOfInterest)[
@@ -93,15 +103,7 @@ function RoutePage() {
         ].longitude
       );
     }
-
-    if (!isIOS) {
-      window.addEventListener(
-        "deviceorientationabsolute",
-        deviceOrientationHandler,
-        true
-      );
-    }
-  }, []);
+  }, [pointsOfInterest]);
 
   if (selectedRoute === null) return null;
   return (
