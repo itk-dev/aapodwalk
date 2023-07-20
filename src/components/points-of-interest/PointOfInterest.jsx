@@ -21,6 +21,8 @@ function PointOfInterest({
   const [rotation, setRotation] = useState(0);
   const [angle, setAngle] = useState(0);
   const { geolocationAvailable } = useContext(PermissionContext);
+  let handlerAvailable = true;
+  let locationHandlerAvailable = true;
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
     navigator.userAgent.match(/AppleWebKit/);
@@ -58,7 +60,7 @@ function PointOfInterest({
         latitude,
         longitude
       )
-    ); // Rådhuset
+    );
     console.log("compass:");
     console.log(compass);
     console.log(compas - angle);
@@ -92,14 +94,6 @@ function PointOfInterest({
         longitude
       );
       setProximity(distance);
-      setAngle(
-        getAngleFromLocationToDestination(
-          latitude,
-          longitude,
-          56.15695739939817,
-          10.210870468924062
-        )
-      ); // domkirken
       setUnlocked(distance < 10000); // todo magic number/get from config
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
