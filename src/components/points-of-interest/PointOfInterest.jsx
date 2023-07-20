@@ -46,8 +46,8 @@ function PointOfInterest({
       getAngleFromLocationToDestination(
         pos.coords.latitude,
         pos.coords.longitude,
-        56.15695739939817,
-        10.210870468924062
+        latitude,
+        longitude
       )
     ); // Rådhuset
     setRotation(compass - angle);
