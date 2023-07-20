@@ -71,7 +71,7 @@ function PointOfInterest({
 
       console.log(arrowRotation);
       if (arrowRotation < 0) {
-        arrowRotation %= 180;
+        arrowRotation = (3600000 + arrowRotation) % 180;
       }
       console.log("final " + arrowRotation);
       setRotation(arrowRotation);
