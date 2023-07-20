@@ -91,6 +91,7 @@ function RoutePage() {
   }, []);
 
   useEffect(() => {
+    console.log(pointsOfInterest);
     if (pointsOfInterest) {
       setLatitude(
         Object.values(pointsOfInterest)[
