@@ -124,9 +124,6 @@ function App() {
         <button type="button" onClick={() => navigate(-1)}>
           go back
         </button>
-        <button type="button" className="start-btn">
-          Vis mig vej (app js defineret)
-        </button>
       </div>
       <LatLongContext.Provider value={contextLatLong}>
         <CacheContext.Provider value={cacheContext}>
