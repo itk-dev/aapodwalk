@@ -139,7 +139,14 @@ function App() {
       </LatLongContext.Provider>
       {audioRef && source && (
         // eslint-disable-next-line jsx-a11y/media-has-caption
-        <audio ref={audioRef} controls src={`${fileUrl}${source}`} />
+        <div className="fixed left-3 bottom-0 right-3 bg-zinc-200 dark:bg-zinc-700">
+          <audio
+            className="w-full"
+            ref={audioRef}
+            controls
+            src={`${fileUrl}${source}`}
+          />
+        </div>
       )}
     </div>
   );
