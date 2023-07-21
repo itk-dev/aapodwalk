@@ -1,14 +1,23 @@
 import { React, useState, useEffect, useContext } from "react";
 import LatLongContext from "../../context/latitude-longitude-context";
 import { getDistanceBetweenCoordinates } from "../../util/helper";
+import PodcastWrapper from "./PodcastWrapper";
 import PermissionContext from "../../context/permission-context";
 import AudioContext from "../../context/audio-context";
 import Image from "../Image";
 
 function PointOfInterest({
-  pointOfInterest: { latitude, longitude, name, image, id, subtitles, podcast },
+  pointOfInterest: {
+    latitude,
+    longitude,
+    name,
+    image,
+    id,
+    subtitles,
+    podcast,
+    IFrameUrl,
+  },
 }) {
-  const startBtn = document.querySelector(".start-btn");
   const { lat, long } = useContext(LatLongContext);
   const { setSource } = useContext(AudioContext);
   const [proximity, setProximity] = useState(null);
@@ -16,7 +25,6 @@ function PointOfInterest({
   const [viewSubtitles, setViewSubtitles] = useState(false);
 
   const { geolocationAvailable } = useContext(PermissionContext);
-
   useEffect(() => {
     if (
       latitude &&
@@ -32,7 +40,7 @@ function PointOfInterest({
         longitude
       );
       setProximity(distance);
-      setUnlocked(distance < 10000); // todo magic number/get from config
+      setUnlocked(distance < 5); // todo magic number/get from config
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
 
@@ -100,6 +108,7 @@ function PointOfInterest({
       )}
       {!unlocked && <div>kan ikke tilgås</div>}
       {viewSubtitles && <div>{subtitles}</div>}
+      {unlocked && IFrameUrl && <PodcastWrapper IFrameUrl={IFrameUrl} />}
     </>
   );
 }

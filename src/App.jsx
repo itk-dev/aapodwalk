@@ -79,7 +79,7 @@ function App() {
         setSpeed(position.coords.speed);
       });
       updateLocation();
-    }, 2000);
+    }, 3000);
   };
 
   const handlePermissions = async () => {
