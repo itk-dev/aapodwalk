@@ -17,8 +17,11 @@ function Route({ id }) {
   if (route === null) return null;
 
   return (
-    <Link className="bg-zinc-100 dark:bg-zinc-700 flex relative" to={`/route/${id}`}>
-      <div className="w-32 flex justify-center place-items-center" >
+    <Link
+      className="bg-zinc-100 dark:bg-zinc-700 flex relative"
+      to={`/route/${id}`}
+    >
+      <div className="w-32 flex justify-center place-items-center">
         <CirclePlay className="absolute w-6" />
         <Image className="object-cover h-full" src={route.image} />
       </div>
