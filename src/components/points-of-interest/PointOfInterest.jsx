@@ -87,7 +87,6 @@ function PointOfInterest({
     }
   }, []);
 
-
   return (
     <div className="flex items-start gap-4 p-4">
       <Image src={image} className="w-24 h-24 rounded-full" />
@@ -113,7 +112,7 @@ function PointOfInterest({
                 type="button"
                 onClick={() => setSource(podcast)}
               >
-                <CirclePlay className="w-6"/>
+                <CirclePlay className="w-6" />
                 <span className="sr-only">Afspil</span>
               </button>
             )}
@@ -125,14 +124,18 @@ function PointOfInterest({
               >
                 {viewSubtitles ? (
                   <Xmark className="h-6 w-6 text-zinc-800" />
-                  ) : (
+                ) : (
                   <ClosedCap className="h-6 w-6 text-zinc-800" />
                 )}
                 <span className="sr-only">Se tekst</span>
               </button>
             )}
           </div>
-          {viewSubtitles && <div className="bg-zinc-200 text-zinc-800 dark:bg-zinc-500 dark:text-white p-2 rounded mt-2">{subtitles}</div>}
+          {viewSubtitles && (
+            <div className="bg-zinc-200 text-zinc-800 dark:bg-zinc-500 dark:text-white p-2 rounded mt-2">
+              {subtitles}
+            </div>
+          )}
           {!unlocked && <div>Lås op ved at gå tættere på</div>}
         </div>
       </div>
