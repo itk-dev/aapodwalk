@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import PointOfInterest from "../points-of-interest/PointOfInterest";
@@ -17,6 +17,11 @@ function RoutePage() {
   const [latitude, setLatitude] = useState(0);
   const [longitude, setLongitude] = useState(0);
   const [destinationName, setDestinationName] = useState(null);
+  const [userLatitude, setUserLatitude] = useState(0);
+  const [userLongitude, setUserLongitude] = useState(0);
+  const { audio } = useContext(AudioContext);
+  let handlerAvailable = true;
+  let locationHandlerAvailable = true;
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
     navigator.userAgent.match(/AppleWebKit/);
@@ -91,6 +96,9 @@ function RoutePage() {
   }, [pointsOfInterest]);
 
   if (selectedRoute === null) return null;
+
+  console.log(audio);
+
   return (
     <div className="flex flex-col place-items-start pb-20">
       <BackButton>Afslut</BackButton>
