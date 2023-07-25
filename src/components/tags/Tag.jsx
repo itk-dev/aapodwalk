@@ -5,11 +5,11 @@ function Tag({ name, numberOfRoutes, id }) {
   if (numberOfRoutes === 0) return null;
   return (
     <Link
-      className="block bg-emerald-500 mb-3 rounded-md p-3"
+      className="block bg-emerald-400 dark:bg-emerald-800 mb-3 rounded-md p-3"
       to={`/tag/${id}`}
     >
       <span className="block text-lg font-bold">{name}</span>
-      <span className="text-s text-zinc-600">{numberOfRoutes} historier</span>
+      <span className="text-s text-zinc-600 dark:text-zinc-300">{numberOfRoutes} historier</span>
     </Link>
   );
 }
