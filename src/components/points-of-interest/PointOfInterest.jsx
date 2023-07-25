@@ -85,10 +85,17 @@ function PointOfInterest({
     if (isExperienceIdInLocalstorage()) {
       setUnlocked(true);
     }
+
   }, []);
 
   return (
-    <div className="flex items-start gap-4 p-4">
+    <div
+      className={
+        unlocked
+          ? `flex items-start gap-4 p-4`
+          : `flex items-start gap-4 p-4 opacity-10`
+      }
+    >
       <Image src={image} className="w-24 h-24 rounded-full" />
       <div className="flex flex-col">
         <h2 className="text-zinc-900 text-sm font-bold dark:text-zinc-200 my-3">

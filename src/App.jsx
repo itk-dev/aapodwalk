@@ -10,8 +10,6 @@ import TagsList from "./components/tags/TagsList";
 import RoutePage from "./components/routes/RoutePage";
 import ApiEndpointContext from "./context/api-endpoint-context";
 
-// import "./App.css";
-
 function App() {
   const [geolocationAvailable, setGeolocationAvailable] = useState();
   const [lat, setLat] = useState(null);

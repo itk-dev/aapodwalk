@@ -5,6 +5,7 @@ import PointOfInterest from "../points-of-interest/PointOfInterest";
 import { getAngleFromLocationToDestination } from "../../util/helper";
 import BackButton from "../BackButton";
 import { ReactComponent as LocationArrow } from "../../icons/location-arrow-solid.svg";
+import AudioContext from "../../context/audio-context";
 
 function RoutePage() {
   const { id } = useParams();
@@ -96,8 +97,6 @@ function RoutePage() {
   }, [pointsOfInterest]);
 
   if (selectedRoute === null) return null;
-
-  console.log(audio);
 
   return (
     <div className="flex flex-col place-items-start pb-20">
