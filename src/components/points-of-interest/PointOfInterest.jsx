@@ -20,7 +20,7 @@ function PointOfInterest({
     subtitles,
     podcast,
     IFrameUrl,
-  },
+  }, index
 }) {
   const { lat, long } = useContext(LatLongContext);
   const { setSource } = useContext(AudioContext);
@@ -85,17 +85,19 @@ function PointOfInterest({
     if (isExperienceIdInLocalstorage()) {
       setUnlocked(true);
     }
-
   }, []);
 
   return (
     <div
       className={
         unlocked
-          ? `flex items-start gap-4 p-4`
-          : `flex items-start gap-4 p-4 opacity-10`
+          ? `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg`
+          : `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg opacity-10`
       }
     >
+      <div className="absolute -left-3 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
+        {index}
+      </div>
       <Image src={image} className="w-24 h-24 rounded-full" />
       <div className="flex flex-col">
         <h2 className="text-zinc-900 text-sm font-bold dark:text-zinc-200 my-3">
@@ -146,18 +148,6 @@ function PointOfInterest({
           {!unlocked && <div>Lås op ved at gå tættere på</div>}
         </div>
       </div>
-      {unlocked && (
-        <button type="button" onClick={() => setSource(podcast)}>
-          Play
-        </button>
-      )}
-      {unlocked && (
-        <button type="button" onClick={() => setViewSubtitles(!viewSubtitles)}>
-          Se tekst
-        </button>
-      )}
-      {!unlocked && <div>kan ikke tilgås</div>}
-      {viewSubtitles && <div>{subtitles}</div>}
       {unlocked && IFrameUrl && <PodcastWrapper IFrameUrl={IFrameUrl} />}
     </div>
   );
