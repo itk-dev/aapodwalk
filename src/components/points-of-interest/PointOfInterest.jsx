@@ -159,7 +159,7 @@ function PointOfInterest({
       {!unlocked && <div>kan ikke tilgås</div>}
       {viewSubtitles && <div>{subtitles}</div>}
       {unlocked && IFrameUrl && <PodcastWrapper IFrameUrl={IFrameUrl} />}
-    </>
+    </div>
   );
 }
 
