@@ -48,6 +48,24 @@ export function getAngleFromLocationToDestination(lat1, long1, lat2, long2) {
   return bearing;
 }
 
+export function isExperienceIdInLocalstorage(experienceId) {
+  const currentLocalStorage = localStorage.getItem("unlocked-experiences");
+  if (currentLocalStorage) {
+    const updateLocalStorage = JSON.parse(currentLocalStorage);
+    if (updateLocalStorage.includes(experienceId)) {
+      return true;
+    }
+  }
+  return false;
+}
+
+export function getRelevantDestinationPoint(pointsOfInterest) {
+  const poiArray = pointsOfInterest.filter((poi) => {
+    return !isExperienceIdInLocalstorage(poi.id);
+  });
+  return poiArray;
+}
+
 export function getIdFromApiEndpoint(endpoint) {
   const regex = /[^\/]+$/;
   // Todo create utils file

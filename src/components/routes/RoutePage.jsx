@@ -2,7 +2,7 @@ import { React, useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import PointOfInterest from "../points-of-interest/PointOfInterest";
-import { getAngleFromLocationToDestination } from "../../util/helper";
+import { getAngleFromLocationToDestination, getRelevantDestinationPoint } from "../../util/helper";
 import BackButton from "../BackButton";
 import { ReactComponent as LocationArrow } from "../../icons/location-arrow-solid.svg";
 import AudioContext from "../../context/audio-context";
@@ -86,12 +86,17 @@ function RoutePage() {
       );
     }
   }, []);
-  useEffect(() => {
+
+  const destinationChanged = () => {
     if (pointsOfInterest) {
-      setLatitude(pointsOfInterest[0].latitude);
-      setLongitude(pointsOfInterest[0].longitude);
-      setDestinationName(pointsOfInterest[0].name);
+      const destinationPoint = getRelevantDestinationPoint(pointsOfInterest);
+      setLatitude(destinationPoint[0].latitude);
+      setLongitude(destinationPoint[0].longitude);
+      setDestinationName(destinationPoint[0].name);
     }
+  }
+  useEffect(() => {
+    destinationChanged();
   }, [pointsOfInterest]);
 
   if (selectedRoute === null) return null;
