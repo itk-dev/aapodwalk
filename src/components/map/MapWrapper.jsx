@@ -11,11 +11,12 @@ import TileWMS from "ol/source/TileWMS";
 import Projection from "ol/proj/Projection";
 import Proj4 from "proj4";
 import { register } from "ol/proj/proj4";
+import { latlngToUTM } from "../../util/helper";
 import ApiEndpointContext from "../../context/api-endpoint-context";
 import "./map-wrapper.css";
 
 // Todo style this......
-function MapWrapper({ mapData, goToView }) {
+function MapWrapper({ mapData, goToView, hideMapOverlay }) {
   const { mapUsername, mapPassword } = useContext(ApiEndpointContext);
   const [map, setMap] = useState();
   const [vectorLayer, setVectorLayer] = useState(null);
@@ -29,10 +30,7 @@ function MapWrapper({ mapData, goToView }) {
     mapData.length > 0 ? mapData[0].northing : 574969.6851;
   const eastingInitial = mapData.length > 0 ? mapData[0].easting : 6223950.2116;
   const view = new View({
-    minZoom: 6,
-    maxZoom: 20,
     center: [northingInitial, eastingInitial],
-    zoom: 6,
     resolutions: [
       1638.4, 819.2, 409.6, 204.8, 102.4, 51.2, 25.6, 12.8, 6.4, 3.2, 1.6, 0.8,
       0.4, 0.2, 0.1,
@@ -63,13 +61,18 @@ function MapWrapper({ mapData, goToView }) {
 
   useEffect(() => {
     if (goToView && map) {
-      const { easting, northing } = goToView;
+      const { centerlatitude, centerlongitude, zoomValue } = goToView;
+      const [destinationLat, destinationLong] = latlngToUTM(
+        centerlatitude,
+        centerlongitude
+      );
       map.getView().animate({
-        center: [northing, easting],
+        center: [destinationLat, destinationLong],
+        zoom: zoomValue,
         duration: 800,
       });
     }
-  }, [goToView]);
+  }, [goToView, map, hideMapOverlay]);
 
   useEffect(() => {
     if (!mapData) {
@@ -161,6 +164,7 @@ function MapWrapper({ mapData, goToView }) {
         layers,
         target: mapElement.current,
         view,
+        controls: [],
       });
 
       // save map and vector layer references to state
@@ -175,7 +179,9 @@ function MapWrapper({ mapData, goToView }) {
       <div ref={mapElement} className="map rounded-xl overflow-hidden" id="map">
         <div id="tooltip" className="tooltip" />
       </div>
-      <div className="map-color-overlay absolute left-0 top-0 bottom-0 right-0 w-screen h-screen bg-zinc-400 dark:bg-zinc-800 opacity-70 dark:opacity-80" />
+      {!hideMapOverlay && (
+        <div className="map-color-overlay absolute left-0 top-0 bottom-0 right-0 w-screen h-screen bg-zinc-400 dark:bg-zinc-800 opacity-70 dark:opacity-80" />
+      )}
     </div>
   );
 }

@@ -3,7 +3,7 @@ import MapWrapper from "../map/MapWrapper";
 import { getFeaturesForMap } from "../../util/helper";
 import BackButton from "../BackButton";
 
-function SelectedRoute({ selectedRoute }) {
+function SelectedRoute({ selectedRoute, hideMapOverlay }) {
   const [featuresForMap, setFeaturesForMap] = useState(null);
 
   useEffect(() => {
@@ -18,7 +18,11 @@ function SelectedRoute({ selectedRoute }) {
 
   return (
     <>
-      <MapWrapper mapData={featuresForMap} goToView={featuresForMap[0]} />
+      <MapWrapper
+        mapData={featuresForMap}
+        goToView={selectedRoute}
+        hideMapOverlay={hideMapOverlay}
+      />
       <BackButton>Kategorier</BackButton>
       <div className="relative ml-2">
         {/* TODO: show the real category instead of "Valgt kategory" */}
@@ -53,6 +57,41 @@ function SelectedRoute({ selectedRoute }) {
           </label>
         </div>
       </div>
+      {!hideMapOverlay && (
+        <div className="relative ml-2">
+          <h1 className="text-4xl font-bold mt-10 mb-5">
+            {selectedRoute.name}
+          </h1>
+          <div className="info-box bg-zinc-100 dark:bg-zinc-700 rounded p-3 w-32">
+            <label htmlFor="distance" className="block mb-1">
+              <span className="text-xs">
+                <b>Distance</b>
+                <br /> {selectedRoute.distance}
+              </span>
+              {/* <div id="distance" className="text-lg">
+              
+            </div> */}
+            </label>
+            <label htmlFor="poi" className="block mb-1">
+              <span className="text-xs">
+                <b>Dele</b> <br /> {selectedRoute.partcount}
+              </span>
+              <div id="poi" className="text-lg">
+                {selectedRoute.pointsOfInterest.length}
+              </div>
+            </label>
+            {/* todo skeleton screen (I think I recall tailwind having these ootb) or some wait indication */}
+            {/* todo how to sum up podcasts */}
+            <label htmlFor="length" className="block">
+              <span className="text-xs">
+                <b>Afspilningstid</b> <br /> {selectedRoute.totalduration} min
+              </span>
+              {/* todo */}
+              <div id="length" className="text-lg" />
+            </label>
+          </div>
+        </div>
+      )}
     </>
   );
 }

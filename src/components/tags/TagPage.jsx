@@ -18,6 +18,7 @@ function TagPage() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const { data } = useFetch(`tags/${id}`);
   const [displayedRoutes, setDisplayedRoutes] = useState(null);
+  const [hideMapOverlay, setHideMapOverlay] = useState(false);
   const [idArray, setIdArray] = useState(null);
 
   useEffect(() => {
@@ -51,8 +52,9 @@ function TagPage() {
         displayedRoutes={displayedRoutes}
         onCarouselChange={onCarouselChange}
         selectedRoute={selectedRoute}
+        hideMapOverlay={hideMapOverlay}
       />
-      <div className="absolute bottom-6 left-6 md:left-auto right-6 flex flex-col gap-3">
+      {/* <div className="absolute bottom-6 left-6 md:left-auto right-6 flex flex-col gap-3">
         <div id="buttons" className="flex gap-3 justify-end">
           <button
             className="p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
@@ -77,7 +79,14 @@ function TagPage() {
           routes={displayedRoutes}
           onCarouselChange={onCarouselChange}
         />
-      </div>
+      </div> */}
+      <RouteCarousel
+        routes={displayedRoutes}
+        onCarouselChange={onCarouselChange}
+        hideMapOverlay={hideMapOverlay}
+        setHideMapOverlay={setHideMapOverlay}
+        selectedRoute={selectedRoute}
+      />
     </>
   );
 }

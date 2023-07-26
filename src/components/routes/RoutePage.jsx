@@ -2,7 +2,10 @@ import { React, useEffect, useState, useContext } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import PointOfInterest from "../points-of-interest/PointOfInterest";
-import { getAngleFromLocationToDestination, getRelevantDestinationPoint } from "../../util/helper";
+import {
+  getAngleFromLocationToDestination,
+  getRelevantDestinationPoint,
+} from "../../util/helper";
 import BackButton from "../BackButton";
 import { ReactComponent as LocationArrow } from "../../icons/location-arrow-solid.svg";
 import AudioContext from "../../context/audio-context";
@@ -21,8 +24,6 @@ function RoutePage() {
   const [userLatitude, setUserLatitude] = useState(0);
   const [userLongitude, setUserLongitude] = useState(0);
   const { audio } = useContext(AudioContext);
-  const handlerAvailable = true;
-  const locationHandlerAvailable = true;
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
     navigator.userAgent.match(/AppleWebKit/);
@@ -94,7 +95,7 @@ function RoutePage() {
       setLongitude(destinationPoint[0].longitude);
       setDestinationName(destinationPoint[0].name);
     }
-  }
+  };
   useEffect(() => {
     destinationChanged();
   }, [pointsOfInterest]);
@@ -112,6 +113,7 @@ function RoutePage() {
               pointOfInterest={pointOfInterest}
               key={pointOfInterest.id}
               index={index + 1}
+              destinationChanged={destinationChanged}
             />
           ))}
       </div>

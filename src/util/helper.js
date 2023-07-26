@@ -92,7 +92,7 @@ export function uniqueArrayById(list) {
   return uniqueArrayToReturn;
 }
 
-function latlngToUTM(lat, long) {
+export function latlngToUTM(lat, long) {
   const parsedLat = parseFloat(lat);
   const parsedLong = parseFloat(long);
   const wgs84 = "+proj=longlat +ellps=WGS84 +datum=WGS84 +no_defs";
