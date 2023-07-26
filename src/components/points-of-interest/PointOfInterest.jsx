@@ -85,7 +85,6 @@ function PointOfInterest({
     if (isExperienceIdInLocalstorage()) {
       setUnlocked(true);
     }
-
   }, []);
 
   return (
@@ -146,18 +145,6 @@ function PointOfInterest({
           {!unlocked && <div>Lås op ved at gå tættere på</div>}
         </div>
       </div>
-      {unlocked && (
-        <button type="button" onClick={() => setSource(podcast)}>
-          Play
-        </button>
-      )}
-      {unlocked && (
-        <button type="button" onClick={() => setViewSubtitles(!viewSubtitles)}>
-          Se tekst
-        </button>
-      )}
-      {!unlocked && <div>kan ikke tilgås</div>}
-      {viewSubtitles && <div>{subtitles}</div>}
       {unlocked && IFrameUrl && <PodcastWrapper IFrameUrl={IFrameUrl} />}
     </div>
   );
