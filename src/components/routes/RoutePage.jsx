@@ -1,4 +1,4 @@
-import { React, useEffect, useState, useContext } from "react";
+import { React, useEffect, useState, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import PointOfInterest from "../points-of-interest/PointOfInterest";
@@ -12,6 +12,7 @@ import AudioContext from "../../context/audio-context";
 
 function RoutePage() {
   const { id } = useParams();
+  const bottomRef = useRef(null);
   const { data } = useFetch(`routes/${id}`);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [pointsOfInterest, setPointsOfInterest] = useState(null);
@@ -53,6 +54,12 @@ function RoutePage() {
       );
     }, 3000);
   }
+
+  useEffect(() => {
+    if (pointsOfInterest && bottomRef) {
+      bottomRef.current?.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [bottomRef, pointsOfInterest]);
 
   function deviceOrientationHandler(e) {
     setTimeout(() => {
@@ -103,7 +110,7 @@ function RoutePage() {
   if (selectedRoute === null) return null;
 
   return (
-    <div className="flex flex-col place-items-start pb-20">
+    <div className="flex flex-col place-items-start pb-28">
       <BackButton>Afslut</BackButton>
       <h1 className="text-xl font-bold my-3">{selectedRoute.name}</h1>
       <div className="relative w-full rounded-lg flex flex-col-reverse gap-1">
@@ -163,6 +170,7 @@ function RoutePage() {
           )}
         </div>
       </div>
+      <div ref={bottomRef} />
     </div>
   );
 }
