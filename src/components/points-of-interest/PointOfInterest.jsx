@@ -20,7 +20,8 @@ function PointOfInterest({
     subtitles,
     podcast,
     IFrameUrl,
-  }, index
+  },
+  index,
 }) {
   const { lat, long } = useContext(LatLongContext);
   const { setSource } = useContext(AudioContext);
@@ -141,7 +142,7 @@ function PointOfInterest({
             )}
           </div>
           {viewSubtitles && (
-            <div className="bg-zinc-200 text-zinc-800 dark:bg-zinc-500 dark:text-white p-2 rounded mt-2">
+            <div className="bg-zinc-200 text-zinc-800 dark:bg-zinc-600 dark:text-white p-2 rounded mt-2">
               {subtitles}
             </div>
           )}

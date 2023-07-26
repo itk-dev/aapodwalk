@@ -21,8 +21,8 @@ function RoutePage() {
   const [userLatitude, setUserLatitude] = useState(0);
   const [userLongitude, setUserLongitude] = useState(0);
   const { audio } = useContext(AudioContext);
-  let handlerAvailable = true;
-  let locationHandlerAvailable = true;
+  const handlerAvailable = true;
+  const locationHandlerAvailable = true;
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
     navigator.userAgent.match(/AppleWebKit/);
@@ -102,20 +102,24 @@ function RoutePage() {
       <h1 className="text-xl font-bold my-3">{selectedRoute.name}</h1>
       <div className="relative w-full rounded-lg flex flex-col-reverse gap-1">
         {pointsOfInterest &&
-          pointsOfInterest
-            .map((pointOfInterest, index) => (
-              <PointOfInterest
-                pointOfInterest={pointOfInterest}
-                key={pointOfInterest.id}
-                index={index + 1}
-              />
-            ))}
+          pointsOfInterest.map((pointOfInterest, index) => (
+            <PointOfInterest
+              pointOfInterest={pointOfInterest}
+              key={pointOfInterest.id}
+              index={index + 1}
+            />
+          ))}
       </div>
       {/* TODO: Make room for audio player below when playing */}
       <div className="fixed left-3 bottom-3 right-3 bg-zinc-200 dark:bg-zinc-700 flex gap-3 rounded-lg p-3 pb-15 divide-x dark:divide-zinc-200/5">
         <div>
-          <span className="block text-sm text-bold">Afstand til del 1</span>
-          <span className="block">180 meter</span>
+          <div className="text-sm text-bold">
+            Afstand til del
+            <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
+              1
+            </span>
+          </div>
+          <div className="">180 meter</div>
         </div>
         <div className="pl-3">
           {/* TODO: Make this check for compass */}
