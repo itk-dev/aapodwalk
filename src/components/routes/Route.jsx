@@ -2,7 +2,6 @@ import { React, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import Image from "../Image";
-import { ReactComponent as CirclePlay } from "../../icons/circle-play-solid.svg";
 
 function Route({ id }) {
   const { data } = useFetch(`routes/${id}`);
@@ -22,7 +21,6 @@ function Route({ id }) {
       to={`/route/${id}`}
     >
       <div className="w-32 flex justify-center place-items-center">
-        <CirclePlay className="absolute w-6" />
         <Image className="object-cover h-full" src={route.image} />
       </div>
       <div className="flex-initial text-left leading-none p-3">
