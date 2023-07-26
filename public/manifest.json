@@ -1,5 +1,5 @@
 {
-  "short_name": "aapodwalk",
+  "short_name": "Podwalk",
   "name": "A cool app for something with podcasts and something with walks",
   "icons": [
     {
@@ -10,6 +10,6 @@
   ],
   "start_url": ".",
   "display": "standalone",
-  "theme_color": "#000000",
+  "theme_color": "#27272A",
   "background_color": "#ffffff"
 }
