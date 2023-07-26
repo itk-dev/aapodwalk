@@ -7,6 +7,8 @@ import {
   getIdsFromApiEndpoints,
 } from "../../util/helper";
 import RouteCarousel from "../routes/RouteCarousel";
+import { ReactComponent as IconCirclePlay } from "../../icons/circle-play-solid.svg";
+import { ReactComponent as IconMap } from "../../icons/map-solid.svg";
 
 // A tag page displays routes connected to the tag-id
 function TagPage() {
@@ -50,10 +52,32 @@ function TagPage() {
         onCarouselChange={onCarouselChange}
         selectedRoute={selectedRoute}
       />
-      <RouteCarousel
-        routes={displayedRoutes}
-        onCarouselChange={onCarouselChange}
-      />
+      <div className="absolute bottom-6 left-6 md:left-auto right-6 flex flex-col gap-3">
+        <div id="buttons" className="flex gap-3 justify-end">
+          <button
+            className="p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
+            type="button"
+            // TODO: Change onClick to toggle map layer
+            // onClick={() => setSource(podcast)}
+          >
+            <IconMap className="w-6 h-6" />
+            <span className="sr-only">Vis kortet</span>
+          </button>
+          <button
+            className="p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
+            type="button"
+            // TODO: Change onClick to go to selected route
+            // onClick={() => setSource(podcast)}
+          >
+            <IconCirclePlay className="w-6 h-6" />
+            <span className="sr-only">Afspil</span>
+          </button>
+        </div>
+        <RouteCarousel
+          routes={displayedRoutes}
+          onCarouselChange={onCarouselChange}
+        />
+      </div>
     </>
   );
 }

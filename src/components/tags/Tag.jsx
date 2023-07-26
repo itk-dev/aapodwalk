@@ -9,7 +9,9 @@ function Tag({ name, numberOfRoutes, id }) {
       to={`/tag/${id}`}
     >
       <span className="block text-lg font-bold">{name}</span>
-      <span className="text-s text-zinc-600 dark:text-zinc-300">{numberOfRoutes} historier</span>
+      <span className="text-s text-zinc-600 dark:text-zinc-300">
+        {numberOfRoutes} historier
+      </span>
     </Link>
   );
 }

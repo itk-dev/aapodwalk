@@ -17,15 +17,15 @@ function Route({ id }) {
 
   return (
     <Link
-      className="bg-zinc-100 dark:bg-zinc-700 flex relative"
+      className="bg-zinc-100 dark:bg-zinc-700 flex flex-row relative h-32"
       to={`/route/${id}`}
     >
-      <div className="w-32 flex justify-center place-items-center">
+      <div className="flex-none w-36">
         <Image className="object-cover h-full" src={route.image} />
       </div>
-      <div className="flex-initial text-left leading-none p-3">
-        <span className="block mb-1">{route.name}</span>
-        <span className="text-xs ">{route.description}</span>
+      <div className="flex-initial text-left leading-none py-3 pl-3 pr-6 mb-6">
+        <h2 className="mb-2 font-bold">{route.name}</h2>
+        <div className="text-xs line-clamp-3">{route.description}</div>
       </div>
     </Link>
   );
