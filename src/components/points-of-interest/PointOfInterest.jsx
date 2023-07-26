@@ -21,6 +21,7 @@ function PointOfInterest({
     podcast,
     IFrameUrl,
   },
+  index,
 }) {
   const { lat, long } = useContext(LatLongContext);
   const { setSource } = useContext(AudioContext);
@@ -91,10 +92,13 @@ function PointOfInterest({
     <div
       className={
         unlocked
-          ? `flex items-start gap-4 p-4`
-          : `flex items-start gap-4 p-4 opacity-10`
+          ? `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg`
+          : `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg opacity-10`
       }
     >
+      <div className="absolute -left-3 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
+        {index}
+      </div>
       <Image src={image} className="w-24 h-24 rounded-full" />
       <div className="flex flex-col">
         <h2 className="text-zinc-900 text-sm font-bold dark:text-zinc-200 my-3">
@@ -138,7 +142,7 @@ function PointOfInterest({
             )}
           </div>
           {viewSubtitles && (
-            <div className="bg-zinc-200 text-zinc-800 dark:bg-zinc-500 dark:text-white p-2 rounded mt-2">
+            <div className="bg-zinc-200 text-zinc-800 dark:bg-zinc-600 dark:text-white p-2 rounded mt-2">
               {subtitles}
             </div>
           )}

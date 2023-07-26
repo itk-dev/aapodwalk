@@ -21,8 +21,8 @@ function RoutePage() {
   const [userLatitude, setUserLatitude] = useState(0);
   const [userLongitude, setUserLongitude] = useState(0);
   const { audio } = useContext(AudioContext);
-  let handlerAvailable = true;
-  let locationHandlerAvailable = true;
+  const handlerAvailable = true;
+  const locationHandlerAvailable = true;
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
     navigator.userAgent.match(/AppleWebKit/);
@@ -86,10 +86,8 @@ function RoutePage() {
       );
     }
   }, []);
-
   useEffect(() => {
     if (pointsOfInterest) {
-      console.log(pointsOfInterest);
       setLatitude(pointsOfInterest[0].latitude);
       setLongitude(pointsOfInterest[0].longitude);
       setDestinationName(pointsOfInterest[0].name);
@@ -102,48 +100,60 @@ function RoutePage() {
     <div className="flex flex-col place-items-start pb-20">
       <BackButton>Afslut</BackButton>
       <h1 className="text-xl font-bold my-3">{selectedRoute.name}</h1>
-      <div className="overflow-y-auto h-4/6 relative w-full bg-white dark:bg-zinc-700 dark:highlight-white/5 shadow-lg ring-1 ring-black/5 rounded-lg flex flex-col divide-y dark:divide-zinc-200/5">
+      <div className="relative w-full rounded-lg flex flex-col-reverse gap-1">
         {pointsOfInterest &&
-          pointsOfInterest
-            .toReversed()
-            .map((pointOfInterest) => (
-              <PointOfInterest
-                pointOfInterest={pointOfInterest}
-                key={pointOfInterest.id}
-              />
-            ))}
+          pointsOfInterest.map((pointOfInterest, index) => (
+            <PointOfInterest
+              pointOfInterest={pointOfInterest}
+              key={pointOfInterest.id}
+              index={index + 1}
+            />
+          ))}
       </div>
       {/* TODO: Make room for audio player below when playing */}
       <div className="fixed left-3 bottom-3 right-3 bg-zinc-200 dark:bg-zinc-700 flex gap-3 rounded-lg p-3 pb-15 divide-x dark:divide-zinc-200/5">
         <div>
-          <span className="block text-sm text-bold">Afstand til del 1</span>
-          <span className="block">180 meter</span>
-          <button
-            className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
-            type="button"
-            onClick={() => startWaypointer()}
-          >
-            Vis mig vej
-          </button>
-        </div>
-        <div className="pl-3">
-          <div className="flex justify-between mb-3">
-            <span className="text-sm text-bold">Retning</span>
-            <span className="w-1/2">
-              <LocationArrow
-                className="inline w-5"
-                style={{
-                  transform: `rotate(${-rotation}deg)`,
-                }}
-              />
+          <div className="text-sm text-bold">
+            Afstand til del
+            <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
+              1
             </span>
           </div>
-          <div className="text-xs text-zinc-500">
-            Lat: {userLatitude}/{latitude}
-          </div>
-          <div className="text-xs text-zinc-500">
-            Long: {userLongitude}/{longitude}
-          </div>
+          <div className="">180 meter</div>
+        </div>
+        <div className="pl-3">
+          {/* TODO: Make this check for compass */}
+          {!location && (
+            <button
+              className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
+              type="button"
+              onClick={() => startWaypointer()}
+            >
+              Vis mig vej
+            </button>
+          )}
+          {/* TODO: Make this check for compass */}
+          {location && (
+            <div>
+              <div className="flex justify-between mb-3">
+                <span className="text-sm text-bold">Retning</span>
+                <span className="w-1/2">
+                  <LocationArrow
+                    className="inline w-5"
+                    style={{
+                      transform: `rotate(${-rotation}deg)`,
+                    }}
+                  />
+                </span>
+              </div>
+              <div className="text-xs text-zinc-500">
+                Lat: {userLatitude}/{latitude}
+              </div>
+              <div className="text-xs text-zinc-500">
+                Long: {userLongitude}/{longitude}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
