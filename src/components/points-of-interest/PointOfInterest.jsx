@@ -1,6 +1,9 @@
 import { React, useState, useEffect, useContext } from "react";
 import LatLongContext from "../../context/latitude-longitude-context";
-import { getDistanceBetweenCoordinates } from "../../util/helper";
+import {
+  getDistanceBetweenCoordinates,
+  isExperienceIdInLocalstorage,
+} from "../../util/helper";
 import PodcastWrapper from "./PodcastWrapper";
 import PermissionContext from "../../context/permission-context";
 import AudioContext from "../../context/audio-context";
@@ -22,14 +25,16 @@ function PointOfInterest({
     IFrameUrl,
   },
   index,
+  destinationChanged,
+  nextUnlockableId,
 }) {
   const { lat, long } = useContext(LatLongContext);
   const { setSource } = useContext(AudioContext);
   const [proximity, setProximity] = useState(null);
-  const [unlocked, setUnlocked] = useState(false);
   const [viewSubtitles, setViewSubtitles] = useState(false);
-
+  const [unlocked, setUnlocked] = useState(false);
   const { geolocationAvailable } = useContext(PermissionContext);
+
   useEffect(() => {
     if (
       latitude &&
@@ -45,23 +50,14 @@ function PointOfInterest({
         longitude
       );
       setProximity(distance);
-      setUnlocked(distance < 5); // todo magic number/get from config
+      if (!unlocked && id === nextUnlockableId) {
+        setUnlocked(distance < 51); // todo magic number/get from config
+      }
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
 
-  function isExperienceIdInLocalstorage() {
-    const currentLocalStorage = localStorage.getItem("unlocked-experiences");
-    if (currentLocalStorage) {
-      const updateLocalStorage = JSON.parse(currentLocalStorage);
-      if (updateLocalStorage.includes(id)) {
-        return true;
-      }
-    }
-    return false;
-  }
-
   useEffect(() => {
-    if (isExperienceIdInLocalstorage()) {
+    if (isExperienceIdInLocalstorage(id)) {
       return;
     }
     if (unlocked) {
@@ -75,6 +71,7 @@ function PointOfInterest({
           "unlocked-experiences",
           JSON.stringify(updateLocalStorage)
         );
+        destinationChanged();
       } else {
         // add new "unlocked steps"
         localStorage.setItem("unlocked-experiences", JSON.stringify([id]));
@@ -83,7 +80,7 @@ function PointOfInterest({
   }, [unlocked]);
 
   useEffect(() => {
-    if (isExperienceIdInLocalstorage()) {
+    if (isExperienceIdInLocalstorage(id)) {
       setUnlocked(true);
     }
   }, []);
@@ -93,7 +90,7 @@ function PointOfInterest({
       className={
         unlocked
           ? `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg`
-          : `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg opacity-10`
+          : `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg opacity-30`
       }
     >
       <div className="absolute -left-3 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
