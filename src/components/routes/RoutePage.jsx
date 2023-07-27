@@ -158,12 +158,11 @@ function RoutePage() {
 
   if (selectedRoute === null) return null;
 
-
   return (
     <div className="flex flex-col place-items-start pb-36">
       <BackButton>Afslut</BackButton>
       <h1 className="text-xl font-bold my-3">{selectedRoute.name}</h1>
-      <div className="relative w-full rounded-lg flex flex-col-reverse gap-1">
+      <div className="relative w-full rounded-lg flex flex-col-reverse gap-1 pl-3">
         {pointsOfInterest &&
           pointsOfInterest.map((pointOfInterest, index) => (
             <PointOfInterest
@@ -176,12 +175,13 @@ function RoutePage() {
             />
           ))}
       </div>
-      <div className="fixed flex flex-col left-3 bottom-3 right-3 bg-zinc-200 dark:bg-zinc-700 gap-3 rounded-lg p-3 pb-15 divide-x dark:divide-zinc-200/5">
+      <div className="fixed flex flex-col left-3 bottom-0 right-3 bg-zinc-200 dark:bg-zinc-900 gap-3 rounded-t-lg p-3 pb-15 divide-y dark:divide-zinc-200/5">
         {routeComplete && <h3>You completed the route. Congratulations!</h3>}
         {!routeComplete && (
           <div className="flex flex-row justify-between">
             <div>
-              <div className="text-sm text-bold">
+              <p className="text-xs text-zinc-500">Find vej til næste del</p>
+              <div className="text-sm font-bold">
                 Afstand til del
                 <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
                   {destinationIndex + 1}
@@ -194,7 +194,7 @@ function RoutePage() {
             <div className="pl-3">
               {(!orientation || !angle) && (
                 <button
-                  className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
+                  className="bg-zinc-700 dark:bg-zinc-200 text-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
                   type="button"
                   onClick={() => startWaypointer()}
                 >
@@ -207,7 +207,7 @@ function RoutePage() {
                     <span className="text-sm text-bold mr-5">Retning</span>
                     <span className="w-1/2">
                       <LocationArrow
-                        className="inline w-5"
+                        className="inline w-10"
                         style={{
                           transform: `rotate(${-rotation}deg)`,
                         }}
@@ -220,14 +220,17 @@ function RoutePage() {
           </div>
         )}
 
-        <div>
-          <audio
-            className="w-full"
-            ref={audioRef}
-            controls
-            src={`${fileUrl}${source}`}
-          />
-        </div>
+        {source && audioRef && (
+          <div className="pt-2">
+            <p className="text-xs text-zinc-500">Igangværende afspilning</p>
+            {/* TODO: Get the real name instead of Pizza 1 */}
+            <p className="text-sm font-bold ">Pizza 1</p>
+            <audio className="w-full" ref={audioRef} controls>
+              <source src={`${fileUrl}${source}`} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
+          </div>
+        )}
       </div>
       <div ref={bottomRef} />
     </div>

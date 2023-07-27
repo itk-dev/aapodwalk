@@ -50,7 +50,7 @@ function PointOfInterest({
       );
       setProximity(distance);
       if (!unlocked && id === nextUnlockableId) {
-        setUnlocked(distance < 50); // todo magic number/get from config
+        setUnlocked(distance < 51); // todo magic number/get from config
       }
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
