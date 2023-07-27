@@ -28,10 +28,12 @@ function RoutePage() {
   const [destinationDistance, setDestinationDistance] = useState(null);
   const [destinationIndex, setDestinationIndex] = useState(0);
   const [nextUnlockableId, setNextUnlockableId] = useState(null);
+  const [routeComplete, setRouteComplete] = useState(false);
   const [source, setSource] = useState(null);
   const { userLatitude, userLongitude } = useContext(LatLongContext);
   const { geolocationAvailable } = useContext(PermissionContext);
   const audioRef = useRef();
+  const { fileUrl } = useContext(ApiEndpointContext);
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
     navigator.userAgent.match(/AppleWebKit/);
@@ -137,6 +139,9 @@ function RoutePage() {
   const destinationChanged = () => {
     if (pointsOfInterest) {
       const destinationPoint = getRelevantDestinationPoint(pointsOfInterest);
+      if (destinationPoint.length === 0) {
+        return setRouteComplete(true);
+      }
       const index = pointsOfInterest.findIndex(
         (poi) => destinationPoint[0].id === poi.id
       );
@@ -145,6 +150,7 @@ function RoutePage() {
       setDestinationLatitude(destinationPoint[0].latitude);
       setDestinationLongitude(destinationPoint[0].longitude);
     }
+    return false;
   };
   useEffect(() => {
     destinationChanged();
@@ -152,10 +158,9 @@ function RoutePage() {
 
   if (selectedRoute === null) return null;
 
-  const { fileUrl } = useContext(ApiEndpointContext);
 
   return (
-    <div className="flex flex-col place-items-start pb-28">
+    <div className="flex flex-col place-items-start pb-36">
       <BackButton>Afslut</BackButton>
       <h1 className="text-xl font-bold my-3">{selectedRoute.name}</h1>
       <div className="relative w-full rounded-lg flex flex-col-reverse gap-1">
@@ -171,49 +176,50 @@ function RoutePage() {
             />
           ))}
       </div>
-      {/* TODO: Make room for audio player below when playing */}
       <div className="fixed flex flex-col left-3 bottom-3 right-3 bg-zinc-200 dark:bg-zinc-700 gap-3 rounded-lg p-3 pb-15 divide-x dark:divide-zinc-200/5">
-        <div className="flex flex-row justify-between">
-          <div>
-            <div className="text-sm text-bold">
-              Afstand til del
-              <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
-                {destinationIndex + 1}
-              </span>
-            </div>
-            <div className="">
-              {destinationDistance && `${destinationDistance} meter`}
-            </div>
-          </div>
-          <div className="pl-3">
-            {/* TODO: Make this check for compass */}
-            {(!orientation || !angle) && (
-              <button
-                className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
-                type="button"
-                onClick={() => startWaypointer()}
-              >
-                Vis mig vej
-              </button>
-            )}
-            {/* TODO: Make this check for compass */}
-            {orientation && angle && (
-              <div>
-                <div className="flex justify-between">
-                  <span className="text-sm text-bold mr-5">Retning</span>
-                  <span className="w-1/2">
-                    <LocationArrow
-                      className="inline w-5"
-                      style={{
-                        transform: `rotate(${-rotation}deg)`,
-                      }}
-                    />
-                  </span>
-                </div>
+        {routeComplete && <h3>You completed the route. Congratulations!</h3>}
+        {!routeComplete && (
+          <div className="flex flex-row justify-between">
+            <div>
+              <div className="text-sm text-bold">
+                Afstand til del
+                <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
+                  {destinationIndex + 1}
+                </span>
               </div>
-            )}
+              <div className="">
+                {destinationDistance && `${destinationDistance} meter`}
+              </div>
+            </div>
+            <div className="pl-3">
+              {(!orientation || !angle) && (
+                <button
+                  className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
+                  type="button"
+                  onClick={() => startWaypointer()}
+                >
+                  Vis mig vej
+                </button>
+              )}
+              {orientation && angle && (
+                <div>
+                  <div className="flex justify-between">
+                    <span className="text-sm text-bold mr-5">Retning</span>
+                    <span className="w-1/2">
+                      <LocationArrow
+                        className="inline w-5"
+                        style={{
+                          transform: `rotate(${-rotation}deg)`,
+                        }}
+                      />
+                    </span>
+                  </div>
+                </div>
+              )}
+            </div>
           </div>
-        </div>
+        )}
+
         <div>
           <audio
             className="w-full"
