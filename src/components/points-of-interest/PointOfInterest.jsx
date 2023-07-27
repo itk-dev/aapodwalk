@@ -86,21 +86,17 @@ function PointOfInterest({
 
   return (
     <div
-      className={
-        unlocked
-          ? `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg`
-          : `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg opacity-30`
-      }
+      className={`relative flex items-start gap-4 p-2 rounded-lg ${unlocked ? `bg-zinc-200 dark:bg-zinc-600` : `bg-zinc-100 dark:bg-zinc-700` }`}
     >
-      <div className="absolute -left-3 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
+      <div className={`absolute -left-3 px-2 font-bold rounded-full text-sm ${unlocked ? `bg-emerald-700 text-zinc-100` : `bg-emerald-900 text-zinc-400` }`} >
         {index}
       </div>
-      <Image src={image} className="w-24 h-24 rounded-full" />
+      <Image src={image} className={`w-24 h-24 rounded-full ${!unlocked && `opacity-40` }` } />
       <div className="flex flex-col">
         <h2 className="text-zinc-900 text-sm font-bold dark:text-zinc-200 my-3">
           {name}
         </h2>
-        <div className="text-zinc-500 text-sm font-medium dark:text-zinc-400">
+        <div className="text-zinc-500 text-sm font-medium dark:text-zinc-200">
           {!unlocked && (
             <label htmlFor="distance">
               <RulerHorizontal className="w-4 inline mr-3" />
