@@ -1,0 +1,85 @@
+# This repository adheres to the publiccode.yml standard by including this
+# metadata file that makes public software easily discoverable.
+# More info at https://github.com/italia/publiccode.yml
+
+publiccodeYmlVersion: "0.3"
+name: Podwalk
+developmentStatus: concept
+softwareType: standalone/web
+applicationSuite: Podwalk
+url: "https://github.com/itk-dev/aapodwalk"
+landingURL: "https://mosaik.aarhuskommune.dk/login"
+softwareVersion: "1.0"
+releaseDate: "2023-08-01"
+platforms:
+  - web
+categories:
+  - content-management
+usedBy:
+  - Aarhus kommune
+intendedAudience:
+  scope:
+    - society
+  countries:
+    - da
+description:
+  en:
+    localisedName: Aarhus Podwalk
+    shortDescription: >
+      Podwalk makes it possible to get guided audio tours around a city. 
+    longDescription: >
+      Podwalk is created to give existing audio bits in the City of aarhus a life in the city in stead of only in our archieves. The webapp shows different routes and which points of interest you will cross. 
+    documentation: "https://github.com/itk-dev/aapodwalk"
+    apiDocumentation: "https://mosaic.srvitkstgweb01.itkdev.dk/api/v1"
+    features:
+      - Choose walk
+      - Hear walk
+      - Create net walk
+legal:
+  license: MPL-2.0
+  mainCopyrightOwner: City of Aarhus
+  repoOwner: City of Aarhus
+maintenance:
+  type: "contract"
+  contractors:
+    - name: "ITK development"
+      email: "itkdev@aarhus.dk"
+      website: "https://privatecompany.com"
+      until: "2024-01-01"
+  contacts:
+    - name: ITK development
+      email: "itkdev@aarhus.dk"
+      affiliation: Aarhus kommune
+      phone: "+45 41854181"
+localisation:
+  localisationReady: false
+  availableLanguages:
+    - da
+    - en
+dependsOn:
+  open:
+    - name: PHP
+      versionMin: ".1"
+      versionMax: "1.3"
+      optional: true
+    - name: PostgreSQL
+      version: "3.2"
+      optional: true
+  proprietary:
+    - name: Oracle
+      versionMin: "11.4"
+    - name: IBM SoftLayer
+it:
+  countryExtensionVersion: "0.2"
+  conforme:
+    lineeGuidaDesign: false
+    modelloInteroperabilita: false
+    misureMinimeSicurezza: true
+    gdpr: true
+  piattaforme:
+    spid: false
+    cie: false
+    anpr: false
+    pagopa: false
+  riuso:
+    codiceIPA:
