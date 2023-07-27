@@ -59,35 +59,36 @@ function SelectedRoute({ selectedRoute, hideMapOverlay }) {
       </div>
       {!hideMapOverlay && (
         <div className="relative ml-2">
-          <h1 className="text-4xl font-bold mt-10 mb-5">
+          {/* TODO: show the real category instead of "Valgt kategory" */}
+          <p className="mt-10 text-sm font-bold text-emerald-800 dark:text-emerald-400 drop-shadow">
+            Valgt kategori
+          </p>
+          <h1 className="text-4xl font-bold mb-5 drop-shadow">
             {selectedRoute.name}
           </h1>
-          <div className="info-box bg-zinc-100 dark:bg-zinc-700 rounded p-3 w-32">
-            <label htmlFor="distance" className="block mb-1">
-              <span className="text-xs">
-                <b>Distance</b>
-                <br /> {selectedRoute.distance}
-              </span>
+          <div
+            id="info-box"
+            className="bg-zinc-100 dark:bg-zinc-700 rounded p-3 w-32 drop-shadow"
+          >
+            <label htmlFor="distance" className="block mb-5">
+              <b>Distance</b>
+              <br /> {selectedRoute.distance}
               {/* <div id="distance" className="text-lg">
-              
-            </div> */}
+       {selectedRoute.distance}
+     </div> */}
             </label>
-            <label htmlFor="poi" className="block mb-1">
-              <span className="text-xs">
-                <b>Dele</b> <br /> {selectedRoute.partcount}
-              </span>
-              <div id="poi" className="text-lg">
-                {selectedRoute.pointsOfInterest.length}
-              </div>
+            <label htmlFor="poi" className="block mb-2">
+              <b>Afsnit</b> <br /> {selectedRoute.partcount}
+              {/* <div id="poi" className="text-lg">
+       {selectedRoute.pointsOfInterest.length}
+     </div> */}
             </label>
-            {/* todo skeleton screen (I think I recall tailwind having these ootb) or some wait indication */}
+            {/* todo skeleton screen (I think I recall tailwind having these ootb) or some wait indication. https://tailwindcss.com/docs/animation#pulse */}
             {/* todo how to sum up podcasts */}
             <label htmlFor="length" className="block">
-              <span className="text-xs">
-                <b>Afspilningstid</b> <br /> {selectedRoute.totalduration} min
-              </span>
+              <b>Afspilningstid</b> <br /> {selectedRoute.totalduration} min
               {/* todo */}
-              <div id="length" className="text-lg" />
+              {/* <div id="length" className="text-lg" /> */}
             </label>
           </div>
         </div>

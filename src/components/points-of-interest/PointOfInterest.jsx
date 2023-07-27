@@ -26,6 +26,7 @@ function PointOfInterest({
   },
   index,
   destinationChanged,
+  nextUnlockableId,
 }) {
   const { lat, long } = useContext(LatLongContext);
   const { setSource } = useContext(AudioContext);
@@ -49,7 +50,7 @@ function PointOfInterest({
         longitude
       );
       setProximity(distance);
-      if (!unlocked) {
+      if (!unlocked && id === nextUnlockableId) {
         setUnlocked(distance < 51); // todo magic number/get from config
       }
     }

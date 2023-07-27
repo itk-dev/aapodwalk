@@ -2,10 +2,13 @@ import { React, useEffect, useState, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import PointOfInterest from "../points-of-interest/PointOfInterest";
+import LatLongContext from "../../context/latitude-longitude-context";
 import {
   getAngleFromLocationToDestination,
   getRelevantDestinationPoint,
+  getDistanceBetweenCoordinates,
 } from "../../util/helper";
+import PermissionContext from "../../context/permission-context";
 import BackButton from "../BackButton";
 import { ReactComponent as LocationArrow } from "../../icons/location-arrow-solid.svg";
 import AudioContext from "../../context/audio-context";
@@ -19,11 +22,14 @@ function RoutePage() {
   const [orientation, setOrientation] = useState(0);
   const [rotation, setRotation] = useState(0);
   const [angle, setAngle] = useState(0);
-  const [latitude, setLatitude] = useState(0);
-  const [longitude, setLongitude] = useState(0);
-  const [destinationName, setDestinationName] = useState(null);
-  const [userLatitude, setUserLatitude] = useState(0);
-  const [userLongitude, setUserLongitude] = useState(0);
+  const [destinationLatitude, setDestinationLatitude] = useState(0);
+  const [destinationLongitude, setDestinationLongitude] = useState(0);
+  const [destinationDistance, setDestinationDistance] = useState(null);
+  const [destination, setDestination] = useState(null);
+  const [destinationIndex, setDestinationIndex] = useState(0);
+  const [nextUnlockableId, setNextUnlockableId] = useState(null);
+  const { userLatitude, userLongitude } = useContext(LatLongContext);
+  const { geolocationAvailable } = useContext(PermissionContext);
   const { audio } = useContext(AudioContext);
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
@@ -37,6 +43,30 @@ function RoutePage() {
   }, [data]);
 
   useEffect(() => {
+    if (
+      destinationLatitude &&
+      destinationLongitude &&
+      userLatitude &&
+      userLongitude &&
+      geolocationAvailable === "granted"
+    ) {
+      const distance = getDistanceBetweenCoordinates(
+        userLatitude,
+        userLongitude,
+        destinationLatitude,
+        destinationLongitude
+      );
+      setDestinationDistance(distance);
+    }
+  }, [
+    destinationLatitude,
+    destinationLongitude,
+    userLatitude,
+    userLongitude,
+    geolocationAvailable,
+  ]);
+
+  useEffect(() => {
     if (orientation && angle) {
       setRotation(orientation - angle);
     }
@@ -48,8 +78,8 @@ function RoutePage() {
         getAngleFromLocationToDestination(
           pos.coords.latitude,
           pos.coords.longitude,
-          latitude,
-          longitude
+          destinationLatitude,
+          destinationLongitude
         )
       );
     }, 3000);
@@ -98,9 +128,15 @@ function RoutePage() {
   const destinationChanged = () => {
     if (pointsOfInterest) {
       const destinationPoint = getRelevantDestinationPoint(pointsOfInterest);
-      setLatitude(destinationPoint[0].latitude);
-      setLongitude(destinationPoint[0].longitude);
-      setDestinationName(destinationPoint[0].name);
+      const index = pointsOfInterest.findIndex(
+        (poi) => destinationPoint[0].id === poi.id
+      );
+      setDestinationIndex(index);
+      setDestination(destinationPoint[0]);
+      setNextUnlockableId(destinationPoint[0].id);
+
+      setDestinationLatitude(destinationPoint[0].latitude);
+      setDestinationLongitude(destinationPoint[0].longitude);
     }
   };
   useEffect(() => {
@@ -121,6 +157,7 @@ function RoutePage() {
               key={pointOfInterest.id}
               index={index + 1}
               destinationChanged={destinationChanged}
+              nextUnlockableId={nextUnlockableId}
             />
           ))}
       </div>
@@ -130,14 +167,16 @@ function RoutePage() {
           <div className="text-sm text-bold">
             Afstand til del
             <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
-              1
+              {destinationIndex + 1}
             </span>
           </div>
-          <div className="">180 meter</div>
+          <div className="">
+            {destinationDistance && `${destinationDistance} meter`}
+          </div>
         </div>
         <div className="pl-3">
           {/* TODO: Make this check for compass */}
-          {!location && (
+          {(!orientation || !angle) && (
             <button
               className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
               type="button"
@@ -147,7 +186,7 @@ function RoutePage() {
             </button>
           )}
           {/* TODO: Make this check for compass */}
-          {location && (
+          {orientation && angle && (
             <div>
               <div className="flex justify-between mb-3">
                 <span className="text-sm text-bold">Retning</span>
@@ -160,12 +199,12 @@ function RoutePage() {
                   />
                 </span>
               </div>
-              <div className="text-xs text-zinc-500">
+              {/* <div className="text-xs text-zinc-500">
                 Lat: {userLatitude}/{latitude}
               </div>
               <div className="text-xs text-zinc-500">
                 Long: {userLongitude}/{longitude}
-              </div>
+              </div> */}
             </div>
           )}
         </div>
