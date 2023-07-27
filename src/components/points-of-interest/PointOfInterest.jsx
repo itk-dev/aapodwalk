@@ -6,7 +6,6 @@ import {
 } from "../../util/helper";
 import PodcastWrapper from "./PodcastWrapper";
 import PermissionContext from "../../context/permission-context";
-import AudioContext from "../../context/audio-context";
 import Image from "../Image";
 import { ReactComponent as CirclePlay } from "../../icons/circle-play-solid.svg";
 import { ReactComponent as ClosedCap } from "../../icons/closed-captioning-solid.svg";
@@ -27,9 +26,9 @@ function PointOfInterest({
   index,
   destinationChanged,
   nextUnlockableId,
+  setSource
 }) {
   const { lat, long } = useContext(LatLongContext);
-  const { setSource } = useContext(AudioContext);
   const [proximity, setProximity] = useState(null);
   const [viewSubtitles, setViewSubtitles] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
