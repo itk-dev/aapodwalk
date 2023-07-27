@@ -158,7 +158,6 @@ function RoutePage() {
 
   if (selectedRoute === null) return null;
 
-
   return (
     <div className="flex flex-col place-items-start pb-36">
       <BackButton>Afslut</BackButton>
@@ -221,18 +220,17 @@ function RoutePage() {
           </div>
         )}
 
-        {source && audioRef &&
+        {source && audioRef && (
           <div className="pt-2">
             <p className="text-xs text-zinc-500">Igangværende afspilning</p>
+            {/* TODO: Get the real name instead of Pizza 1 */}
             <p className="text-sm font-bold ">Pizza 1</p>
-            <audio
-              className="w-full"
-              ref={audioRef}
-              controls
-              src={`${fileUrl}${source}`}
-            />
+            <audio className="w-full" ref={audioRef} controls>
+              <source src={`${fileUrl}${source}`} type="audio/mpeg" />
+              Your browser does not support the audio element.
+            </audio>
           </div>
-        }
+        )}
       </div>
       <div ref={bottomRef} />
     </div>

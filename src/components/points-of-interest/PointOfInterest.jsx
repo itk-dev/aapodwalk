@@ -26,7 +26,7 @@ function PointOfInterest({
   index,
   destinationChanged,
   nextUnlockableId,
-  setSource
+  setSource,
 }) {
   const { lat, long } = useContext(LatLongContext);
   const [proximity, setProximity] = useState(null);
