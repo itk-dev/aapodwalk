@@ -97,7 +97,7 @@ function App() {
 
 
   return (
-    <div className="App h-full min-h-screen w-screen p-3 text-zinc-800 dark:text-white bg-zinc-100 dark:bg-zinc-800 overflow-hidden touch-none">
+    <div className="App h-full min-h-screen w-screen p-3 text-zinc-800 dark:text-white bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
       <LatLongContext.Provider value={contextLatLong}>
         <CacheContext.Provider value={cacheContext}>
           <PermissionContext.Provider value={geolocationAvailableContext}>

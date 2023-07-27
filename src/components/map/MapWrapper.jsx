@@ -69,6 +69,7 @@ function MapWrapper({ mapData, goToView, hideMapOverlay }) {
       map.getView().animate({
         center: [destinationLat, destinationLong],
         zoom: zoomValue,
+        rotation: 0,
         duration: 800,
       });
     }
@@ -189,7 +190,7 @@ function MapWrapper({ mapData, goToView, hideMapOverlay }) {
   // TODO: Remove zoom and info btn
 
   return (
-    <div className="map-container absolute left-0 top-0 h-screen px-3 pt-12 pb-3">
+    <div className="map-container absolute left-0 top-0 h-screen px-3 pt-12 pb-3 touch-none">
       <div ref={mapElement} className="map rounded-xl overflow-hidden" id="map">
         <div id="tooltip" className="tooltip" />
       </div>
