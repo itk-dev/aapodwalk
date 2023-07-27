@@ -37,17 +37,22 @@ function SelectedRoute({ selectedRoute, hideMapOverlay }) {
             id="info-box"
             className="bg-zinc-100 dark:bg-zinc-700 rounded p-3 w-32 drop-shadow"
           >
-            <label htmlFor="distance" className="block mb-5">
-              <b>Distance</b>
-              <br /> {selectedRoute.distance}
+            <label htmlFor="distance" className="block mb-2">
+              <b className="text-sm">Distance</b>
+              <br />
+              <span className="text-xl">{selectedRoute.distance}</span>
             </label>
             <label htmlFor="poi" className="block mb-2">
-              <b>Afsnit</b> <br /> {selectedRoute.partcount}
+              <b className="text-xs">Afsnit</b>
+              <br />
+              <span className="text-xl">{selectedRoute.partcount}</span>
             </label>
             {/* todo skeleton screen (I think I recall tailwind having these ootb) or some wait indication. https://tailwindcss.com/docs/animation#pulse */}
             {/* todo how to sum up podcasts */}
             <label htmlFor="length" className="block">
-              <b>Afspilningstid</b> <br /> {selectedRoute.totalduration} min
+              <b className="text-sm">Afspilningstid</b>
+              <br />
+              <span className="text-xl">{selectedRoute.totalduration} min</span>
             </label>
           </div>
         </div>
