@@ -19,9 +19,9 @@ function RoutePage() {
   const { data } = useFetch(`routes/${id}`);
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [pointsOfInterest, setPointsOfInterest] = useState(null);
-  const [orientation, setOrientation] = useState(0);
+  const [orientation, setOrientation] = useState(null);
   const [rotation, setRotation] = useState(0);
-  const [angle, setAngle] = useState(0);
+  const [angle, setAngle] = useState(null);
   const [destinationLatitude, setDestinationLatitude] = useState(0);
   const [destinationLongitude, setDestinationLongitude] = useState(0);
   const [destinationDistance, setDestinationDistance] = useState(null);
@@ -144,7 +144,6 @@ function RoutePage() {
   }, [pointsOfInterest]);
 
   if (selectedRoute === null) return null;
-
   return (
     <div className="flex flex-col place-items-start pb-28">
       <BackButton>Afslut</BackButton>

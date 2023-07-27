@@ -15,11 +15,11 @@ function RouteCarousel({
   selectedRoute,
 }) {
   return (
-    <div className="absolute flex justify-end h-40 left-0 bottom-0 right-0 rounded-lg overflow-hidden w-full">
+    <div className="absolute flex justify-end h-56 left-0 bottom-0 right-0 rounded-lg overflow-hidden w-full">
       {!hideMapOverlay && (
         <button
           type="button"
-          className="h-10 mr-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
+          className="h-10 mr-3 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
         >
           <Link className="" to={selectedRoute && `/route/${selectedRoute.id}`}>
             <IconCirclePlay className="w-6 h-6" />
@@ -29,7 +29,7 @@ function RouteCarousel({
       <button
         onClick={() => setHideMapOverlay(!hideMapOverlay)}
         type="button"
-        className="h-10 mr-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
+        className="h-10 mr-5 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
       >
         <IconMap className="w-6 h-6" />
       </button>

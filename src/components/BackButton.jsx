@@ -12,7 +12,7 @@ function BackButton({ children }) {
       type="button"
       onClick={() => navigate(-1)}
     >
-      <span className="bg-zinc-300 dark:bg-zinc-700 flex place-content-center px-3 mr-2 rounded">
+      <span className="block bg-zinc-300 dark:bg-zinc-700 place-content-center px-3 mr-2 rounded">
         {children === "Afslut" ? (
           <Xmark className="inline w-2" />
         ) : (

@@ -90,7 +90,7 @@ function PointOfInterest({
       className={
         unlocked
           ? `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg`
-          : `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg opacity-10`
+          : `relative flex items-start gap-4 p-2 bg-white dark:bg-zinc-700 rounded-lg opacity-30`
       }
     >
       <div className="absolute -left-3 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
