@@ -26,7 +26,7 @@ function PointOfInterest({
   index,
   destinationChanged,
   nextUnlockableId,
-  setSource,
+  setSource
 }) {
   const { lat, long } = useContext(LatLongContext);
   const [proximity, setProximity] = useState(null);
@@ -50,7 +50,7 @@ function PointOfInterest({
       );
       setProximity(distance);
       if (!unlocked && id === nextUnlockableId) {
-        setUnlocked(distance < 50); // todo magic number/get from config
+        setUnlocked(distance < 51); // todo magic number/get from config
       }
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
