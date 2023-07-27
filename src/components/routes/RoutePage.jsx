@@ -103,8 +103,8 @@ function RoutePage() {
   }, [bottomRef, pointsOfInterest]);
 
   function deviceOrientationHandler(e) {
+    navigator.geolocation.getCurrentPosition(locationHandler);
     setTimeout(() => {
-      navigator.geolocation.getCurrentPosition(locationHandler);
       const orientaionValue = e.webkitCompassHeading || Math.abs(e.alpha - 360);
       setOrientation(orientaionValue);
     }, 3000);
