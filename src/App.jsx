@@ -45,6 +45,7 @@ function App() {
   const updateLocation = () => {
     if (lat === null || long === null) {
       navigator.geolocation.getCurrentPosition((position) => {
+        setHasAllowedGeolocation(true);
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
         setHeading(position.coords.heading);
@@ -53,6 +54,7 @@ function App() {
     }
     setTimeout(() => {
       navigator.geolocation.getCurrentPosition((position) => {
+        setHasAllowedGeolocation(true);
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
         setHeading(position.coords.heading);
