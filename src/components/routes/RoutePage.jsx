@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/media-has-caption */
 import { React, useEffect, useState, useContext, useRef } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
@@ -11,7 +12,7 @@ import {
 import PermissionContext from "../../context/permission-context";
 import BackButton from "../BackButton";
 import { ReactComponent as LocationArrow } from "../../icons/location-arrow-solid.svg";
-import AudioContext from "../../context/audio-context";
+import ApiEndpointContext from "../../context/api-endpoint-context";
 
 function RoutePage() {
   const { id } = useParams();
@@ -25,12 +26,12 @@ function RoutePage() {
   const [destinationLatitude, setDestinationLatitude] = useState(0);
   const [destinationLongitude, setDestinationLongitude] = useState(0);
   const [destinationDistance, setDestinationDistance] = useState(null);
-  const [destination, setDestination] = useState(null);
   const [destinationIndex, setDestinationIndex] = useState(0);
   const [nextUnlockableId, setNextUnlockableId] = useState(null);
+  const [source, setSource] = useState(null);
   const { userLatitude, userLongitude } = useContext(LatLongContext);
   const { geolocationAvailable } = useContext(PermissionContext);
-  const { audio } = useContext(AudioContext);
+  const audioRef = useRef();
   const isIOS =
     navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
     navigator.userAgent.match(/AppleWebKit/);
@@ -41,6 +42,14 @@ function RoutePage() {
       setPointsOfInterest(data.pointsOfInterest["hydra:member"]);
     }
   }, [data]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      audioRef.current.pause();
+      audioRef.current.load();
+      audioRef.current.play();
+    }
+  }, [source]);
 
   useEffect(() => {
     if (
@@ -132,9 +141,7 @@ function RoutePage() {
         (poi) => destinationPoint[0].id === poi.id
       );
       setDestinationIndex(index);
-      setDestination(destinationPoint[0]);
       setNextUnlockableId(destinationPoint[0].id);
-
       setDestinationLatitude(destinationPoint[0].latitude);
       setDestinationLongitude(destinationPoint[0].longitude);
     }
@@ -144,6 +151,9 @@ function RoutePage() {
   }, [pointsOfInterest]);
 
   if (selectedRoute === null) return null;
+
+  const { fileUrl } = useContext(ApiEndpointContext);
+
   return (
     <div className="flex flex-col place-items-start pb-28">
       <BackButton>Afslut</BackButton>
@@ -157,55 +167,60 @@ function RoutePage() {
               index={index + 1}
               destinationChanged={destinationChanged}
               nextUnlockableId={nextUnlockableId}
+              setSource={setSource}
             />
           ))}
       </div>
       {/* TODO: Make room for audio player below when playing */}
-      <div className="fixed left-3 bottom-3 right-3 bg-zinc-200 dark:bg-zinc-700 flex gap-3 rounded-lg p-3 pb-15 divide-x dark:divide-zinc-200/5">
-        <div>
-          <div className="text-sm text-bold">
-            Afstand til del
-            <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
-              {destinationIndex + 1}
-            </span>
+      <div className="fixed flex flex-col left-3 bottom-3 right-3 bg-zinc-200 dark:bg-zinc-700 gap-3 rounded-lg p-3 pb-15 divide-x dark:divide-zinc-200/5">
+        <div className="flex flex-row justify-between">
+          <div>
+            <div className="text-sm text-bold">
+              Afstand til del
+              <span className="ml-1 px-2 font-bold rounded-full bg-emerald-700 text-zinc-100 text-sm">
+                {destinationIndex + 1}
+              </span>
+            </div>
+            <div className="">
+              {destinationDistance && `${destinationDistance} meter`}
+            </div>
           </div>
-          <div className="">
-            {destinationDistance && `${destinationDistance} meter`}
+          <div className="pl-3">
+            {/* TODO: Make this check for compass */}
+            {(!orientation || !angle) && (
+              <button
+                className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
+                type="button"
+                onClick={() => startWaypointer()}
+              >
+                Vis mig vej
+              </button>
+            )}
+            {/* TODO: Make this check for compass */}
+            {orientation && angle && (
+              <div>
+                <div className="flex justify-between">
+                  <span className="text-sm text-bold mr-5">Retning</span>
+                  <span className="w-1/2">
+                    <LocationArrow
+                      className="inline w-5"
+                      style={{
+                        transform: `rotate(${-rotation}deg)`,
+                      }}
+                    />
+                  </span>
+                </div>
+              </div>
+            )}
           </div>
         </div>
-        <div className="pl-3">
-          {/* TODO: Make this check for compass */}
-          {(!orientation || !angle) && (
-            <button
-              className="bg-zinc-700 dark:bg-zinc-200 dark:text-zinc-800 rounded text-sm py-1 px-3"
-              type="button"
-              onClick={() => startWaypointer()}
-            >
-              Vis mig vej
-            </button>
-          )}
-          {/* TODO: Make this check for compass */}
-          {orientation && angle && (
-            <div>
-              <div className="flex justify-between mb-3">
-                <span className="text-sm text-bold">Retning</span>
-                <span className="w-1/2">
-                  <LocationArrow
-                    className="inline w-5"
-                    style={{
-                      transform: `rotate(${-rotation}deg)`,
-                    }}
-                  />
-                </span>
-              </div>
-              {/* <div className="text-xs text-zinc-500">
-                Lat: {userLatitude}/{latitude}
-              </div>
-              <div className="text-xs text-zinc-500">
-                Long: {userLongitude}/{longitude}
-              </div> */}
-            </div>
-          )}
+        <div>
+          <audio
+            className="w-full"
+            ref={audioRef}
+            controls
+            src={`${fileUrl}${source}`}
+          />
         </div>
       </div>
       <div ref={bottomRef} />

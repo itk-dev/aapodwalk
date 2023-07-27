@@ -1,14 +1,12 @@
-import React, { useEffect, useState, useMemo, useRef, useContext } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { Routes, Navigate, Route } from "react-router-dom";
 import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
-import AudioContext from "./context/audio-context";
 import CacheContext from "./context/cache-context";
 import PermissionContext from "./context/permission-context";
 import Info from "./components/info";
 import TagsList from "./components/tags/TagsList";
 import RoutePage from "./components/routes/RoutePage";
-import ApiEndpointContext from "./context/api-endpoint-context";
 
 function App() {
   const [geolocationAvailable, setGeolocationAvailable] = useState();
@@ -16,9 +14,7 @@ function App() {
   const [long, setLong] = useState(null);
   const [heading, setHeading] = useState(null);
   const [speed, setSpeed] = useState(null);
-  const [source, setSource] = useState(null);
   const [cache, setCache] = useState({});
-  const audioRef = useRef();
 
   const cacheContext = useMemo(
     () => ({
@@ -38,26 +34,12 @@ function App() {
     [lat, long, heading, speed]
   );
 
-  const audio = useMemo(
-    () => ({
-      setSource,
-    }),
-    [setSource]
-  );
   const geolocationAvailableContext = useMemo(
     () => ({
       geolocationAvailable,
     }),
     [geolocationAvailable]
   );
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.pause();
-      audioRef.current.load();
-      audioRef.current.play();
-    }
-  }, [source]);
 
   const updateLocation = () => {
     if (lat === null || long === null) {
@@ -113,39 +95,25 @@ function App() {
     requestPermissions();
   }, []);
 
-  const { fileUrl } = useContext(ApiEndpointContext);
 
   return (
     <div className="App h-full min-h-screen w-screen p-3 text-zinc-800 dark:text-white bg-zinc-100 dark:bg-zinc-800 overflow-hidden touch-none">
       <LatLongContext.Provider value={contextLatLong}>
         <CacheContext.Provider value={cacheContext}>
-          <AudioContext.Provider value={audio}>
-            <PermissionContext.Provider value={geolocationAvailableContext}>
-              <Routes>
-                <Route path="/" element={<TagsList />} />
-                <Route path="tag/:id" element={<TagPage />} />
-                <Route path="route/:id" element={<RoutePage />} />
-                <Route
-                  path="info"
-                  element={<Info geolocationAvailable={geolocationAvailable} />}
-                />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
-            </PermissionContext.Provider>
-          </AudioContext.Provider>
+          <PermissionContext.Provider value={geolocationAvailableContext}>
+            <Routes>
+              <Route path="/" element={<TagsList />} />
+              <Route path="tag/:id" element={<TagPage />} />
+              <Route path="route/:id" element={<RoutePage />} />
+              <Route
+                path="info"
+                element={<Info geolocationAvailable={geolocationAvailable} />}
+              />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </PermissionContext.Provider>
         </CacheContext.Provider>
       </LatLongContext.Provider>
-      {audioRef && source && (
-        // eslint-disable-next-line jsx-a11y/media-has-caption
-        <div className="fixed left-3 bottom-0 right-3 bg-zinc-200 dark:bg-zinc-700">
-          <audio
-            className="w-full"
-            ref={audioRef}
-            controls
-            src={`${fileUrl}${source}`}
-          />
-        </div>
-      )}
     </div>
   );
 }
