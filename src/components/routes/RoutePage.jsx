@@ -86,7 +86,7 @@ function RoutePage() {
 
   function locationHandler(pos) {
     setTimeout(() => {
-      setAccuracy();
+      setAccuracy(pos.coords.accuracy);
       setAngle(
         getAngleFromLocationToDestination(
           pos.coords.latitude,
