@@ -67,14 +67,14 @@ export function getRelevantDestinationPoint(pointsOfInterest) {
 }
 
 export function getIdFromApiEndpoint(endpoint) {
-  const regex = /[^\/]+$/;
+  const regex = /[^/]+$/;
   // Todo create utils file
   const idFound = endpoint ? endpoint.toString().match(regex) : null;
   return idFound[0];
 }
 
 export function getIdsFromApiEndpoints(endpoints) {
-  const regex = /[^\/]+$/;
+  const regex = /[^/]+$/;
   const result = [];
 
   endpoints.forEach((e) => {

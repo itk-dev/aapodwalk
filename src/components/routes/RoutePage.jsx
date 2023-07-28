@@ -30,6 +30,7 @@ function RoutePage() {
   const [nextUnlockableId, setNextUnlockableId] = useState(null);
   const [routeComplete, setRouteComplete] = useState(false);
   const [source, setSource] = useState(null);
+  const [accuracy, setAccuracy] = useState(0);
   const { userLatitude, userLongitude } = useContext(LatLongContext);
   const { geolocationAvailable } = useContext(PermissionContext);
   const audioRef = useRef();
@@ -85,6 +86,7 @@ function RoutePage() {
 
   function locationHandler(pos) {
     setTimeout(() => {
+      setAccuracy();
       setAngle(
         getAngleFromLocationToDestination(
           pos.coords.latitude,
@@ -172,6 +174,7 @@ function RoutePage() {
               destinationChanged={destinationChanged}
               nextUnlockableId={nextUnlockableId}
               setSource={setSource}
+              accuracy={accuracy}
             />
           ))}
       </div>
@@ -204,7 +207,9 @@ function RoutePage() {
               {orientation && angle && (
                 <div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-bold mr-5">Retning</span>
+                    <span className="text-sm text-bold mr-5 my-auto">
+                      Retning
+                    </span>
                     <span className="w-1/2">
                       <LocationArrow
                         className="inline w-10"
