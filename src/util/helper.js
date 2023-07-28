@@ -59,9 +59,9 @@ export function isExperienceIdInLocalstorage(experienceId) {
   return false;
 }
 
-export function getRelevantDestinationPoint(pointsOfInterest) {
+export function getRelevantDestinationPoint(pointsOfInterest, newlyUnlockedId) {
   const poiArray = pointsOfInterest.filter((poi) => {
-    return !isExperienceIdInLocalstorage(poi.id);
+    return !isExperienceIdInLocalstorage(poi.id) && poi.id !== newlyUnlockedId;
   });
   return poiArray;
 }

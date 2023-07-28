@@ -138,9 +138,12 @@ function RoutePage() {
     }
   }, []);
 
-  const destinationChanged = () => {
+  const destinationChanged = (newlyUnlockedId = null) => {
     if (pointsOfInterest) {
-      const destinationPoint = getRelevantDestinationPoint(pointsOfInterest);
+      const destinationPoint = getRelevantDestinationPoint(
+        pointsOfInterest,
+        newlyUnlockedId
+      );
       if (destinationPoint.length === 0) {
         return setRouteComplete(true);
       }

@@ -51,8 +51,7 @@ function PointOfInterest({
       );
       setProximity(distance);
       if (!unlocked && id === nextUnlockableId) {
-        setUnlocked(distance < accuracy); // todo magic number/get from config
-        destinationChanged();
+        setUnlocked(distance < accuracy);
       }
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
@@ -62,6 +61,7 @@ function PointOfInterest({
       return;
     }
     if (unlocked) {
+      destinationChanged(id);
       const currentLocalStorage = localStorage.getItem("unlocked-experiences");
       if (currentLocalStorage) {
         // add to existing unlocked steps
@@ -72,7 +72,6 @@ function PointOfInterest({
           "unlocked-experiences",
           JSON.stringify(updateLocalStorage)
         );
-        destinationChanged();
       } else {
         // add new "unlocked steps"
         localStorage.setItem("unlocked-experiences", JSON.stringify([id]));
@@ -118,7 +117,7 @@ function PointOfInterest({
               <span className="sr-only">Afstand</span>
               {/* todo this is slow and would benefit from loading screen / skeleton componenet */}
               <span className="text-md" id="distance">
-                {proximity - accuracy} m
+                {Math.round(proximity - accuracy)} m
               </span>
             </label>
           )}
