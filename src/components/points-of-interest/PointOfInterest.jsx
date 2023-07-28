@@ -35,6 +35,7 @@ function PointOfInterest({
   const { geolocationAvailable } = useContext(PermissionContext);
 
   console.log(lat, long);
+  console.log(geolocationAvailable);
   useEffect(() => {
     if (
       latitude &&
