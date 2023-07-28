@@ -34,15 +34,13 @@ function PointOfInterest({
   const [unlocked, setUnlocked] = useState(false);
   const { geolocationAvailable } = useContext(PermissionContext);
 
-  console.log(lat, long);
-  console.log(geolocationAvailable);
   useEffect(() => {
     if (
       latitude &&
       longitude &&
       lat &&
       long &&
-      geolocationAvailable === "granted"
+      geolocationAvailable !== "denied"
     ) {
       const distance = getDistanceBetweenCoordinates(
         lat,
@@ -50,7 +48,6 @@ function PointOfInterest({
         latitude,
         longitude
       );
-      console.log(distance);
       setProximity(distance);
       if (!unlocked && id === nextUnlockableId) {
         setUnlocked(distance < 51); // todo magic number/get from config
