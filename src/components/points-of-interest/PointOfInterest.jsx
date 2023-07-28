@@ -27,6 +27,7 @@ function PointOfInterest({
   destinationChanged,
   nextUnlockableId,
   setSource,
+  accuracy,
 }) {
   const { lat, long } = useContext(LatLongContext);
   const [proximity, setProximity] = useState(null);
@@ -50,7 +51,8 @@ function PointOfInterest({
       );
       setProximity(distance);
       if (!unlocked && id === nextUnlockableId) {
-        setUnlocked(distance < 51); // todo magic number/get from config
+        setUnlocked(distance < accuracy); // todo magic number/get from config
+        destinationChanged();
       }
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
@@ -86,12 +88,25 @@ function PointOfInterest({
 
   return (
     <div
-      className={`relative flex items-start gap-4 p-2 rounded-lg ${unlocked ? `bg-zinc-200 dark:bg-zinc-600` : `bg-zinc-100 dark:bg-zinc-700` }`}
+      className={`relative flex items-start gap-4 p-2 rounded-lg ${
+        unlocked
+          ? `bg-zinc-200 dark:bg-zinc-600`
+          : `bg-zinc-100 dark:bg-zinc-700`
+      }`}
     >
-      <div className={`absolute -left-3 px-2 font-bold rounded-full text-sm ${unlocked ? `bg-emerald-700 text-zinc-100` : `bg-emerald-900 text-zinc-400` }`} >
+      <div
+        className={`absolute -left-3 px-2 font-bold rounded-full text-sm ${
+          unlocked
+            ? `bg-emerald-700 text-zinc-100`
+            : `bg-emerald-900 text-zinc-400`
+        }`}
+      >
         {index}
       </div>
-      <Image src={image} className={`w-24 h-24 rounded-full ${!unlocked && `opacity-40` }` } />
+      <Image
+        src={image}
+        className={`w-24 h-24 rounded-full ${!unlocked && `opacity-40`}`}
+      />
       <div className="flex flex-col">
         <h2 className="text-zinc-900 text-sm font-bold dark:text-zinc-200 my-3">
           {name}
@@ -103,7 +118,7 @@ function PointOfInterest({
               <span className="sr-only">Afstand</span>
               {/* todo this is slow and would benefit from loading screen / skeleton componenet */}
               <span className="text-md" id="distance">
-                {proximity} m
+                {proximity - accuracy} m
               </span>
             </label>
           )}

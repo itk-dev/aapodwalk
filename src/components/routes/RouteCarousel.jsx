@@ -1,4 +1,4 @@
-import { React, useState } from "react";
+import { React } from "react";
 import { Carousel } from "react-responsive-carousel";
 import { Link } from "react-router-dom";
 import Route from "./Route";
