@@ -22,6 +22,7 @@ function PointOfInterest({
     subtitles,
     podcast,
     IFrameUrl,
+    proximityToUnlock,
   },
   index,
   destinationChanged,
@@ -51,7 +52,9 @@ function PointOfInterest({
       );
       setProximity(distance);
       if (!unlocked && id === nextUnlockableId) {
-        setUnlocked(distance < accuracy);
+        setUnlocked(
+          distance < accuracy || distance < Number(proximityToUnlock)
+        );
       }
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
