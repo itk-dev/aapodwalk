@@ -232,7 +232,7 @@ function RoutePage() {
           <div className="pt-2">
             <p className="text-xs text-zinc-500">Igangværende afspilning</p>
             {/* TODO: Get the real name instead of Pizza 1 */}
-            <p className="text-sm font-bold ">Pizza 1</p>
+            {/* <p className="text-sm font-bold ">Pizza 1</p> */}
             <audio className="w-full" ref={audioRef} controls>
               <source src={`${fileUrl}${source}`} type="audio/mpeg" />
               Your browser does not support the audio element.
