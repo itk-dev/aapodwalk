@@ -52,9 +52,7 @@ function PointOfInterest({
       );
       setProximity(distance);
       if (!unlocked && id === nextUnlockableId) {
-        setUnlocked(
-          distance < accuracy || distance < Number(proximityToUnlock)
-        );
+        setUnlocked(distance < accuracy || distance < proximityToUnlock);
       }
     }
   }, [latitude, longitude, lat, long, geolocationAvailable]);
