@@ -15,7 +15,6 @@ import { latlngToUTM } from "../../util/helper";
 import ApiEndpointContext from "../../context/api-endpoint-context";
 import "./map-wrapper.css";
 
-// Todo style this......
 function MapWrapper({ mapData, goToView, hideMapOverlay }) {
   const { mapUsername, mapPassword } = useContext(ApiEndpointContext);
   const [map, setMap] = useState();
