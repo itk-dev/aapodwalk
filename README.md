@@ -35,3 +35,19 @@ REACT_APP_TOKEN=token_stuff_here # created in api (123?)
 REACT_APP_DF_MAP_USERNAME=username_here # can be found in 1password
 REACT_APP_DF_MAP_PASSWORD=password_here # can likewise be found in 1password
 ```
+
+## publiccode.yml
+
+This code adheres to the
+[publiccode.yml](https://github.com/publiccodeyml/publiccode.yml) standard by
+including a [`publiccode.yml`](publiccode.yml) metadata file that makes public
+software easily discoverable. See [`publiccode.yml`](publiccode.yml) for details.
+
+Validate the `publiccode.yml` file by running
+
+```shell
+docker run --interactive italia/publiccode-parser-go /dev/stdin < publiccode.yml
+```
+
+The validation is automatically performed by a GitHub Action whenever a pull
+request is made (cf. [`.github/workflows/pr.yaml`](.github/workflows/pr.yaml)).
