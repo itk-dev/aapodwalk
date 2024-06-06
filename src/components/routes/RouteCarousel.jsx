@@ -3,8 +3,8 @@ import { Carousel } from "react-responsive-carousel";
 import { Link } from "react-router-dom";
 import Route from "./Route";
 import { getIdFromApiEndpoint } from "../../util/helper";
-import { ReactComponent as IconCirclePlay } from "../../icons/circle-play-solid.svg";
-import { ReactComponent as IconMap } from "../../icons/map-solid.svg";
+import IconMap from "../../icons/map-solid.svg?react";
+import IconCirclePlay from "../../icons/circle-play-solid.svg?react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 function RouteCarousel({

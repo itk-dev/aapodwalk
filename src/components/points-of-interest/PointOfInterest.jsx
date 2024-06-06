@@ -7,10 +7,10 @@ import {
 import PodcastWrapper from "./PodcastWrapper";
 import PermissionContext from "../../context/permission-context";
 import Image from "../Image";
-import { ReactComponent as CirclePlay } from "../../icons/circle-play-solid.svg";
-import { ReactComponent as ClosedCap } from "../../icons/closed-captioning-solid.svg";
-import { ReactComponent as RulerHorizontal } from "../../icons/ruler-horizontal-solid.svg";
-import { ReactComponent as Xmark } from "../../icons/xmark-solid.svg";
+import CirclePlay from "../../icons/circle-play-solid.svg";
+import ClosedCap from "../../icons/closed-captioning-solid.svg";
+import RulerHorizontal from "../../icons/ruler-horizontal-solid.svg";
+import Xmark from "../../icons/xmark-solid.svg";
 
 function PointOfInterest({
   pointOfInterest: {
@@ -30,6 +30,7 @@ function PointOfInterest({
   setSource,
   accuracy,
 }) {
+  console.log(proximityToUnlock);
   const { lat, long } = useContext(LatLongContext);
   const [proximity, setProximity] = useState(null);
   const [viewSubtitles, setViewSubtitles] = useState(false);
@@ -51,6 +52,10 @@ function PointOfInterest({
         longitude
       );
       setProximity(distance);
+      console.log(
+        distance < accuracy || distance < proximityToUnlock,
+        "distance < accuracy || distance < proximityToUnlock"
+      );
       if (!unlocked && id === nextUnlockableId) {
         setUnlocked(distance < accuracy || distance < proximityToUnlock);
       }
@@ -127,6 +132,7 @@ function PointOfInterest({
               <button
                 className="p-1 rounded text-zinc-800 bg-zinc-100"
                 type="button"
+                aria-label="Afspil podcast"
                 onClick={() => setSource(podcast)}
               >
                 <CirclePlay className="w-6" />
@@ -137,6 +143,7 @@ function PointOfInterest({
               <button
                 className="p-1 rounded text-zinc-800 bg-zinc-100"
                 type="button"
+                aria-label="Se podcast som tekst"
                 onClick={() => setViewSubtitles(!viewSubtitles)}
               >
                 {viewSubtitles ? (

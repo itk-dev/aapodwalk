@@ -107,7 +107,7 @@ function App() {
     // todo some sort of spinner or some indication that something is happening
     requestPermissions();
   }, []);
-
+  console.log(hasAllowedGeolocation);
   return (
     <>
       {hasAllowedGeolocation && (
