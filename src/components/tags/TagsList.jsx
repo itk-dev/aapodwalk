@@ -10,7 +10,6 @@ function TagsList() {
 
   useEffect(() => {
     if (data) {
-      console.log(data);
       setTags(data["hydra:member"]);
     }
   }, [data]);

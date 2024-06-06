@@ -30,7 +30,6 @@ function PointOfInterest({
   setSource,
   accuracy,
 }) {
-  console.log(proximityToUnlock);
   const { lat, long } = useContext(LatLongContext);
   const [proximity, setProximity] = useState(null);
   const [viewSubtitles, setViewSubtitles] = useState(false);
@@ -52,10 +51,7 @@ function PointOfInterest({
         longitude
       );
       setProximity(distance);
-      console.log(
-        distance < accuracy || distance < proximityToUnlock,
-        "distance < accuracy || distance < proximityToUnlock"
-      );
+ 
       if (!unlocked && id === nextUnlockableId) {
         setUnlocked(distance < accuracy || distance < proximityToUnlock);
       }
