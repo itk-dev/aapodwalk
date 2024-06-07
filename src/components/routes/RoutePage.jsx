@@ -11,7 +11,7 @@ import {
 } from "../../util/helper";
 import PermissionContext from "../../context/permission-context";
 import BackButton from "../BackButton";
-import { ReactComponent as LocationArrow } from "../../icons/location-arrow-solid.svg";
+import LocationArrow from "../../icons/location-arrow-solid.svg";
 import ApiEndpointContext from "../../context/api-endpoint-context";
 
 function RoutePage() {

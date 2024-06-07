@@ -28,7 +28,7 @@ services:
       # - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
 
   node:
-    image: node:18
+    image: node:20
     command: npm run start
     working_dir: /app
     networks:

@@ -1,7 +1,7 @@
 import { React } from "react";
 import { useNavigate } from "react-router-dom";
-import { ReactComponent as AngleLeft } from "../icons/angle-left-solid.svg";
-import { ReactComponent as Xmark } from "../icons/xmark-solid.svg";
+import Xmark from "../icons/xmark-solid.svg";
+import AngleLeft from "../icons/angle-left-solid.svg";
 
 function BackButton({ children }) {
   const navigate = useNavigate();

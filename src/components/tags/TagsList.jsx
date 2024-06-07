@@ -1,7 +1,7 @@
 import { React, useEffect, useState } from "react";
 import useFetch from "../../util/useFetch";
 import Tag from "./Tag";
-import { ReactComponent as Xmark } from "../../icons/xmark-solid.svg";
+import Xmark from "../../icons/xmark-solid.svg";
 
 function TagsList() {
   const [tags, setTags] = useState(null);
