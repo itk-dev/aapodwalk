@@ -8,6 +8,7 @@ docker compose pull
 docker compose run --rm node npm install
 docker compose run --rm node npm run build
 docker compose up --detach --remove-orphans
+docker compose run --rm node rm -rf node_modules
 open "http://$(docker compose port nginx 8080)"
 ```
 
