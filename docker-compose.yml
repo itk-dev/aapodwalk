@@ -1,5 +1,4 @@
-version: "3.4"
-
+# itk-version: 3.2.1
 networks:
   frontend:
     external: true
@@ -14,28 +13,21 @@ services:
       - app
       - frontend
     depends_on:
-      - node
+      - phpfpm
     ports:
-      - "8080"
+      - '8080'
     volumes:
-      - ${PWD}/.docker/vhost.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./:/app:delegated
+      - ./.docker/templates:/etc/nginx/templates:ro
+      - .:/app
+    environment:
+      NGINX_FPM_SERVICE: ${COMPOSE_PROJECT_NAME}-phpfpm-1:9000
+      NGINX_WEB_ROOT: /app/dist
+      NGINX_PORT: 8080
+      NGINX_MAX_BODY_SIZE: 5M
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-      # - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
-      # - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-
-  node:
-    image: node:20
-    command: npm run start
-    working_dir: /app
-    networks:
-      - app
-    ports:
-      - "3000:3000"
-    environment:
-      - NODE_ENV=development
-    volumes:
-      - .:/app:delegated
+#      HTTPS config - uncomment to enable redirect from :80 to :443
+#      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
+#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
