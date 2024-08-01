@@ -2,28 +2,28 @@
 
 ## Running this app in docker
 
-```sh
-docker compose run node npm install
-docker compose up --detach
+
+```shell
+docker compose pull
+docker compose run --rm node npm install
+docker compose run --rm node npm run build
+docker compose up --detach --remove-orphans
 open "http://$(docker compose port nginx 8080)"
-
-# Alternatively
-itkdev-docker-compose open
 ```
 
-## Linting
+## Coding standards
 
-```bash
-npm run check-coding-standards
+```shell
+docker compose run --rm node npm run check-coding-standards
 ```
 
-```bash
-npm run apply-coding-standards
+```shell
+docker compose run --rm node npm run apply-coding-standards
 ```
 
 ## .env.local
 
-```bash
+```shell
 # The location of the api
 COMPOSE_PROJECT_NAME=aapodwalk
 COMPOSE_DOMAIN=aapodwalk.local.itkdev.dk
