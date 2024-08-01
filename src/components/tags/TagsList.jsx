@@ -41,6 +41,7 @@ function TagsList() {
             <button
               className="p-1 rounded text-zinc-800 bg-zinc-100 float-right ml-1 mb-1"
               type="button"
+              aria-label="Luk beskrivelsen"
               onClick={() => setViewAbout(!viewAbout)}
             >
               <Xmark className="h-6 w-6 text-zinc-800" />

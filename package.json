@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/plugin-transform-optional-chaining": "^7.24.8",
+    "@babel/preset-env": "^7.25.3",
+    "@babel/preset-react": "^7.24.7",
     "@vitejs/plugin-react": "^4.3.0",
     "ol": "^7.4.0",
     "proj4": "^2.9.0",

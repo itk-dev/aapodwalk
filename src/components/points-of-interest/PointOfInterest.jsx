@@ -51,7 +51,7 @@ function PointOfInterest({
         longitude
       );
       setProximity(distance);
- 
+
       if (!unlocked && id === nextUnlockableId) {
         setUnlocked(distance < accuracy || distance < proximityToUnlock);
       }

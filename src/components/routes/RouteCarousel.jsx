@@ -3,6 +3,7 @@ import { Carousel } from "react-responsive-carousel";
 import { Link } from "react-router-dom";
 import Route from "./Route";
 import { getIdFromApiEndpoint } from "../../util/helper";
+// ignore import/no-unresolved
 import IconMap from "../../icons/map-solid.svg?react";
 import IconCirclePlay from "../../icons/circle-play-solid.svg?react";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
@@ -19,6 +20,7 @@ function RouteCarousel({
       {!hideMapOverlay && (
         <div className="absolute flex justify-end h-56 left-0 bottom-0 right-0 rounded-lg overflow-hidden w-full">
           <button
+            aria-label="Afspil"
             type="button"
             className="h-10 mr-3 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
           >
@@ -30,6 +32,7 @@ function RouteCarousel({
             </Link>
           </button>
           <button
+            aria-label="Åben/luk kortvisning"
             onClick={() => setHideMapOverlay(!hideMapOverlay)}
             type="button"
             className="h-10 mr-5 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
@@ -58,6 +61,7 @@ function RouteCarousel({
       )}
       {hideMapOverlay && (
         <button
+          aria-label="Åben/luk kortvisning"
           onClick={() => setHideMapOverlay(!hideMapOverlay)}
           type="button"
           className="h-10 absolute bottom-5 right-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
