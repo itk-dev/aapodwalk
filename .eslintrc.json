@@ -16,6 +16,7 @@
     // react 18 no longer needs "react in scope"
     "react/react-in-jsx-scope": "off",
     "react/prop-types": "off",
+    "import/no-unresolved": "off",
     "react/jsx-filename-extension": [
       "warn",
       {
