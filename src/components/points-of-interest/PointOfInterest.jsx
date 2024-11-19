@@ -7,10 +7,10 @@ import {
 import PodcastWrapper from "./PodcastWrapper";
 import PermissionContext from "../../context/permission-context";
 import Image from "../Image";
-import CirclePlay from "../../icons/circle-play-solid.svg";
-import ClosedCap from "../../icons/closed-captioning-solid.svg";
-import RulerHorizontal from "../../icons/ruler-horizontal-solid.svg";
-import Xmark from "../../icons/xmark-solid.svg";
+import CirclePlay from "../../icons/circle-play-solid.svg?url";
+import ClosedCap from "../../icons/closed-captioning-solid.svg?url";
+import RulerHorizontal from "../../icons/ruler-horizontal-solid.svg?url";
+import Xmark from "../../icons/xmark-solid.svg?url";
 
 function PointOfInterest({
   pointOfInterest: {
@@ -115,7 +115,7 @@ function PointOfInterest({
         <div className="text-zinc-500 text-sm font-medium dark:text-zinc-200">
           {!unlocked && (
             <label htmlFor="distance">
-              <RulerHorizontal className="w-4 inline mr-3" />
+              <img src={RulerHorizontal} alt="" className="w-4 inline mr-3" />
               <span className="sr-only">Afstand</span>
               {/* todo this is slow and would benefit from loading screen / skeleton componenet */}
               <span className="text-md" id="distance">
@@ -131,7 +131,7 @@ function PointOfInterest({
                 aria-label="Afspil podcast"
                 onClick={() => setSource(podcast)}
               >
-                <CirclePlay className="w-6" />
+                <img src={CirclePlay} alt="" className="w-6" />
                 <span className="sr-only">Afspil</span>
               </button>
             )}
@@ -143,9 +143,13 @@ function PointOfInterest({
                 onClick={() => setViewSubtitles(!viewSubtitles)}
               >
                 {viewSubtitles ? (
-                  <Xmark className="h-6 w-6 text-zinc-800" />
+                  <img src={Xmark} alt="" className="h-6 w-6 text-zinc-800" />
                 ) : (
-                  <ClosedCap className="h-6 w-6 text-zinc-800" />
+                  <img
+                    src={ClosedCap}
+                    alt=""
+                    className="h-6 w-6 text-zinc-800"
+                  />
                 )}
                 <span className="sr-only">Se tekst</span>
               </button>

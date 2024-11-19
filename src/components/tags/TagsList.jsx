@@ -44,7 +44,11 @@ function TagsList() {
               aria-label="Luk beskrivelsen"
               onClick={() => setViewAbout(!viewAbout)}
             >
-              <Xmark className="h-6 w-6 text-zinc-800" />
+              <img
+                src={Xmark}
+                alt="Tilbage"
+                className="h-6 w-6 text-zinc-800"
+              />
             </button>
             <div className="flex flex-col gap-2">
               <p>Vælg først en kategori på listen herover.</p>
