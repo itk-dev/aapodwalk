@@ -1,7 +1,7 @@
 import { React } from "react";
 import { useNavigate } from "react-router-dom";
-import Xmark from "../icons/xmark-solid.svg";
-import AngleLeft from "../icons/angle-left-solid.svg";
+import Xmark from "../icons/xmark-solid.svg?url";
+import AngleLeft from "../icons/angle-left-solid.svg?url";
 
 function BackButton({ children }) {
   const navigate = useNavigate();
@@ -14,9 +14,9 @@ function BackButton({ children }) {
     >
       <span className="block bg-zinc-300 dark:bg-zinc-700 place-content-center px-3 mr-2 rounded">
         {children === "Afslut" ? (
-          <Xmark className="inline w-2" />
+          <img src={Xmark} alt="Tilbage" className="inline w-2" />
         ) : (
-          <AngleLeft className="inline w-2" />
+          <img src={AngleLeft} alt="Tilbage" className="inline w-2" />
         )}
       </span>
       {children}

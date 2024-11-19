@@ -3,9 +3,8 @@ import { Carousel } from "react-responsive-carousel";
 import { Link } from "react-router-dom";
 import Route from "./Route";
 import { getIdFromApiEndpoint } from "../../util/helper";
-// ignore import/no-unresolved
-import IconMap from "../../icons/map-solid.svg?react";
-import IconCirclePlay from "../../icons/circle-play-solid.svg?react";
+import IconMap from "../../icons/map-solid.svg?url";
+import IconCirclePlay from "../../icons/circle-play-solid.svg?url";
 import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
 
 function RouteCarousel({
@@ -24,11 +23,12 @@ function RouteCarousel({
             type="button"
             className="h-10 mr-3 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
           >
-            <Link
-              className=""
-              to={selectedRoute && `/route/${selectedRoute.id}`}
-            >
-              <IconCirclePlay className="w-6 h-6" />
+            <Link to={selectedRoute && `/route/${selectedRoute.id}`}>
+              <img
+                src={IconCirclePlay}
+                className="w-6 h-6"
+                alt={`Link to ${selectedRoute.name}`}
+              />
             </Link>
           </button>
           <button
@@ -37,7 +37,7 @@ function RouteCarousel({
             type="button"
             className="h-10 mr-5 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
           >
-            <IconMap className="w-6 h-6" />
+            <img src={IconMap} className="w-6 h-6" alt="" />
           </button>
           <Carousel
             className="absolute left-0 bottom-0 right-0 m-5 rounded-lg overflow-hidden max-h-96 md:max-w-lg"
@@ -66,7 +66,7 @@ function RouteCarousel({
           type="button"
           className="h-10 absolute bottom-5 right-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
         >
-          <IconMap className="w-6 h-6" />
+          <img src={IconMap} className="w-6 h-6" alt="" />
         </button>
       )}
     </>
