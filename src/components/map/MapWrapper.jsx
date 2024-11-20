@@ -63,7 +63,7 @@ function MapWrapper({ mapData, goToView, hideMapOverlay }) {
       const { centerlatitude, centerlongitude, zoomValue } = goToView;
       const [destinationLat, destinationLong] = latlngToUTM(
         centerlatitude,
-        centerlongitude
+        centerlongitude,
       );
       map.getView().animate({
         center: [destinationLat, destinationLong],
@@ -168,7 +168,7 @@ function MapWrapper({ mapData, goToView, hideMapOverlay }) {
       // Proj4 projection definition
       Proj4.defs(
         "EPSG:25832",
-        "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs"
+        "+proj=utm +zone=32 +ellps=GRS80 +towgs84=0,0,0,0,0,0,0 +units=m +no_defs +type=crs",
       );
 
       register(Proj4);

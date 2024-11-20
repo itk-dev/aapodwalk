@@ -9,7 +9,7 @@ function SelectedRoute({ selectedRoute, hideMapOverlay }) {
   useEffect(() => {
     if (selectedRoute) {
       setFeaturesForMap(
-        getFeaturesForMap(selectedRoute.pointsOfInterest["hydra:member"])
+        getFeaturesForMap(selectedRoute.pointsOfInterest["hydra:member"]),
       );
     }
   }, [selectedRoute]);

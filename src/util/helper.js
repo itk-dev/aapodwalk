@@ -38,7 +38,7 @@ export function getAngleFromLocationToDestination(lat1, long1, lat2, long2) {
   let bearing = Math.atan2(
     Math.sin(endY - startY) * Math.cos(endX),
     Math.cos(startX) * Math.sin(endX) -
-      Math.sin(startX) * Math.cos(endX) * Math.cos(endY - startY)
+      Math.sin(startX) * Math.cos(endX) * Math.cos(endY - startY),
   );
 
   bearing *= 57.2957795;

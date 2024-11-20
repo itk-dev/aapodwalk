@@ -48,7 +48,7 @@ function PointOfInterest({
         lat,
         long,
         latitude,
-        longitude
+        longitude,
       );
       setProximity(distance);
 
@@ -72,7 +72,7 @@ function PointOfInterest({
         updateLocalStorage.push(id);
         localStorage.setItem(
           "unlocked-experiences",
-          JSON.stringify(updateLocalStorage)
+          JSON.stringify(updateLocalStorage),
         );
       } else {
         // add new "unlocked steps"

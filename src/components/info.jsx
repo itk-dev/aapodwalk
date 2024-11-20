@@ -16,7 +16,7 @@ function Info() {
         lat,
         long,
         56.153574116526194, // Todo, as of now this is hardcoded to the center of Aarhus, this is perhaps not a good solution in the long run.
-        10.21435188437761
+        10.21435188437761,
       );
       setDistance(distance);
     }
