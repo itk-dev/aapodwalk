@@ -3,9 +3,10 @@
 This is the frontend of a project that creates guided audio tours.
 
 ## Podwalk lingo
+
 ### Point of interst
 
-A point of interest is a geo location which plays audio. 
+A point of interest is a geo location which plays audio.
 
 ### Route
 
@@ -13,8 +14,9 @@ A route consists of multiple connected points of interst.
 
 ### Tag
 
-A tag can be connected to multiple points of interst. The tags are used to group different points of interst together. 
-In the frontend, the entrypoint to a content is through tags. So, if the points of interest in a route are not tagged, they are not displayed.
+A tag can be connected to multiple points of interst. The tags are used to group different points of interst together.
+In the frontend, the entrypoint to a content is through tags. So, if the points of interest in a route are not tagged,
+they are not displayed.
 
 A point of interest can have mulitple tags. A Route can have multiple points of interest.
 
@@ -27,7 +29,8 @@ classDiagram
     Route --> PointOfInterest
 ```
 
-This project relies on a map from [datafordeler](https://confluence.sdfi.dk/pages/viewpage.action?pageId=16056489), the credentials (username/password) are put in the [`env.local`](#.env.local)
+This project relies on a map from [datafordeler](https://confluence.sdfi.dk/pages/viewpage.action?pageId=16056489), the
+credentials (username/password) are put in the [`env.local`](#Development setup)
 
 ## Running the app in docker
 
