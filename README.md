@@ -18,7 +18,7 @@ A tag can be connected to multiple points of interst. The tags are used to group
 In the frontend, the entrypoint to a content is through tags. So, if the points of interest in a route are not tagged,
 they are not displayed.
 
-A point of interest can have mulitple tags. A Route can have multiple points of interest.
+A point of interest can have multiple tags. A Route can have multiple points of interest.
 
 ``` mermaid
 ---
