@@ -82,5 +82,5 @@ docker run --rm --volume $PWD:/md peterdavehello/markdownlint markdownlint --ign
 ```
 
 ```shell name=markdown-apply
-docker run --rm --volume $PWD:/md peterdavehello/markdownlint markdownlint --ignore node_modules --ignore LICENSE.md '**/*.md' --fix
+docker run --rm --volume "$PWD:/md" peterdavehello/markdownlint markdownlint --ignore node_modules --ignore LICENSE.md '**/*.md' --fix
 ```
