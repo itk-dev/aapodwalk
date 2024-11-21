@@ -68,7 +68,7 @@ VITE_APP_DF_MAP_PASSWORD=password_here # can likewise be found in 1password
 ### Check and apply with prettier
 
 ```shell name=prettier-check
-docker run --rm -v "$(pwd):/work" tmknom/prettier:latest --check src
+docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --check src
 ```
 
 ```shell name=prettier-apply
