@@ -72,7 +72,7 @@ docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --check src
 ```
 
 ```shell name=prettier-apply
-docker run --rm -v "$(pwd):/work" tmknom/prettier:latest --write src
+docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --write src
 ```
 
 ### Check and apply markdownlint
