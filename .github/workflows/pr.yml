@@ -49,6 +49,7 @@ jobs:
       # https://github.com/mikkelricky/markdown-code-runner
       # We need to run as root in GitHub Actions, hence the `--substitutions` hack!
       - run: |
+          docker network create frontend
           go run github.com/mikkelricky/markdown-code-runner@latest run \
             --verbose --echo '👉 ' \
             --substitutions '{"docker run ": "docker run --user root ", "docker compose run ": "docker compose run --user root "}' \
