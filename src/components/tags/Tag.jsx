@@ -10,7 +10,7 @@ function Tag({ name, numberOfRoutes, id }) {
     >
       <span className="block text-lg font-bold">{name}</span>
       <span className="text-s text-zinc-600 dark:text-zinc-300">
-        {numberOfRoutes} historier
+        {numberOfRoutes === 1 ? "1 historie" : `${numberOfRoutes} historier`}
       </span>
     </Link>
   );

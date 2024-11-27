@@ -32,7 +32,7 @@ classDiagram
 This project relies on a map from [datafordeler](https://confluence.sdfi.dk/pages/viewpage.action?pageId=16056489), the
 credentials (username/password) are put in the [`env.local`](#Development setup)
 
-## Running the app in docker
+## Building the app
 
 ```shell name=development-build
 docker compose pull
@@ -47,6 +47,16 @@ docker compose run --rm node npm install
 ```
 
 ## Development setup
+
+### Running the app in docker (with hmr)
+
+```shell
+docker compose pull
+docker compose run --rm node npm install
+docker compose --file docker-compose.dev.yml up
+```
+
+### Env
 
 `env.local`
 
