@@ -48,12 +48,12 @@ docker compose run --rm node npm install
 
 ## Development setup
 
-### Running the app in docker (with hmr)
+### Running the app in docker
 
 ```shell
 docker compose pull
 docker compose run --rm node npm install
-docker compose --file docker-compose.dev.yml up
+docker compose up
 ```
 
 ### Env

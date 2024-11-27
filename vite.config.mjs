@@ -6,14 +6,9 @@ export default defineConfig({
   base: "/",
   plugins: [react(), svgLoader()],
   server: {
+    open: false,
     strictPort: true,
     port: 3000,
     host: "localhost",
-    hmr: {
-      host: "aapodwalk.local.itkdev.dk",
-      protocol: "wss",
-      clientPort: 443,
-      path: "/ws",
-    },
   },
 });
