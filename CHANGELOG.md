@@ -9,8 +9,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.1] - 2024-11-19
 
-- [PR-26]https://github.com/itk-dev/aapodwalk/pull/26)
-  - Improved readme 
+- [PR-26]<https://github.com/itk-dev/aapodwalk/pull/26>)
+  - Improved readme
   - Updated linting
   - Added .markdownlint.jsonc
   - Added developer setup
