@@ -88,7 +88,7 @@ docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --write src
 ### Check and apply markdownlint
 
 ```shell name=markdown-check
-docker run --rm --volume $PWD:/md peterdavehello/markdownlint markdownlint --ignore node_modules --ignore LICENSE.md '**/*.md'
+docker run --rm --volume "$PWD:/md" peterdavehello/markdownlint markdownlint --ignore node_modules --ignore LICENSE.md '**/*.md'
 ```
 
 ```shell name=markdown-apply
