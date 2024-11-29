@@ -21,28 +21,3 @@ services:
     # See https://stackoverflow.com/a/77001347/2502647 for details.
     profiles:
       - dummy-profile
-
-  nginx:
-    image: nginxinc/nginx-unprivileged:alpine
-    restart: unless-stopped
-    networks:
-      - app
-      - frontend
-    volumes:
-      - ./.docker/templates:/etc/nginx/templates:ro
-      - ./.docker/nginx.conf:/etc/nginx/nginx.conf:ro
-      - .:/app
-    environment:
-      NGINX_FPM_SERVICE: ${COMPOSE_PROJECT_NAME}-phpfpm-1:9000
-      NGINX_WEB_ROOT: /app/dist
-      NGINX_PORT: 8080
-      NGINX_MAX_BODY_SIZE: 5M
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=frontend"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_SERVER_DOMAIN}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_SERVER_DOMAIN}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
