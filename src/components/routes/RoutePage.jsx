@@ -11,7 +11,7 @@ import {
 } from "../../util/helper";
 import PermissionContext from "../../context/permission-context";
 import BackButton from "../BackButton";
-// import LocationArrow from "../../icons/location-arrow-solid.svg";
+import LocationArrow from "../../icons/location-arrow-solid.svg?url";
 import ApiEndpointContext from "../../context/api-endpoint-context";
 
 function RoutePage() {
@@ -66,7 +66,7 @@ function RoutePage() {
         userLatitude,
         userLongitude,
         destinationLatitude,
-        destinationLongitude,
+        destinationLongitude
       );
       setDestinationDistance(distance);
     }
@@ -92,8 +92,8 @@ function RoutePage() {
           pos.coords.latitude,
           pos.coords.longitude,
           destinationLatitude,
-          destinationLongitude,
-        ),
+          destinationLongitude
+        )
       );
     }, 3000);
   }
@@ -120,7 +120,7 @@ function RoutePage() {
             window.addEventListener(
               "deviceorientation",
               deviceOrientationHandler,
-              true,
+              true
             );
           }
         })
@@ -133,7 +133,7 @@ function RoutePage() {
       window.addEventListener(
         "deviceorientationabsolute",
         deviceOrientationHandler,
-        true,
+        true
       );
     }
   }, []);
@@ -142,13 +142,13 @@ function RoutePage() {
     if (pointsOfInterest) {
       const destinationPoint = getRelevantDestinationPoint(
         pointsOfInterest,
-        newlyUnlockedId,
+        newlyUnlockedId
       );
       if (destinationPoint.length === 0) {
         return setRouteComplete(true);
       }
       const index = pointsOfInterest.findIndex(
-        (poi) => destinationPoint[0].id === poi.id,
+        (poi) => destinationPoint[0].id === poi.id
       );
       setDestinationIndex(index);
       setNextUnlockableId(destinationPoint[0].id);
@@ -214,14 +214,18 @@ function RoutePage() {
                       Retning
                     </span>
                     <span className="w-1/2">
-                      {/* todo make this work again 
-                      cannot make this work: https://www.npmjs.com/package/vite-svg-loader#component */}
-                      {/* <LocationArrow
+                      <div
                         className="inline w-10"
                         style={{
                           transform: `rotate(${-rotation}deg)`,
                         }}
-                      /> */}
+                      >
+                        <img
+                          src={LocationArrow}
+                          alt=""
+                          className="h-5"
+                        />
+                      </div>
                     </span>
                   </div>
                 </div>
