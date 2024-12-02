@@ -21,7 +21,7 @@ function RouteCarousel({
           <button
             aria-label="Afspil"
             type="button"
-            className="h-10 mr-3 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
+            className="h-10 mr-3 mt-5 p-2 rounded bg-white drop-shadow"
           >
             <Link to={selectedRoute && `/route/${selectedRoute.id}`}>
               <img
@@ -35,7 +35,7 @@ function RouteCarousel({
             aria-label="Åben/luk kortvisning"
             onClick={() => setHideMapOverlay(!hideMapOverlay)}
             type="button"
-            className="h-10 mr-5 mt-5 p-2 rounded text-zinc-100 dark:text-zinc-800 bg-zinc-800 dark:bg-zinc-100 drop-shadow"
+            className="h-10 mr-5 mt-5 p-2 rounded bg-white drop-shadow"
           >
             <img src={IconMap} className="w-6 h-6" alt="" />
           </button>
