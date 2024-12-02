@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-27](https://github.com/itk-dev/aapodwalk/pull/27)
+  Fix permalinks in build files
+
 ## [1.0.1] - 2024-11-19
 - [PR-25](https://github.com/itk-dev/aapodwalk/pull/25)
   - Make `svg` import work again

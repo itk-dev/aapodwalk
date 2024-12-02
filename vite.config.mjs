@@ -4,7 +4,7 @@ import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   // depending on your application, base can also be "/"
-  base: "",
+  base: "/",
   plugins: [react(), svgLoader()],
   server: {
     open: false,
