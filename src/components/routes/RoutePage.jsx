@@ -11,7 +11,7 @@ import {
 } from "../../util/helper";
 import PermissionContext from "../../context/permission-context";
 import BackButton from "../BackButton";
-// import LocationArrow from "../../icons/location-arrow-solid.svg";
+import LocationArrow from "../../icons/location-arrow-solid.svg?url";
 import ApiEndpointContext from "../../context/api-endpoint-context";
 
 function RoutePage() {
@@ -214,14 +214,14 @@ function RoutePage() {
                       Retning
                     </span>
                     <span className="w-1/2">
-                      {/* todo make this work again 
-                      cannot make this work: https://www.npmjs.com/package/vite-svg-loader#component */}
-                      {/* <LocationArrow
-                        className="inline w-10"
+                      <div
                         style={{
                           transform: `rotate(${-rotation}deg)`,
                         }}
-                      /> */}
+                        className="inline w-10"
+                      >
+                        <img src={LocationArrow} alt="" className="h-5" />
+                      </div>
                     </span>
                   </div>
                 </div>
