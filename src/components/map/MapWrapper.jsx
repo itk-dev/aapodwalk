@@ -42,6 +42,7 @@ function MapWrapper({ mapData, goToView, hideMapOverlay }) {
       // Map tiles
       title: "WMS skærmkort (DAF)",
       type: "base",
+      preload: Infinity,
       visible: true,
       source: new TileWMS({
         url: `https://services.datafordeler.dk/Dkskaermkort/topo_skaermkort/1.0.0/wms?username=${mapUsername}&password=${mapPassword}`,

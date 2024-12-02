@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+- [PR-30](https://github.com/itk-dev/aapodwalk/pull/30)
+  - Load map faster with preload attribute
 - [PR-29](https://github.com/itk-dev/aapodwalk/pull/29)
   - Readd location arrow
 - [PR-28](https://github.com/itk-dev/aapodwalk/pull/28)
