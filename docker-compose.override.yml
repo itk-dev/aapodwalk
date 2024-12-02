@@ -19,8 +19,8 @@ services:
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
 #      HTTPS config - uncomment to enable redirect from :80 to :443
-#      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
-#      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
+      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
   node:
     image: node:20
     command: npm run start
@@ -32,8 +32,12 @@ services:
     volumes:
       - .:/app:delegated
     labels:
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}-http.middlewares=redirect-to-https"
+      - "traefik.enable=true"
+      - "traefik.docker.network=frontend"
+      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}-http.rule=Host(`${COMPOSE_SERVER_DOMAIN}`)"
+      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}-http.entrypoints=web"
+      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}-http.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-      - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_SERVER_DOMAIN}`)"
+      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}.entrypoints=websecure"
+      - "traefik.http.services.node_${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=3000"
