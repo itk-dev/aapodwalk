@@ -42,6 +42,9 @@ docker compose up --detach --remove-orphans
 docker compose run --rm node rm -rf node_modules
 ```
 
+If you want to test the build, change `NGINX_WEB_ROOT` from `/app` to `/app/dist` in `docker-compose.override.yml` and
+open https://aapodwalk.local.itkdev.dk
+
 ```shell name=development-install
 docker compose run --rm node npm install
 ```
