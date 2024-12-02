@@ -29,6 +29,7 @@ services:
       - '3000'
     networks:
       - app
+      - frontend
     environment:
       - NODE_ENV=development
     volumes:
@@ -36,8 +37,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
-      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}-http.rule=Host(`node_${COMPOSE_DOMAIN}`)"
-      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}-http.middlewares=redirect-to-https"
-      - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
-      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}.rule=Host(`node_${COMPOSE_DOMAIN}`)"
       - "traefik.http.services.node_${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=3000"
+      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}-http.rule=Host(`node_${COMPOSE_DOMAIN}`)"
+      #- "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
