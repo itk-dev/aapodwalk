@@ -214,13 +214,15 @@ function RoutePage() {
                       Retning
                     </span>
                     <span className="w-1/2">
-                      <div
-                        style={{
-                          transform: `rotate(${-rotation}deg)`,
-                        }}
-                        className="inline w-10"
-                      >
-                        <img src={LocationArrow} alt="" className="h-5" />
+                      <div className="inline w-10">
+                        <img
+                          src={LocationArrow}
+                          style={{
+                            transform: `rotate(${-rotation}deg)`,
+                          }}
+                          alt=""
+                          className="h-5"
+                        />
                       </div>
                     </span>
                   </div>
