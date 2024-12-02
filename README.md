@@ -69,25 +69,3 @@ VITE_APP_TOKEN=token_stuff_here # created in api (123?)
 VITE_APP_DF_MAP_USERNAME=username_here # can be found in 1password
 VITE_APP_DF_MAP_PASSWORD=password_here # can likewise be found in 1password
 ```
-
-## Linting
-
-### Check and apply with prettier
-
-```shell name=prettier-check
-docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --check src
-```
-
-```shell name=prettier-apply
-docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --write src
-```
-
-### Check and apply markdownlint
-
-```shell name=markdown-check
-docker run --rm --volume "$PWD:/md" peterdavehello/markdownlint markdownlint --ignore node_modules --ignore LICENSE.md '**/*.md'
-```
-
-```shell name=markdown-apply
-docker run --rm --volume "$PWD:/md" peterdavehello/markdownlint markdownlint --ignore node_modules --ignore LICENSE.md '**/*.md' --fix
-```
