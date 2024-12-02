@@ -62,9 +62,6 @@ docker compose up
 
 ```shell
 # The location of the api
-COMPOSE_PROJECT_NAME=aapodwalk
-COMPOSE_DOMAIN=aapodwalk.local.itkdev.dk
-
 VITE_APP_API_BASE=API_URL_HERE # most probably https://aapodwalk-api.local.itkdev.dk/
 VITE_APP_API_ROUTE=api/v1/
 VITE_APP_TOKEN=token_stuff_here # created in api (123?)

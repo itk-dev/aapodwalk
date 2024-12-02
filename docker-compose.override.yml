@@ -37,6 +37,6 @@ services:
     labels:
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
-      - "traefik.http.services.node_${COMPOSE_PROJECT_NAME}.loadbalancer.server.port=3000"
-      - "traefik.http.routers.node_${COMPOSE_PROJECT_NAME}-http.rule=Host(`node_${COMPOSE_DOMAIN}`)"
+      - "traefik.http.services.${NODE_COMPOSE_PROJECT_NAME}.loadbalancer.server.port=3000"
+      - "traefik.http.routers.${NODE_COMPOSE_PROJECT_NAME}-http.rule=Host(`${NODE_COMPOSE_DOMAIN}`)"
       #- "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
