@@ -26,7 +26,7 @@ function TagsList() {
       <div className="fixed left-3 bottom-3 right-3 bg-sky-400 dark:bg-sky-900 flex flex-col gap-3 rounded-lg p-3">
         {!viewAbout && (
           <div>
-            <h2 className="mb-2 font-bold">Hvordan fungere podwalk?</h2>
+            <h2 className="mb-2 font-bold">Hvordan fungerer podwalk?</h2>
             <button
               className="py-1 px-4 rounded text-zinc-800 bg-zinc-100 flex-auto"
               type="button"
