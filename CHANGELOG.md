@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+- [PR-28](https://github.com/itk-dev/aapodwalk/pull/28)
+  - White background on icons
 
 ## [1.0.1] - 2024-11-19
 - [PR-25](https://github.com/itk-dev/aapodwalk/pull/25)
