@@ -11,16 +11,18 @@ services:
       - ./.docker/templates:/etc/nginx/templates:ro
       - .:/app
     environment:
-      NGINX_WEB_ROOT: /app
+      NGINX_WEB_ROOT: /app/dist
       NGINX_PORT: 8080
       NGINX_MAX_BODY_SIZE: 5M
-    labels:
+    labels: &labels
       - "traefik.enable=true"
       - "traefik.docker.network=frontend"
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.rule=Host(`${COMPOSE_DOMAIN}`)"
-#      HTTPS config - uncomment to enable redirect from :80 to :443
+      # HTTPS config - uncomment to enable redirect from :80 to :443
       - "traefik.http.routers.${COMPOSE_PROJECT_NAME}.middlewares=redirect-to-https"
       - "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+    profiles: [build]
+
   node:
     image: node:20
     command: npm run start
@@ -34,9 +36,5 @@ services:
       - NODE_ENV=development
     volumes:
       - .:/app:delegated
-    labels:
-      - "traefik.enable=true"
-      - "traefik.docker.network=frontend"
-      - "traefik.http.services.${NODE_COMPOSE_PROJECT_NAME}.loadbalancer.server.port=3000"
-      - "traefik.http.routers.${NODE_COMPOSE_PROJECT_NAME}-http.rule=Host(`${NODE_COMPOSE_DOMAIN}`)"
-      #- "traefik.http.middlewares.redirect-to-https.redirectscheme.scheme=https"
+    labels: *labels
+    profiles: [develop]

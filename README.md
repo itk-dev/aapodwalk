@@ -38,12 +38,12 @@ credentials (username/password) are put in the `.env.local` (see Development set
 docker compose pull
 docker compose run --rm node npm install
 docker compose run --rm node npm run build
-docker compose up --detach --remove-orphans
 docker compose run --rm node rm -rf node_modules
-```
-
-If you want to test the build, change `NGINX_WEB_ROOT` from `/app` to `/app/dist` in `docker-compose.override.yml` and
+COMPOSE_PROFILES="*" docker compose stop
+# Start the "build" profile (cf. https://docs.docker.com/compose/how-tos/profiles/)
+COMPOSE_PROFILES=build docker compose up --detach --remove-orphans
 open https://aapodwalk.local.itkdev.dk
+```
 
 ```shell name=development-install
 docker compose run --rm node npm install
@@ -53,10 +53,13 @@ docker compose run --rm node npm install
 
 ### Running the app in docker
 
-```shell
+```shell name=development-develop
 docker compose pull
+# Stop the "build" setup
+COMPOSE_PROFILES="*" docker compose stop
 docker compose run --rm node npm install
-docker compose up
+docker compose up --detach --remove-orphans
+open https://aapodwalk.local.itkdev.dk
 ```
 
 ### Env
