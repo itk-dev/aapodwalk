@@ -30,9 +30,41 @@ classDiagram
 ```
 
 This project relies on a map from [datafordeler](https://confluence.sdfi.dk/pages/viewpage.action?pageId=16056489), the
-credentials (username/password) are put in the `.env.local` (see Development setup).
+credentials (username/password) are put in the `.env.local` ( Development setup - running the app in docker).
+
+## Development setup - running the app in docker
+
+To run this app, there are some local variables that needs to be set:
+
+`env.local`
+
+```shell
+# The location of the api
+VITE_APP_API_BASE=API_URL_HERE # Probably https://aapodwalk-api.local.itkdev.dk/
+VITE_APP_API_ROUTE=api/v1/
+VITE_APP_TOKEN=token_stuff_here # This is created in the api
+
+VITE_APP_DF_MAP_USERNAME=username_here # Can be found in 1password
+VITE_APP_DF_MAP_PASSWORD=password_here # Can likewise be found in 1password
+```
+
+Then you up the container:
+
+```shell name=development-develop
+docker compose pull
+# Stop the "build" setup
+COMPOSE_PROFILES="*" docker compose stop
+docker compose run --rm node npm install
+# When the container 'up's, npm runs start that watches files
+docker compose up --detach --remove-orphans
+open https://aapodwalk.local.itkdev.dk
+```
+
+*Note*, if there is no api running, you will see an empty page.
 
 ## Building the app
+
+To test the app, as it is in production, you can do the following: 
 
 ```shell name=development-build
 docker compose pull
@@ -43,35 +75,4 @@ COMPOSE_PROFILES="*" docker compose stop
 # Start the "build" profile (cf. https://docs.docker.com/compose/how-tos/profiles/)
 COMPOSE_PROFILES=build docker compose up --detach --remove-orphans
 open https://aapodwalk.local.itkdev.dk
-```
-
-```shell name=development-install
-docker compose run --rm node npm install
-```
-
-## Development setup
-
-### Running the app in docker
-
-```shell name=development-develop
-docker compose pull
-# Stop the "build" setup
-COMPOSE_PROFILES="*" docker compose stop
-docker compose run --rm node npm install
-docker compose up --detach --remove-orphans
-open https://aapodwalk.local.itkdev.dk
-```
-
-### Env
-
-`env.local`
-
-```shell
-# The location of the api
-VITE_APP_API_BASE=API_URL_HERE # most probably https://aapodwalk-api.local.itkdev.dk/
-VITE_APP_API_ROUTE=api/v1/
-VITE_APP_TOKEN=token_stuff_here # created in api (123?)
-
-VITE_APP_DF_MAP_USERNAME=username_here # can be found in 1password
-VITE_APP_DF_MAP_PASSWORD=password_here # can likewise be found in 1password
 ```
