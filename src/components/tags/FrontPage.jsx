@@ -3,7 +3,7 @@ import useFetch from "../../util/useFetch";
 import Tag from "./Tag";
 import MapConsentBanner from "../MapConsentBanner";
 
-function TagsList() {
+function FrontPage() {
   const [tags, setTags] = useState(null);
   const { data } = useFetch(`tags`);
 
@@ -27,4 +27,4 @@ function TagsList() {
   );
 }
 
-export default TagsList;
+export default FrontPage;

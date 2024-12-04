@@ -4,7 +4,7 @@ import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
 import PermissionContext from "./context/permission-context";
 import Info from "./components/info";
-import TagsList from "./components/tags/TagsList";
+import FrontPage from "./components/tags/FrontPage";
 import RoutePage from "./components/routes/RoutePage";
 import PersonalInformationPolicyPage from "./components/PersonalInformationPolicyPage";
 
