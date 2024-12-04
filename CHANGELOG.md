@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-37](https://github.com/itk-dev/aapodwalk/pull/37)
+  - Update linting
 - [PR-36](https://github.com/itk-dev/aapodwalk/pull/36)
   - Open street map added
 - [PR-33](https://github.com/itk-dev/aapodwalk/pull/33)
