@@ -135,7 +135,7 @@ function App() {
                   <Route path="tag/:id" element={<TagPage />} />
                   <Route path="route/:id" element={<RoutePage />} />
                   <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
-                  <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage/>} />
+                  <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </PermissionContext.Provider>
