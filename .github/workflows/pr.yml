@@ -27,15 +27,30 @@ jobs:
       - name: npm audit
         run: npm audit
 
-  assets-coding-standards:
-    name: Assets coding standards
+  run-code-blocks-from-readme:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        blocks:
+          - development-install prettier-check
+          - development-install markdown-check
     steps:
-      - name: Checkout
+      - name: Check out repository
         uses: actions/checkout@v4
+        with:
+          persist-credentials: false
+          fetch-depth: 0
 
-      - name: Coding standards
-        run: |
+      # https://github.com/actions/setup-go
+      - uses: actions/setup-go@v5
+        with:
+          go-version: '1.23.0'
+
+      # https://github.com/mikkelricky/markdown-code-runner
+      # We need to run as root in GitHub Actions, hence the `--substitutions` hack!
+      - run: |
           docker network create frontend
-          docker compose run --rm node npm install
-          docker compose run --rm node npm run check-coding-standards
+          go run github.com/mikkelricky/markdown-code-runner@latest run \
+            --verbose --echo '👉 ' \
+            --substitutions '{"docker run ": "docker run --user root ", "docker compose run ": "docker compose run --user root "}' \
+            ${{ matrix.blocks }}
