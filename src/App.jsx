@@ -22,7 +22,7 @@ function App() {
       setCache,
       cache,
     }),
-    [setCache, cache]
+    [setCache, cache],
   );
 
   const contextLatLong = useMemo(
@@ -32,14 +32,14 @@ function App() {
       heading,
       speed,
     }),
-    [lat, long, heading, speed]
+    [lat, long, heading, speed],
   );
 
   const geolocationAvailableContext = useMemo(
     () => ({
       geolocationAvailable,
     }),
-    [geolocationAvailable]
+    [geolocationAvailable],
   );
 
   const updateLocation = () => {

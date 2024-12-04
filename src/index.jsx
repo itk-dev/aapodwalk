@@ -22,5 +22,5 @@ root.render(
         <App />
       </ApiEndpointContext.Provider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );
