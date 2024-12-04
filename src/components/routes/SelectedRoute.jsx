@@ -15,11 +15,7 @@ function SelectedRoute({ selectedRoute, hideMapOverlay }) {
 
   return (
     <>
-      <MapWrapper
-        mapData={featuresForMap}
-        goToView={selectedRoute}
-        hideMapOverlay={hideMapOverlay}
-      />
+      <MapWrapper mapData={featuresForMap} goToView={selectedRoute} hideMapOverlay={hideMapOverlay} />
       <BackButton>Kategorier</BackButton>
       {!hideMapOverlay && (
         <div className="flex flex-col ml-2">
@@ -28,9 +24,7 @@ function SelectedRoute({ selectedRoute, hideMapOverlay }) {
             Valgt kategori
           </div>
           <div className="flex">
-            <h1 className="text-4xl font-bold mb-5 drop-shadow">
-              {selectedRoute.name}
-            </h1>
+            <h1 className="text-4xl font-bold mb-5 drop-shadow">{selectedRoute.name}</h1>
           </div>
           <div className="bg-zinc-100 dark:bg-zinc-700 rounded p-3 w-32 drop-shadow">
             <label htmlFor="distance" className="block mb-2">

@@ -35,9 +35,7 @@ function RoutePage() {
   const { geolocationAvailable } = useContext(PermissionContext);
   const audioRef = useRef();
   const { fileUrl } = useContext(ApiEndpointContext);
-  const isIOS =
-    navigator.userAgent.match(/(iPod|iPhone|iPad)/) &&
-    navigator.userAgent.match(/AppleWebKit/);
+  const isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
 
   useEffect(() => {
     if (data) {
@@ -70,13 +68,7 @@ function RoutePage() {
       );
       setDestinationDistance(distance);
     }
-  }, [
-    destinationLatitude,
-    destinationLongitude,
-    userLatitude,
-    userLongitude,
-    geolocationAvailable,
-  ]);
+  }, [destinationLatitude, destinationLongitude, userLatitude, userLongitude, geolocationAvailable]);
 
   useEffect(() => {
     if (orientation && angle) {
@@ -117,11 +109,7 @@ function RoutePage() {
       DeviceOrientationEvent.requestPermission()
         .then((response) => {
           if (response === "granted") {
-            window.addEventListener(
-              "deviceorientation",
-              deviceOrientationHandler,
-              true,
-            );
+            window.addEventListener("deviceorientation", deviceOrientationHandler, true);
           }
         })
         .catch();
@@ -130,26 +118,17 @@ function RoutePage() {
 
   useEffect(() => {
     if (!isIOS) {
-      window.addEventListener(
-        "deviceorientationabsolute",
-        deviceOrientationHandler,
-        true,
-      );
+      window.addEventListener("deviceorientationabsolute", deviceOrientationHandler, true);
     }
   }, []);
 
   const destinationChanged = (newlyUnlockedId = null) => {
     if (pointsOfInterest) {
-      const destinationPoint = getRelevantDestinationPoint(
-        pointsOfInterest,
-        newlyUnlockedId,
-      );
+      const destinationPoint = getRelevantDestinationPoint(pointsOfInterest, newlyUnlockedId);
       if (destinationPoint.length === 0) {
         return setRouteComplete(true);
       }
-      const index = pointsOfInterest.findIndex(
-        (poi) => destinationPoint[0].id === poi.id,
-      );
+      const index = pointsOfInterest.findIndex((poi) => destinationPoint[0].id === poi.id);
       setDestinationIndex(index);
       setNextUnlockableId(destinationPoint[0].id);
       setDestinationLatitude(destinationPoint[0].latitude);
@@ -193,9 +172,7 @@ function RoutePage() {
                   {destinationIndex + 1}
                 </span>
               </div>
-              <div className="">
-                {destinationDistance && `${destinationDistance} meter`}
-              </div>
+              <div className="">{destinationDistance && `${destinationDistance} meter`}</div>
             </div>
             <div className="pl-3">
               {(!orientation || !angle) && (
@@ -210,9 +187,7 @@ function RoutePage() {
               {orientation && angle && (
                 <div>
                   <div className="flex justify-between">
-                    <span className="text-sm text-bold mr-5 my-auto">
-                      Retning
-                    </span>
+                    <span className="text-sm text-bold mr-5 my-auto">Retning</span>
                     <span className="w-1/2">
                       <div className="inline w-10">
                         <img

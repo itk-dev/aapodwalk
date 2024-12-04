@@ -17,13 +17,7 @@ function MapWrapper({ mapData, goToView, hideMapOverlay }) {
         onClick={() => setFocusOnMap(true)}
       >
         {focusOnMap && <Map zoomControl={true} mapData={mapData}></Map>}
-        {!focusOnMap && (
-          <Map
-            zoomControl={false}
-            additionalClass="opacity-55"
-            mapData={mapData}
-          ></Map>
-        )}
+        {!focusOnMap && <Map zoomControl={false} additionalClass="opacity-55" mapData={mapData}></Map>}
       </div>
       {focusOnMap && (
         <button

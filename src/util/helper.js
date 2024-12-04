@@ -15,9 +15,7 @@ export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   const Δφ = ((lat2 - lat1) * Math.PI) / 180;
   const Δλ = ((lon2 - lon1) * Math.PI) / 180;
 
-  const a =
-    Math.sin(Δφ / 2) * Math.sin(Δφ / 2) +
-    Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
+  const a = Math.sin(Δφ / 2) * Math.sin(Δφ / 2) + Math.cos(φ1) * Math.cos(φ2) * Math.sin(Δλ / 2) * Math.sin(Δλ / 2);
   const c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
 
   let d = Math.round(R * c) - 35; // in metres
@@ -37,8 +35,7 @@ export function getAngleFromLocationToDestination(lat1, long1, lat2, long2) {
 
   let bearing = Math.atan2(
     Math.sin(endY - startY) * Math.cos(endX),
-    Math.cos(startX) * Math.sin(endX) -
-      Math.sin(startX) * Math.cos(endX) * Math.cos(endY - startY),
+    Math.cos(startX) * Math.sin(endX) - Math.sin(startX) * Math.cos(endX) * Math.cos(endY - startY),
   );
 
   bearing *= 57.2957795;

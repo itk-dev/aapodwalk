@@ -1,9 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
 import LatLongContext from "../../context/latitude-longitude-context";
-import {
-  getDistanceBetweenCoordinates,
-  isExperienceIdInLocalstorage,
-} from "../../util/helper";
+import { getDistanceBetweenCoordinates, isExperienceIdInLocalstorage } from "../../util/helper";
 import PodcastWrapper from "./PodcastWrapper";
 import PermissionContext from "../../context/permission-context";
 import Image from "../Image";
@@ -13,17 +10,7 @@ import RulerHorizontal from "../../icons/ruler-horizontal-solid.svg?url";
 import Xmark from "../../icons/xmark-solid.svg?url";
 
 function PointOfInterest({
-  pointOfInterest: {
-    latitude,
-    longitude,
-    name,
-    image,
-    id,
-    subtitles,
-    podcast,
-    IFrameUrl,
-    proximityToUnlock,
-  },
+  pointOfInterest: { latitude, longitude, name, image, id, subtitles, podcast, IFrameUrl, proximityToUnlock },
   index,
   destinationChanged,
   nextUnlockableId,
@@ -37,19 +24,8 @@ function PointOfInterest({
   const { geolocationAvailable } = useContext(PermissionContext);
 
   useEffect(() => {
-    if (
-      latitude &&
-      longitude &&
-      lat &&
-      long &&
-      geolocationAvailable !== "denied"
-    ) {
-      const distance = getDistanceBetweenCoordinates(
-        lat,
-        long,
-        latitude,
-        longitude,
-      );
+    if (latitude && longitude && lat && long && geolocationAvailable !== "denied") {
+      const distance = getDistanceBetweenCoordinates(lat, long, latitude, longitude);
       setProximity(distance);
 
       if (!unlocked && id === nextUnlockableId) {
@@ -70,10 +46,7 @@ function PointOfInterest({
         const updateLocalStorage = JSON.parse(currentLocalStorage);
 
         updateLocalStorage.push(id);
-        localStorage.setItem(
-          "unlocked-experiences",
-          JSON.stringify(updateLocalStorage),
-        );
+        localStorage.setItem("unlocked-experiences", JSON.stringify(updateLocalStorage));
       } else {
         // add new "unlocked steps"
         localStorage.setItem("unlocked-experiences", JSON.stringify([id]));
@@ -90,28 +63,19 @@ function PointOfInterest({
   return (
     <div
       className={`relative flex items-start gap-4 p-2 rounded-lg ${
-        unlocked
-          ? `bg-zinc-200 dark:bg-zinc-600`
-          : `bg-zinc-100 dark:bg-zinc-700`
+        unlocked ? `bg-zinc-200 dark:bg-zinc-600` : `bg-zinc-100 dark:bg-zinc-700`
       }`}
     >
       <div
         className={`absolute -left-3 px-2 font-bold rounded-full text-sm ${
-          unlocked
-            ? `bg-emerald-700 text-zinc-100`
-            : `bg-emerald-900 text-zinc-400`
+          unlocked ? `bg-emerald-700 text-zinc-100` : `bg-emerald-900 text-zinc-400`
         }`}
       >
         {index}
       </div>
-      <Image
-        src={image}
-        className={`w-24 h-24 rounded-full ${!unlocked && `opacity-40`}`}
-      />
+      <Image src={image} className={`w-24 h-24 rounded-full ${!unlocked && `opacity-40`}`} />
       <div className="flex flex-col">
-        <h2 className="text-zinc-900 text-sm font-bold dark:text-zinc-200 my-3">
-          {name}
-        </h2>
+        <h2 className="text-zinc-900 text-sm font-bold dark:text-zinc-200 my-3">{name}</h2>
         <div className="text-zinc-500 text-sm font-medium dark:text-zinc-200">
           {!unlocked && (
             <label htmlFor="distance">
@@ -145,11 +109,7 @@ function PointOfInterest({
                 {viewSubtitles ? (
                   <img src={Xmark} alt="" className="h-6 w-6 text-zinc-800" />
                 ) : (
-                  <img
-                    src={ClosedCap}
-                    alt=""
-                    className="h-6 w-6 text-zinc-800"
-                  />
+                  <img src={ClosedCap} alt="" className="h-6 w-6 text-zinc-800" />
                 )}
                 <span className="sr-only">Se tekst</span>
               </button>
