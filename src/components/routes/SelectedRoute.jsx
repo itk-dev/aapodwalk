@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
 import MapWrapper from "../map/MapWrapper";
-import { getFeaturesForMap } from "../../util/helper";
 import BackButton from "../BackButton";
 
 function SelectedRoute({ selectedRoute, hideMapOverlay }) {
@@ -9,7 +8,7 @@ function SelectedRoute({ selectedRoute, hideMapOverlay }) {
   useEffect(() => {
     if (selectedRoute) {
       setFeaturesForMap(
-        getFeaturesForMap(selectedRoute.pointsOfInterest["hydra:member"])
+        selectedRoute.pointsOfInterest["hydra:member"]
       );
     }
   }, [selectedRoute]);

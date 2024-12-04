@@ -29,8 +29,9 @@ classDiagram
     Route --> PointOfInterest
 ```
 
-This project relies on a map from [datafordeler](https://confluence.sdfi.dk/pages/viewpage.action?pageId=16056489), the
-credentials (username/password) are put in the `.env.local` ( Development setup - running the app in docker).
+### Map
+
+This project relies on a [Open Street Map](https://www.openstreetmap.org/), implemented with [React Leaflet](https://react-leaflet.js.org/).
 
 ## Development setup - running the app in docker
 
@@ -43,9 +44,6 @@ To run this app, there are some local variables that needs to be set:
 VITE_APP_API_BASE=API_URL_HERE # Probably https://aapodwalk-api.local.itkdev.dk/
 VITE_APP_API_ROUTE=api/v1/
 VITE_APP_TOKEN=token_stuff_here # This is created in the api
-
-VITE_APP_DF_MAP_USERNAME=username_here # Can be found in 1password
-VITE_APP_DF_MAP_PASSWORD=password_here # Can likewise be found in 1password
 ```
 
 Then you up the container:

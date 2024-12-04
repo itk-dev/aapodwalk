@@ -101,18 +101,4 @@ export function latlngToUTM(lat, long) {
   return Proj4(wgs84, utm, [parsedLong, parsedLat]);
 }
 
-export function getFeaturesForMap(resources) {
-  const locations = [];
-  if (resources) {
-    resources.forEach(({ latitude, longitude }) => {
-      const utmCoordinates = latlngToUTM(Number(latitude), Number(longitude));
-      locations.push({
-        northing: utmCoordinates[0],
-        easting: utmCoordinates[1],
-      });
-    });
-  }
-  return locations;
-}
-
 export default {};
