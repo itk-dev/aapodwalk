@@ -20,7 +20,6 @@ function Map({ mapData, zoomControl, additionalClass = "" }) {
           <Marker
           key={index}
           position={[latitude, longitude]}
-          // Using the index for numbering only works if the data they are in the correct order
           icon={L.divIcon({
               html: `
               <div class="pin">
