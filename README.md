@@ -77,6 +77,11 @@ open https://aapodwalk.local.itkdev.dk
 
 ## Linting
 
+```shell name=development-install
+# development-install is used in actions
+docker compose run --rm node npm install
+```
+
 ### Check and apply with prettier
 
 ```shell name=prettier-check
