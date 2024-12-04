@@ -44,23 +44,15 @@ function TagsList() {
               aria-label="Luk beskrivelsen"
               onClick={() => setViewAbout(!viewAbout)}
             >
-              <img
-                src={Xmark}
-                alt="Tilbage"
-                className="h-6 w-6 text-zinc-800"
-              />
+              <img src={Xmark} alt="Tilbage" className="h-6 w-6 text-zinc-800" />
             </button>
             <div className="flex flex-col gap-2">
               <p>Vælg først en kategori på listen herover.</p>
               <p>Vælg derefter den ønskede rute.</p>
+              <p>Gå hen til første del af ruten og der kan du starte afspilningen.</p>
               <p>
-                Gå hen til første del af ruten og der kan du starte
-                afspilningen.
-              </p>
-              <p>
-                Lyt til vejledningen eller brug navigations pilen i bunden af
-                rute visningen til at komme til næste punkt. Husk at være
-                opmærksom på dine opgivelser.
+                Lyt til vejledningen eller brug navigations pilen i bunden af rute visningen til at komme til næste
+                punkt. Husk at være opmærksom på dine opgivelser.
               </p>
               <p>God fornøjelse med din podwalk.</p>
             </div>

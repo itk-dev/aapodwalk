@@ -16,10 +16,7 @@ function Route({ id }) {
   if (route === null) return null;
 
   return (
-    <Link
-      className="bg-zinc-100 dark:bg-zinc-700 flex flex-row relative h-32"
-      to={`/route/${id}`}
-    >
+    <Link className="bg-zinc-100 dark:bg-zinc-700 flex flex-row relative h-32" to={`/route/${id}`}>
       <div className="flex-none w-36">
         <Image className="object-cover h-full" src={route.image} />
       </div>

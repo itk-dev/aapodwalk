@@ -17,11 +17,11 @@ function Map({ mapData, zoomControl, additionalClass = "" }) {
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
       {mapData.map(({ latitude, longitude }, index) => (
-          <Marker
+        <Marker
           key={index}
           position={[latitude, longitude]}
           icon={L.divIcon({
-              html: `
+            html: `
               <div class="pin">
                 <span>${index}</span>
               </div>

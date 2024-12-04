@@ -12,9 +12,7 @@ root.render(
     <BrowserRouter>
       <ApiEndpointContext.Provider
         value={{
-          url:
-            import.meta.env.VITE_APP_API_BASE +
-            import.meta.env.VITE_APP_API_ROUTE,
+          url: import.meta.env.VITE_APP_API_BASE + import.meta.env.VITE_APP_API_ROUTE,
           fileUrl: import.meta.env.VITE_APP_API_BASE,
           token: import.meta.env.VITE_APP_TOKEN,
         }}
@@ -22,5 +20,5 @@ root.render(
         <App />
       </ApiEndpointContext.Provider>
     </BrowserRouter>
-  </React.StrictMode>
+  </React.StrictMode>,
 );

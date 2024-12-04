@@ -1,6 +1,6 @@
 .leaflet-container {
   height: 100%;
-  
+
   * {
     transition: all 120ms ease-out;
   }

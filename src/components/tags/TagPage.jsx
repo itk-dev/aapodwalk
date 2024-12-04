@@ -2,10 +2,7 @@ import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import SelectedRoute from "../routes/SelectedRoute";
-import {
-  getIdFromApiEndpoint,
-  getIdsFromApiEndpoints,
-} from "../../util/helper";
+import { getIdFromApiEndpoint, getIdsFromApiEndpoints } from "../../util/helper";
 import RouteCarousel from "../routes/RouteCarousel";
 
 // A tag page displays routes connected to the tag-id

@@ -22,7 +22,7 @@ function App() {
       setCache,
       cache,
     }),
-    [setCache, cache]
+    [setCache, cache],
   );
 
   const contextLatLong = useMemo(
@@ -32,14 +32,14 @@ function App() {
       heading,
       speed,
     }),
-    [lat, long, heading, speed]
+    [lat, long, heading, speed],
   );
 
   const geolocationAvailableContext = useMemo(
     () => ({
       geolocationAvailable,
     }),
-    [geolocationAvailable]
+    [geolocationAvailable],
   );
 
   const updateLocation = () => {
@@ -119,12 +119,7 @@ function App() {
                   <Route path="/" element={<TagsList />} />
                   <Route path="tag/:id" element={<TagPage />} />
                   <Route path="route/:id" element={<RoutePage />} />
-                  <Route
-                    path="info"
-                    element={
-                      <Info geolocationAvailable={geolocationAvailable} />
-                    }
-                  />
+                  <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
               </PermissionContext.Provider>
