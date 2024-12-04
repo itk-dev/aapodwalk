@@ -17,8 +17,6 @@ root.render(
             import.meta.env.VITE_APP_API_ROUTE,
           fileUrl: import.meta.env.VITE_APP_API_BASE,
           token: import.meta.env.VITE_APP_TOKEN,
-          mapUsername: import.meta.env.VITE_APP_DF_MAP_USERNAME,
-          mapPassword: import.meta.env.VITE_APP_DF_MAP_PASSWORD,
         }}
       >
         <App />

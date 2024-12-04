@@ -6,6 +6,8 @@ The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
 ## Unreleased
+- [PR-36](https://github.com/itk-dev/aapodwalk/pull/36)
+  -  Open street map added
 - [PR-33](https://github.com/itk-dev/aapodwalk/pull/33)
   - Improved readme
   - Added watch of files on docker compose up
