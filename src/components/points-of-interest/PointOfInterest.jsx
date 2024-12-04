@@ -21,7 +21,7 @@ function PointOfInterest({
   const [proximity, setProximity] = useState(null);
   const [viewSubtitles, setViewSubtitles] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
-  const { geolocationAvailable } = useContext(PermissionContext);
+  const { geolocationAvailableContext: geolocationAvailable } = useContext(PermissionContext);
 
   useEffect(() => {
     if (latitude && longitude && lat && long && geolocationAvailable !== "denied") {

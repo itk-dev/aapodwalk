@@ -32,7 +32,7 @@ function RoutePage() {
   const [source, setSource] = useState(null);
   const [accuracy, setAccuracy] = useState(0);
   const { userLatitude, userLongitude } = useContext(LatLongContext);
-  const { geolocationAvailable } = useContext(PermissionContext);
+  const { geolocationAvailableContext: geolocationAvailable } = useContext(PermissionContext);
   const audioRef = useRef();
   const { fileUrl } = useContext(ApiEndpointContext);
   const isIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);

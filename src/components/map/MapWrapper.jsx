@@ -1,10 +1,14 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import Xmark from "../../icons/xmark-solid.svg?url";
 import Map from "./Map";
 import "./map-wrapper.css";
+import PermissionContext from "../../context/permission-context";
 
-function MapWrapper({ mapData, goToView, hideMapOverlay }) {
+function MapWrapper({ mapData }) {
   const [focusOnMap, setFocusOnMap] = useState(false);
+  const { openStreetMapConsent } = useContext(PermissionContext);
+
+  if (!openStreetMapConsent) return null;
 
   return (
     <>
