@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-38](https://github.com/itk-dev/aapodwalk/pull/38)
+  - Added consent banner (`MapConsentBanner.jsx`)
+  - Updated permission context to include open street map permission
+  - Used localstorage to save yes/no from user 
+  - Added route with extra consent info (`PersonalInformationPolicyPage.jsx`)
 - [PR-37](https://github.com/itk-dev/aapodwalk/pull/37)
   - Update linting
 - [PR-36](https://github.com/itk-dev/aapodwalk/pull/36)
