@@ -8,7 +8,7 @@ function Map({ mapData, zoomControl, additionalClass = "" }) {
     <MapContainer
       center={[56.15355732197891, 10.213148468411132]} // Aarhus <3
       zoom={14}
-      className={additionalClass}
+      className={`${additionalClass} rounded`}
       zoomControl={zoomControl}
       scrollWheelZoom={false}
     >
@@ -22,7 +22,7 @@ function Map({ mapData, zoomControl, additionalClass = "" }) {
           position={[latitude, longitude]}
           icon={L.divIcon({
             html: `
-              <div class="pin">
+              <div class="bg-white dark:bg-black pin">
                 <span>${index}</span>
               </div>
             `,

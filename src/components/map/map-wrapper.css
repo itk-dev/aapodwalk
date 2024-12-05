@@ -7,8 +7,6 @@
 }
 
 .map-container {
-  margin: 0.75rem;
-  margin-top: 2.5rem;
   height: calc(100vh - 2.5rem - 0.75rem);
 }
 
@@ -31,7 +29,6 @@
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: white;
   border-color: rgb(6 95 70 / var(--tw-text-opacity));
   border-style: solid;
   border-radius: 100% 100% 0 100%;
@@ -40,7 +37,10 @@
   transform: rotate(45deg);
   width: 24px;
   height: 24px;
-  background-color: white;
+  
+  @media (prefers-color-scheme: dark) {
+    background-color: red;
+  }
 
   span {
     display: block;

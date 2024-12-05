@@ -1,6 +1,5 @@
 import { React, useEffect, useState } from "react";
 import MapWrapper from "../map/MapWrapper";
-import BackButton from "../BackButton";
 
 function SelectedRoute({ selectedRoute, hideMapOverlay }) {
   const [featuresForMap, setFeaturesForMap] = useState(null);
@@ -16,7 +15,6 @@ function SelectedRoute({ selectedRoute, hideMapOverlay }) {
   return (
     <>
       <MapWrapper mapData={featuresForMap} goToView={selectedRoute} hideMapOverlay={hideMapOverlay} />
-      <BackButton>Kategorier</BackButton>
       {!hideMapOverlay && (
         <div className="flex flex-col ml-2">
           {/* TODO: show the real category instead of "Valgt kategory" */}
