@@ -15,7 +15,6 @@ function App() {
   const [long, setLong] = useState(null);
   const [heading, setHeading] = useState(null);
   const [speed, setSpeed] = useState(null);
-  const [cache, setCache] = useState({});
   const [hasAllowedGeolocation, setHasAllowedGeolocation] = useState(true);
 
   const contextLatLong = useMemo(
