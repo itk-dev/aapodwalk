@@ -113,15 +113,15 @@ function App() {
       {hasAllowedGeolocation && (
         <div className="App flex flex-col h-full min-h-screen dark:text-white w-screen p-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
           <LatLongContext.Provider value={contextLatLong}>
-              <PermissionContext.Provider
-                value={{
-                  geolocationAvailableContext,
-                  openStreetMapConsent,
-                  setOpenStreetMapConsent,
-                }}
-              >
-                <Navbar></Navbar>
-                <div className="relative grow overflow-hidden">
+            <PermissionContext.Provider
+              value={{
+                geolocationAvailableContext,
+                openStreetMapConsent,
+                setOpenStreetMapConsent,
+              }}
+            >
+              <Navbar></Navbar>
+              <div className="relative grow overflow-hidden">
                 <Routes>
                   <Route path="/" element={<FrontPage />} />
                   <Route path="tag/:id" element={<TagPage />} />
@@ -130,8 +130,8 @@ function App() {
                   <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
-                </div>
-              </PermissionContext.Provider>
+              </div>
+            </PermissionContext.Provider>
           </LatLongContext.Provider>
         </div>
       )}

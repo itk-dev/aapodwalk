@@ -17,7 +17,8 @@ const LandingPage = ({}) => {
       <div className="w-3/5">
         <h1 className="text-2xl font-extrabold">Lyt til Aarhus med disse Podwalks</h1>
         <p className="mt-5">
-        Oplev Aarhus gennem podcasts, hvor du går rundt og lytter til historier og lokal viden, der giver nyt liv til gaderne og stederne omkring dig.
+          Oplev Aarhus gennem podcasts, hvor du går rundt og lytter til historier og lokal viden, der giver nyt liv til
+          gaderne og stederne omkring dig.
         </p>
         <p className="mt-5 font-bold">Vælg en rute nedenfor og start din lytteoplevelse.</p>
       </div>

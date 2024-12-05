@@ -11,7 +11,8 @@ function Tag({ title, id }) {
       }`}
       onClick={() => setSelectedTag(id)}
     >
-      <span className="sr-only">Sorter listen af ruter efter ruter med tagget </span>{title}
+      <span className="sr-only">Sorter listen af ruter efter ruter med tagget </span>
+      {title}
     </button>
   );
 }
