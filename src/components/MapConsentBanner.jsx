@@ -15,7 +15,7 @@ const MapConsentBanner = () => {
 
   return (
     <>
-      <div className="fixed left-3 bottom-3 right-3 dark:bg-zinc-600 flex flex-col gap-3 rounded-lg p-3">
+      <div className="fixed left-3 bottom-3 right-3 dark:bg-zinc-600 flex flex-col gap-3 rounded-lg p-3 bg-emerald-400">
         <div>
           <h2 className="mb-1 font-bold">Samtykke</h2>
           <div className="mt-1 flex flex-col">
@@ -36,7 +36,7 @@ const MapConsentBanner = () => {
               <div>
                 <div className="flex justify-between">
                   <button
-                    className="p-1 rounded bg-emerald-400 dark:bg-emerald-800 float-right mr-1 grow"
+                    className="p-1 rounded bg-zinc-100 dark:bg-emerald-800 float-right mr-1 grow"
                     type="button"
                     onClick={() => updateConsent(true)}
                   >
