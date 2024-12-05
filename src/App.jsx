@@ -2,7 +2,6 @@ import React, { useEffect, useState, useMemo } from "react";
 import { Routes, Navigate, Route } from "react-router-dom";
 import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
-import CacheContext from "./context/cache-context";
 import PermissionContext from "./context/permission-context";
 import Info from "./components/info";
 import TagsList from "./components/tags/TagsList";
@@ -16,16 +15,7 @@ function App() {
   const [long, setLong] = useState(null);
   const [heading, setHeading] = useState(null);
   const [speed, setSpeed] = useState(null);
-  const [cache, setCache] = useState({});
   const [hasAllowedGeolocation, setHasAllowedGeolocation] = useState(true);
-
-  const cacheContext = useMemo(
-    () => ({
-      setCache,
-      cache,
-    }),
-    [setCache, cache],
-  );
 
   const contextLatLong = useMemo(
     () => ({
@@ -122,24 +112,22 @@ function App() {
       {hasAllowedGeolocation && (
         <div className="App h-full min-h-screen w-screen p-3 text-zinc-800 dark:text-white bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
           <LatLongContext.Provider value={contextLatLong}>
-            <CacheContext.Provider value={cacheContext}>
-              <PermissionContext.Provider
-                value={{
-                  geolocationAvailableContext,
-                  openStreetMapConsent,
-                  setOpenStreetMapConsent,
-                }}
-              >
-                <Routes>
-                  <Route path="/" element={<TagsList />} />
-                  <Route path="tag/:id" element={<TagPage />} />
-                  <Route path="route/:id" element={<RoutePage />} />
-                  <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
-                  <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-              </PermissionContext.Provider>
-            </CacheContext.Provider>
+            <PermissionContext.Provider
+              value={{
+                geolocationAvailableContext,
+                openStreetMapConsent,
+                setOpenStreetMapConsent,
+              }}
+            >
+              <Routes>
+                <Route path="/" element={<TagsList />} />
+                <Route path="tag/:id" element={<TagPage />} />
+                <Route path="route/:id" element={<RoutePage />} />
+                <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
+                <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
+                <Route path="*" element={<Navigate to="/" />} />
+              </Routes>
+            </PermissionContext.Provider>
           </LatLongContext.Provider>
         </div>
       )}
