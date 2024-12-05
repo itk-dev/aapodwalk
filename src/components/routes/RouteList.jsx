@@ -15,7 +15,7 @@ const RouteList = () => {
   useEffect(() => {
     if (data) {
       if (selectedTag === null) {
-        // Do the stuff with routes in close proximity
+        // Todo do the stuff with routes in close proximity
         setRoutes(data["hydra:member"]);
       } else {
         const filteredData = data["hydra:member"].filter(function ({ tags }) {
