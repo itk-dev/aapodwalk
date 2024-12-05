@@ -12,8 +12,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [1.0.4] - 2024-12-05
 
-- [PR-39](https://github.com/itk-dev/aapodwalk/pull/39)
-  - Remove cache from usefetch and cache context
 - [PR-38](https://github.com/itk-dev/aapodwalk/pull/38)
   - Added consent banner (`MapConsentBanner.jsx`)
   - Updated permission context to include open street map permission
