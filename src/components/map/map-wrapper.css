@@ -38,10 +38,6 @@
   width: 24px;
   height: 24px;
 
-  @media (prefers-color-scheme: dark) {
-    background-color: red;
-  }
-
   span {
     display: block;
     pointer-events: none;
