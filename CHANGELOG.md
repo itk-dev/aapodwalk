@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-40](https://github.com/itk-dev/aapodwalk/pull/40)
+  - Default dark mode
+  - Make consent readable when not on dark mode
+
 ## [1.0.4] - 2024-12-05
 
 - [PR-38](https://github.com/itk-dev/aapodwalk/pull/38)
