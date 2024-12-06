@@ -17,7 +17,7 @@ const FAQ = () => {
       </section>
       <section className="bg-zinc-100 dark:bg-zinc-900 flex flex-row relative my-2 rounded font-bold p-5 flex flex-col mt-5">
         Sådan bruger du navigationen
-        <Link to={"/navigation-help"} className="text-emerald-400 dark:text-emerald-800 font-bold underline mt-5">
+        <Link to={"/navigation-help"} className="text-emerald-400 dark:text-emerald-800 font-bold underline mt-3">
           Vedledning til navigation
         </Link>
       </section>
