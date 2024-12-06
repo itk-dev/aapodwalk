@@ -12,7 +12,7 @@ function FrontPage() {
     <div>
       <LandingPage></LandingPage>
       <SelectedTagContext.Provider value={{ selectedTag, setSelectedTag }}>
-        <TagList/>
+        <TagList />
         <RouteList></RouteList>
       </SelectedTagContext.Provider>
 
