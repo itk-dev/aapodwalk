@@ -10,6 +10,7 @@ const LandingPage = ({}) => {
       localStorage.setItem("info-closed", true);
     }
   }, [infoClosed]);
+
   if (infoClosed) return null;
 
   return (
