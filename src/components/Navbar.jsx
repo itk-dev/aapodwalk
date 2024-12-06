@@ -17,7 +17,7 @@ const Navbar = ({}) => {
         onClick={() => alert("boop")}
       >
         <FontAwesomeIcon icon={faQuestion} />
-        <span class="sr-only">FAQ</span>
+        <span className="sr-only">FAQ</span>
       </button>
     </div>
   );

@@ -31,7 +31,7 @@ const RouteList = () => {
   return (
     <div className="mt-10">
       {routes.map((route) => (
-        <Route route={route} />
+        <Route route={route} key={route.id} />
       ))}
     </div>
   );

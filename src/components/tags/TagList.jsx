@@ -18,7 +18,7 @@ const TagList = () => {
     <>
       <fieldset>
         <legend>Sorter efter:</legend>
-        <div class="flex flex-wrap">
+        <div className="flex flex-wrap">
           <Tag key="close-to-tag" title="Tæt på denne placering" id={null}></Tag>
           {tags.map(({ title, id }) => (
             <Tag key={id} title={title} id={id} />

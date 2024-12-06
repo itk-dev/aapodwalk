@@ -6,10 +6,10 @@ import LatLongContext from "../../context/latitude-longitude-context";
 import PermissionContext from "../../context/permission-context";
 
 function Route({ route }) {
-  const [proximity, setProximity] = useState();
-  console.log(route);
+  // The below is to calculate the proximity between user and first point in route
   const { latitude, longitude } = route.pointsOfInterest[0];
   const { lat, long } = useContext(LatLongContext);
+  const [proximity, setProximity] = useState();
   const { geolocationAvailableContext: geolocationAvailable } = useContext(PermissionContext);
 
   useEffect(() => {
@@ -31,7 +31,7 @@ function Route({ route }) {
         <div className="text-emerald-400 dark:text-emerald-800 font-bold text-sm flex justify-between">
           <div className="truncate w-4/5">
             {route.tags.map(({ title }) => (
-              <span>{title} </span>
+              <span key={title}>{title} </span>
             ))}
           </div>
           <span>{proximity} m</span>
