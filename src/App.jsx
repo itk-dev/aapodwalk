@@ -8,6 +8,7 @@ import FrontPage from "./components/FrontPage";
 import RoutePage from "./components/routes/RoutePage";
 import PersonalInformationPolicyPage from "./components/PersonalInformationPolicyPage";
 import Navbar from "./components/Navbar";
+import FAQ from "./components/FAQ";
 
 function App() {
   const [geolocationAvailable, setGeolocationAvailable] = useState();
@@ -126,7 +127,9 @@ function App() {
                   <Route path="/" element={<FrontPage />} />
                   <Route path="tag/:id" element={<TagPage />} />
                   <Route path="route/:id" element={<RoutePage />} />
+                  <Route path="faq" element={<FAQ />} />
                   <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
+                  <Route path="/navigation-help" element={<div>Todo</div>} />
                   <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
                   <Route path="*" element={<Navigate to="/" />} />
                 </Routes>
