@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-42](https://github.com/itk-dev/aapodwalk/pull/42)
+  - Add faq page
 - [PR-41](https://github.com/itk-dev/aapodwalk/pull/41)
   - Add landing page component
   - Add tags as a filter instead of as a "landing"
