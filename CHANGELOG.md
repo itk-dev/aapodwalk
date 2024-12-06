@@ -7,6 +7,14 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-41](https://github.com/itk-dev/aapodwalk/pull/41)
+  - Add landing page component
+  - Add tags as a filter instead of as a "landing"
+  - Add routes + proximity to route
+  - Add question mark button that, as of now, does nothing
+  - Add support for fontawesome
+  - Save if the user closes the "landing-page" in `localstorage`
+
 - [PR-39](https://github.com/itk-dev/aapodwalk/pull/39)
   - Remove cache from usefetch and cache context
 

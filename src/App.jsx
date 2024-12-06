@@ -4,9 +4,10 @@ import TagPage from "./components/tags/TagPage";
 import LatLongContext from "./context/latitude-longitude-context";
 import PermissionContext from "./context/permission-context";
 import Info from "./components/info";
-import TagsList from "./components/tags/TagsList";
+import FrontPage from "./components/FrontPage";
 import RoutePage from "./components/routes/RoutePage";
 import PersonalInformationPolicyPage from "./components/PersonalInformationPolicyPage";
+import Navbar from "./components/Navbar";
 
 function App() {
   const [geolocationAvailable, setGeolocationAvailable] = useState();
@@ -110,7 +111,7 @@ function App() {
   return (
     <>
       {hasAllowedGeolocation && (
-        <div className="App h-full min-h-screen w-screen p-3 text-zinc-800 dark:text-white bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+        <div className="App flex flex-col h-full min-h-screen dark:text-white w-screen p-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
           <LatLongContext.Provider value={contextLatLong}>
             <PermissionContext.Provider
               value={{
@@ -119,14 +120,17 @@ function App() {
                 setOpenStreetMapConsent,
               }}
             >
-              <Routes>
-                <Route path="/" element={<TagsList />} />
-                <Route path="tag/:id" element={<TagPage />} />
-                <Route path="route/:id" element={<RoutePage />} />
-                <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
-                <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
-                <Route path="*" element={<Navigate to="/" />} />
-              </Routes>
+              <Navbar></Navbar>
+              <div className="relative grow overflow-hidden">
+                <Routes>
+                  <Route path="/" element={<FrontPage />} />
+                  <Route path="tag/:id" element={<TagPage />} />
+                  <Route path="route/:id" element={<RoutePage />} />
+                  <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
+                  <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
+                  <Route path="*" element={<Navigate to="/" />} />
+                </Routes>
+              </div>
             </PermissionContext.Provider>
           </LatLongContext.Provider>
         </div>

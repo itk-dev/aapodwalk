@@ -1,13 +1,19 @@
-import { React } from "react";
-import { Link } from "react-router-dom";
+import { React, useContext } from "react";
+import SelectedTagContext from "../../context/SelectedTagContext";
 
-function Tag({ name, numberOfRoutes, id }) {
-  if (numberOfRoutes === 0) return null;
+function Tag({ title, id }) {
+  const { setSelectedTag, selectedTag } = useContext(SelectedTagContext);
+
   return (
-    <Link className="block bg-emerald-400 dark:bg-emerald-800 mb-3 rounded-md p-3" to={`/tag/${id}`}>
-      <span className="block text-lg font-bold">{name}</span>
-      <span className="text-s text-zinc-600 dark:text-zinc-300">{numberOfRoutes} historier</span>
-    </Link>
+    <button
+      className={`block  mr-1 rounded px-2 mt-1 h-6 font-bold bg-zinc-200 text-black ${
+        selectedTag === id ? "bg-emerald-400 dark:bg-emerald-800 text-white" : ""
+      }`}
+      onClick={() => setSelectedTag(id)}
+    >
+      <span className="sr-only">Filtrer listen af ruter efter ruter med tagget </span>
+      {title}
+    </button>
   );
 }
 
