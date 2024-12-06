@@ -10,7 +10,7 @@ const FAQ = () => {
         Podwalk
         <Link
           to={"/personal-information-policy"}
-          className="text-emerald-400 dark:text-emerald-800 font-bold underline mt-5"
+          className="text-emerald-400 dark:text-emerald-600 font-bold underline mt-5"
         >
           Læs hele oplysningsteksten
         </Link>
