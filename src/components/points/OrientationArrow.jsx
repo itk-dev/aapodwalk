@@ -15,7 +15,7 @@ const OrientationArrow = () => {
   }
 
   useEffect(() => {
-      startWaypointer();
+    startWaypointer();
   }, []);
 
   function startWaypointer() {
