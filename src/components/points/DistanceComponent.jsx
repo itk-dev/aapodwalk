@@ -8,7 +8,7 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
   const { lat, long } = useContext(LatLongContext);
   const distance = useMemo(
     () => getDistanceBetweenCoordinates(true, lat, long, latitude, longitude),
-    [lat, long, latitude, longitude]
+    [lat, long, latitude, longitude],
   );
 
   useEffect(() => {
@@ -19,7 +19,7 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
       }
     }
   }, [id, listOfUnlocked, nextUnlockablePointId, proximityToUnlock, distance]);
-  
+
   function unlockThisPoint(id) {
     setListOfUnlocked([...listOfUnlocked, ...[id]]);
     const currentLocalStorage = localStorage.getItem(`unlocked-experiences-${selectedRoute?.id}`);
