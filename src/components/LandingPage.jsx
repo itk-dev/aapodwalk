@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import Steps from "../icons/steps.svg?url";
 import Xmark from "../icons/xmark-solid.svg?url";
 
-const LandingPage = ({}) => {
+const LandingPage = () => {
   const [infoClosed, setInfoClosed] = useState(localStorage.getItem("info-closed") === "true");
 
   useEffect(() => {
@@ -14,7 +14,7 @@ const LandingPage = ({}) => {
   if (infoClosed) return null;
 
   return (
-    <div className="block bg-emerald-400 dark:bg-emerald-800 mb-3 rounded-md p-3 flex">
+    <div className="bg-emerald-400 dark:bg-emerald-800 mb-3 rounded-md p-3 flex">
       <div className="w-3/5">
         <h1 className="text-2xl font-extrabold">Lyt til Aarhus med disse Podwalks</h1>
         <p className="mt-5">

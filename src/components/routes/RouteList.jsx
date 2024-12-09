@@ -18,9 +18,7 @@ const RouteList = () => {
         // Todo do the stuff with routes in close proximity
         setRoutes(data["hydra:member"]);
       } else {
-        const filteredData = data["hydra:member"].filter(function ({ tags }) {
-          return isATagSelected(tags);
-        });
+        const filteredData = data["hydra:member"].filter(({ tags }) => isATagSelected(tags));
         setRoutes(filteredData);
       }
     }
