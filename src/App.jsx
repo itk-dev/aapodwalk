@@ -28,6 +28,14 @@ function App() {
     [lat, long]
   );
 
+  useEffect(() => {
+    const experiencesFromLocalStorage = localStorage.getItem("unlocked-experiences");
+    if (experiencesFromLocalStorage) {
+      // add to existing unlocked steps
+      setListOfUnlocked(JSON.parse(experiencesFromLocalStorage));
+    }
+  }, []);
+
   const updateLocation = () => {
     if (lat === null || long === null) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -59,10 +67,7 @@ function App() {
         if (event.target.state === "denied") {
           setUserAllowedAccessToGeoLocation(false);
         }
-        // todo
-        // eslint-disable-next-line no-shadow
-        const { state } = event.target;
-        setGeolocationAvailable(state);
+        setGeolocationAvailable(event.target.state);
       };
       if (state === "granted") {
         updateLocation();
@@ -98,9 +103,7 @@ function App() {
 
   return (
     <>
-      <div
-        className="App flex flex-col h-full pt-32 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden"
-      >
+      <div className="App flex flex-col h-full pt-32 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
         <LatLongContext.Provider value={contextLatLong}>
           <PermissionContext.Provider
             value={{
