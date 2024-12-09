@@ -14,15 +14,14 @@ const PointsList = ({ points }) => {
   }
 
   useEffect(() => {
-    for (const { id } of points) {
-      if (listOfUnlocked.includes(id)) {
-        setNextUnlockablePointId(getNextPointToUnlock(id));
-        return;
-      }
-    }
-
     // The first is the next to unlock
     setNextUnlockablePointId(getIdFromPoint(points[0]));
+
+    for (const { id } of points) {
+      if (listOfUnlocked.includes(id)) {
+        setNextUnlockablePointId(getIdFromPoint(getNextPointToUnlock(id)));
+      }
+    }
   }, [listOfUnlocked, points, setNextUnlockablePointId]);
 
   return (

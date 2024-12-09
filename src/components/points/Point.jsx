@@ -13,12 +13,12 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
   const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
   const [unlocked, setUnlocked] = useState(false);
 
-  
   useEffect(() => {
     if (listOfUnlocked) {
       setUnlocked(listOfUnlocked.indexOf(id) > -1);
     }
   }, [listOfUnlocked, id]);
+
 
   return (
     <div className="relative">
@@ -33,7 +33,7 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
             {order}
           </div>
           <h2 className="text-xl font-bold">{name}</h2>
-          <div className="line-clamp-2 text-zinc-300">{subtitles}</div>
+          <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
         </div>
         {((!unlocked && nextUnlockablePointId !== id) || !userAllowedAccessToGeoLocation) && (
           <FontAwesomeIcon
