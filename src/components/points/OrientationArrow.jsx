@@ -1,11 +1,9 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React, useState, useEffect } from "react";
 import LocationArrow from "../../icons/location-arrow.svg?url";
 import { isDeviceIOS } from "../../util/helper";
-import RouteContext from "../../context/RouteContext";
 
-const OrientationArrow = ({ id }) => {
+const OrientationArrow = () => {
   const [orientation, setOrientation] = useState(null);
-  const { nextUnlockablePointId } = useContext(RouteContext);
   const isIOS = isDeviceIOS;
 
   function deviceOrientationHandler(e) {
@@ -17,10 +15,8 @@ const OrientationArrow = ({ id }) => {
   }
 
   useEffect(() => {
-    if (id === nextUnlockablePointId) {
       startWaypointer();
-    }
-  }, [nextUnlockablePointId, id]);
+  }, []);
 
   function startWaypointer() {
     if (isIOS) {

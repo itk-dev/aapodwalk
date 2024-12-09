@@ -43,7 +43,7 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
       </div>
       {nextUnlockablePointId === id && !unlocked && userAllowedAccessToGeoLocation && (
         <>
-          <OrientationArrow id={id} />
+          <OrientationArrow />
           <DistanceComponent
             classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 dark:text-emerald-600 font-bold"
             id={id}
