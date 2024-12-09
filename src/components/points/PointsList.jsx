@@ -5,8 +5,8 @@ import RouteContext from "../../context/RouteContext";
 const PointsList = ({ points }) => {
   const { listOfUnlocked, setNextUnlockablePointId } = useContext(RouteContext);
 
-  function getIdFromPoint({ id }) {
-    return id;
+  function getIdFromPoint(point) {
+    return point?.id || null;
   }
 
   function getNextPointToUnlock(id) {
