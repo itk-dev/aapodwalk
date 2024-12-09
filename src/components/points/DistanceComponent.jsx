@@ -8,7 +8,7 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
   const { lat, long } = useContext(LatLongContext);
   const distance = useMemo(
     () => getDistanceBetweenCoordinates(true, lat, long, latitude, longitude),
-    [lat, long, latitude, longitude]
+    [lat, long, latitude, longitude],
   );
 
   useEffect(() => {
@@ -37,11 +37,7 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
     }
   }
 
-  return (
-    <div className={classes}>
-      {distance} m
-    </div>
-  );
+  return <div className={classes}>{distance} m</div>;
 }
 
 export default DistanceComponent;

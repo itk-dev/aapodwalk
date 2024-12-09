@@ -19,7 +19,6 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
     }
   }, [listOfUnlocked, id]);
 
-
   return (
     <div className="relative">
       <div
@@ -45,7 +44,13 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
       {nextUnlockablePointId === id && !unlocked && userAllowedAccessToGeoLocation && (
         <>
           <OrientationArrow id={id} />
-          <DistanceComponent classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 dark:text-emerald-600 font-bold" id={id} latitude={latitude} longitude={longitude} proximityToUnlock={proximityToUnlock} />
+          <DistanceComponent
+            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 dark:text-emerald-600 font-bold"
+            id={id}
+            latitude={latitude}
+            longitude={longitude}
+            proximityToUnlock={proximityToUnlock}
+          />
           <img
             src={Footprints}
             alt=""

@@ -22,8 +22,6 @@ function RoutePage() {
     }
   }, [fetchedRoute, setSelectedRoute]);
 
-
-
   if (selectedRoute === null) return null;
 
   return <PointsList points={selectedRoute.pointsOfInterest} />;
