@@ -7,7 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- [PR-42](https://github.com/itk-dev/aapodwalk/pull/43)
+- [PR-44](https://github.com/itk-dev/aapodwalk/pull/44)
+  - Remove an error with id of undefined
+  - Rename localstorage key
+  - Delete unused files
+- [PR-43](https://github.com/itk-dev/aapodwalk/pull/43)
   - Big design rewrite
   - Simplified `helper.js`
   - Tried to bundle the responsibility into components (like `DistanceComponent` now does the "703 m" stuff)
