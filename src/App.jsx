@@ -28,14 +28,6 @@ function App() {
     [lat, long],
   );
 
-  useEffect(() => {
-    const experiencesFromLocalStorage = localStorage.getItem("unlocked-experiences");
-    if (experiencesFromLocalStorage) {
-      // add to existing unlocked steps
-      setListOfUnlocked(JSON.parse(experiencesFromLocalStorage));
-    }
-  }, []);
-
   const updateLocation = () => {
     if (lat === null || long === null) {
       navigator.geolocation.getCurrentPosition((position) => {
@@ -69,7 +61,6 @@ function App() {
         }
         setGeolocationAvailable(event.target.state);
       };
-      console.log(state);
       if (state === "granted") {
         updateLocation();
         setUserAllowedAccessToGeoLocation(true);
