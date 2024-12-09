@@ -5,28 +5,27 @@ import { getDistanceBetweenCoordinates } from "../util/helper";
 
 function Info() {
   const { lat, long } = useContext(LatLongContext);
-  const { geolocationAvailable } = useContext(PermissionContext);
+  const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
   const [distance, setDistance] = useState(null);
 
   useEffect(() => {
     if (lat !== null && long !== null) {
-      // todoo
-      // eslint-disable-next-line no-shadow
-      const distance = getDistanceBetweenCoordinates(
+      const localDistance = getDistanceBetweenCoordinates(
+        userAllowedAccessToGeoLocation,
         lat,
         long,
         56.153574116526194, // Todo, as of now this is hardcoded to the center of Aarhus, this is perhaps not a good solution in the long run.
         10.21435188437761,
       );
-      setDistance(distance);
+      setDistance(localDistance);
     }
-  }, [lat, long]);
+  }, [lat]);
 
   return (
     <div className="text-white">
       <h1 className="text-pink-800 text-5xl">Info</h1>
       <br />
-      <p>geolocation available: {geolocationAvailable === "granted"}</p>
+      <p>geolocation available: {userAllowedAccessToGeoLocation}</p>
       <p>lat: {lat}</p>
       <p>long: {long}</p>
 

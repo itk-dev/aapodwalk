@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-42](https://github.com/itk-dev/aapodwalk/pull/43)
+  - Big design rewrite
+  - Simplified `helper.js`
+  - Tried to bundle the responsibility into components (like `DistanceComponent` now does the "703 m" stuff)
+  - Renamed `PointOfInterest` to `Point`
+  - added and removed some `svg`s
+  - added a `RouteContext` to isolate the route state
 - [PR-42](https://github.com/itk-dev/aapodwalk/pull/42)
   - Add faq page
 - [PR-41](https://github.com/itk-dev/aapodwalk/pull/41)
