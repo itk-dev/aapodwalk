@@ -20,7 +20,7 @@ function Route({ route }) {
       <div className="flex-none w-36">
         <Image className="object-cover h-full" src={route.image} />
       </div>
-      <div className="flex flex-col py-3 pl-3 pr-6 overflow-hidden">
+      <div className="flex flex-col py-3 pl-3 pr-6 overflow-hidden w-full">
         <div className="text-emerald-400 dark:text-emerald-800 font-bold text-sm flex justify-between">
           {userAllowedAccessToGeoLocation && (
             <>

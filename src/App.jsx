@@ -69,6 +69,7 @@ function App() {
         }
         setGeolocationAvailable(event.target.state);
       };
+      console.log(state);
       if (state === "granted") {
         updateLocation();
         setUserAllowedAccessToGeoLocation(true);
@@ -91,7 +92,7 @@ function App() {
   useEffect(() => {
     // todo some sort of spinner or some indication that something is happening
     requestPermissions();
-  }, []);
+  }, [userAllowedAccessToGeoLocation]);
 
   useEffect(() => {
     // Consent for handling data with regards to open street map
