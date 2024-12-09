@@ -15,9 +15,26 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
 
   useEffect(() => {
     if (listOfUnlocked) {
-      setUnlocked(listOfUnlocked.indexOf(id) > -1);
+      // The point is not locked if the id is in the list of unlocked.
+      setUnlocked(listOfUnlocked.includes(id));
     }
   }, [listOfUnlocked, id]);
+
+  function isNextPointToUnlock() {
+    // The point is the next in line to be unlocked:
+    // - The id matches that of the next in line to be unlocked
+    // - It has not already been unlocked
+    // - The user gives access to geolocation
+    return nextUnlockablePointId === id && !unlocked && userAllowedAccessToGeoLocation;
+  }
+
+
+  function isLocked() {
+    // The point is locked if:
+    // - It is locked, and it is not the next to be unlocked or
+    // - The user does not allow geo location access
+    return (!unlocked && nextUnlockablePointId !== id) || !userAllowedAccessToGeoLocation;
+  }
 
   return (
     <div className="relative">
@@ -34,14 +51,14 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
           <h2 className="text-xl font-bold">{name}</h2>
           <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
         </div>
-        {((!unlocked && nextUnlockablePointId !== id) || !userAllowedAccessToGeoLocation) && (
+        {isLocked() && (
           <FontAwesomeIcon
             icon={faLock}
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
           />
         )}
       </div>
-      {nextUnlockablePointId === id && !unlocked && userAllowedAccessToGeoLocation && (
+      {isNextPointToUnlock() && (
         <>
           <OrientationArrow />
           <DistanceComponent
