@@ -12,16 +12,7 @@ import PointOverlay from "./PointOverlay";
 import { useSearchParams } from "react-router-dom";
 
 function Point({
-  point: {
-    latitude,
-    longitude,
-    name,
-    image,
-    id,
-    subtitles,
-    proximityToUnlock = 100,
-    mediaEmbedCode,
-  },
+  point: { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100, mediaEmbedCode },
   order,
 }) {
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
