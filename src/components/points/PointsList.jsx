@@ -23,7 +23,7 @@ const PointsList = ({ points }) => {
       }
     }
   }, [listOfUnlocked, points, setNextUnlockablePointId]);
-
+  
   return (
     <>
       <h1 className="text-ms font-bold mb-2">{selectedRoute.title}</h1>
