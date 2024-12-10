@@ -28,7 +28,6 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
     return nextUnlockablePointId === id && !unlocked && userAllowedAccessToGeoLocation;
   }
 
-
   function isLocked() {
     // The point is locked if:
     // - It is locked, and it is not the next to be unlocked or
