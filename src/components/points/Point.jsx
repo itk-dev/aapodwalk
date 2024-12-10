@@ -61,7 +61,7 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
         <>
           <OrientationArrow />
           <DistanceComponent
-            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 dark:text-emerald-600 font-bold"
+            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2"
             id={id}
             latitude={latitude}
             longitude={longitude}
