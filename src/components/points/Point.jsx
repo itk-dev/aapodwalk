@@ -110,7 +110,7 @@ function Point({
           </>
         )}
       </button>
-      {sanitizedEmbed && (
+      {embed && (
         <div
           className={`${
             overlay
