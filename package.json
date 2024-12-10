@@ -25,7 +25,6 @@
     "start": "vite --host 0.0.0.0",
     "build": "vite build",
     "preview": "vite preview",
-    "eject": "react-scripts eject",
     "lint:js": "eslint --ext .js --ext .jsx ./src",
     "lint:js:fix": "eslint --ext .js --ext .jsx --fix ./src",
     "check-coding-standards": "npm run lint:js",
