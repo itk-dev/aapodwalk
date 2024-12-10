@@ -18,7 +18,7 @@ function Map({ mapData, zoomControl, additionalClass = "" }) {
       />
       {mapData.map(({ latitude, longitude }, index) => (
         <Marker
-          key={index}
+          key={latitude}
           position={[latitude, longitude]}
           icon={L.divIcon({
             html: `
