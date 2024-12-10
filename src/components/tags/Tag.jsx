@@ -8,7 +8,11 @@ function Tag({ title, id }) {
 
   useEffect(() => {
     if (searchParams) {
-      setSelectedTag(Number(searchParams.get("tag")));
+      if (searchParams.get("tag") === "null" || !searchParams.get("tag")) {
+        setSelectedTag(null);
+      } else {
+        setSelectedTag(Number(searchParams.get("tag")));
+      }
     }
   }, []);
 
