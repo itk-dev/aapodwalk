@@ -96,7 +96,7 @@ function App() {
 
   return (
     <>
-      <div className="App flex flex-col h-full pt-32 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+      <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
         <LatLongContext.Provider value={contextLatLong}>
           <PermissionContext.Provider
             value={{
