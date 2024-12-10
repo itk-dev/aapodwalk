@@ -8,9 +8,8 @@ function Tag({ title, id }) {
 
   useEffect(() => {
     if (searchParams) {
-      const id = Number(searchParams.get("tag"))
-      setSelectedTag((isNaN(id) || id < 1) ? null : id)
-      }
+      const id = Number(searchParams.get("tag"));
+      setSelectedTag(Number.isNaN(id) || id < 1 ? null : id);
     }
   }, []);
 
