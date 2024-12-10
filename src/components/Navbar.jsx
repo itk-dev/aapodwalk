@@ -9,7 +9,7 @@ const Navbar = () => {
   const { pathname } = useLocation();
 
   return (
-    <div className="fixed top-0 left-0 right-0 p-2 bg-zinc-100 dark:bg-zinc-800 z-50">
+    <div className="fixed top-0 left-0 right-0 p-2 bg-zinc-100 dark:bg-zinc-800 z-40">
       <div className="mb-6 mt-4 flex justify-between">
         {pathname === "/" && <img src={Logo} alt="" className="w-10 h-10" />}
         {pathname !== "/" && <BackButton />}
