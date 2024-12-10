@@ -42,7 +42,7 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
           unlocked ? "" : "opacity-35"
         }`}
       >
-        <Image src={image} className="w-24 h-24 rounded-full grow w-1/4 ml-2 object-cover" />
+        <Image src={image} className="w-24 h-24 rounded grow w-1/4 ml-2 object-cover" />
         <div className="w-3/4 ml-2">
           <div className="flex place-content-center rounded text-xl w-6 h-6 bg-black justify-center mb-2 items-center flex dark:bg-emerald-800">
             {order}
