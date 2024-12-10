@@ -38,7 +38,7 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
     }
   }
 
-  return <div className={classes}>{distance} m</div>;
+  return <div className={`${classes} text-emerald-400 dark:text-emerald-800 font-bold text-sm`}>{distance} m</div>;
 }
 
 export default DistanceComponent;
