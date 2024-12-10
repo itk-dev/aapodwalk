@@ -6,6 +6,7 @@ import RouteContext from "./context/RouteContext";
 import Info from "./components/info";
 import FrontPage from "./components/FrontPage";
 import RoutePage from "./components/routes/RoutePage";
+import RoutePoints from "./components/routes/RoutePoints";
 import PersonalInformationPolicyPage from "./components/PersonalInformationPolicyPage";
 import Navbar from "./components/Navbar";
 import FAQ from "./components/FAQ";
@@ -118,6 +119,7 @@ function App() {
               <div className="relative grow overflow-hidden">
                 <Routes>
                   <Route path="/" element={<FrontPage />} />
+                  <Route path="/route/:id/points" element={<RoutePoints />} />
                   <Route path="route/:id" element={<RoutePage />} />
                   <Route path="faq" element={<FAQ />} />
                   <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
