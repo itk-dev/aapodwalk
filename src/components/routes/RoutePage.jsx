@@ -35,7 +35,7 @@ function RoutePage() {
 
   if (selectedRoute === null) return null;
 
-  const { title, tags, pointsOfInterest, totalDuration, distance, description } = selectedRoute;
+  const { title, tags, points, totalDuration, distance, description } = selectedRoute;
 
   return (
     <>
@@ -53,7 +53,7 @@ function RoutePage() {
             </div>
             <div className="ml-6">
               <div className="font-bold">Dele</div>
-              <div className="text-xl">{pointsOfInterest.length} styk</div>
+              <div className="text-xl">{points.length} styk</div>
             </div>
             <div className="ml-6">
               <div className="font-bold">Afspilningstid</div>
@@ -72,7 +72,7 @@ function RoutePage() {
           </Link>
         </div>
       </div>
-      <MapWrapper mapData={pointsOfInterest} />
+      <MapWrapper mapData={points} />
     </>
   );
 }

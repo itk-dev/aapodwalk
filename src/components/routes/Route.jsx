@@ -8,7 +8,7 @@ import TagList from "../tags/TagList";
 
 function Route({ route }) {
   // The below is to calculate the proximity between user and first point in route
-  const { latitude, longitude } = route.pointsOfInterest[0];
+  const { latitude, longitude } = route.points[0];
   const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
   const { setSelectedRoute } = useContext(SelectedRouteContext);
 
