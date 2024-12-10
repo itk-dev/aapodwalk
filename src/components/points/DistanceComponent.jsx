@@ -22,18 +22,19 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
 
   function unlockThisPoint(id) {
     setListOfUnlocked([...listOfUnlocked, ...[id]]);
-    const currentLocalStorage = localStorage.getItem(`unlocked-experiences-${selectedRoute?.id}`);
+    const storageKey = `unlocked-experiences-${selectedRoute?.id}`;
+    const currentLocalStorage = localStorage.getItem(storageKey);
     if (currentLocalStorage) {
       // add to existing unlocked steps
       const updateLocalStorage = JSON.parse(currentLocalStorage);
 
       if (!updateLocalStorage.includes(id)) {
         updateLocalStorage.push(id);
-        localStorage.setItem(`unlocked-experiences-${selectedRoute?.id}`, JSON.stringify(updateLocalStorage));
+        localStorage.setItem(storageKey, JSON.stringify(updateLocalStorage));
       }
     } else {
       // add new "unlocked steps"
-      localStorage.setItem(`unlocked-experiences-${selectedRoute?.id}`, JSON.stringify([id]));
+      localStorage.setItem(storageKey, JSON.stringify([id]));
     }
   }
 
