@@ -21,7 +21,7 @@ function useFetch(restUrl) {
     switch (action.type) {
       case "loading":
         return { ...initialState, loading: true };
-        case "fetched":
+      case "fetched":
         return { ...initialState, data: action.payload };
       case "error":
         return { ...initialState, error: action.payload };
