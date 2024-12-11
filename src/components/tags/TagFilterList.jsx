@@ -3,9 +3,10 @@ import useFetch from "../../util/useFetch";
 import Tag from "./Tag";
 import TagsLoading from "./TagsLoading";
 
-const TagFilterList = () => {
+function TagFilterList() {
   const [tags, setTags] = useState([]);
   const { data, error, loading } = useFetch("tags");
+
   useEffect(() => {
     if (data) {
       setTags(data["hydra:member"]);
@@ -27,6 +28,6 @@ const TagFilterList = () => {
       </div>
     </fieldset>
   );
-};
+}
 
 export default TagFilterList;

@@ -79,7 +79,6 @@ function App() {
   };
 
   useEffect(() => {
-    // todo some sort of spinner or some indication that something is happening
     requestPermissions();
   }, [userAllowedAccessToGeoLocation]);
 
@@ -95,21 +94,23 @@ function App() {
     <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
       <LatLongContext.Provider value={contextLatLong}>
         <PermissionContext.Provider
-          value={{
-            userAllowedAccessToGeoLocation,
-            openStreetMapConsent,
-            setOpenStreetMapConsent,
-          }}
+          value={useMemo(
+            () => ({ userAllowedAccessToGeoLocation, openStreetMapConsent, setOpenStreetMapConsent }),
+            [userAllowedAccessToGeoLocation, openStreetMapConsent],
+          )}
         >
           <RouteContext.Provider
-            value={{
-              selectedRoute,
-              setSelectedRoute,
-              nextUnlockablePointId,
-              setNextUnlockablePointId,
-              listOfUnlocked,
-              setListOfUnlocked,
-            }}
+            value={useMemo(
+              () => ({
+                selectedRoute,
+                setSelectedRoute,
+                nextUnlockablePointId,
+                setNextUnlockablePointId,
+                listOfUnlocked,
+                setListOfUnlocked,
+              }),
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
+            )}
           >
             <Navbar />
             <div className="relative grow overflow-hidden">

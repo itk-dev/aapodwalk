@@ -23,20 +23,18 @@ function Route({ route }) {
       </div>
       <div className="flex flex-col py-3 pl-3 pr-6 overflow-hidden w-full">
         <div className="text-emerald-400 dark:text-emerald-800 font-bold text-sm flex justify-between">
-          <>
-            <div className="truncate w-4/5">
-              <TagList tags={route.tags} />
-            </div>
-            {userAllowedAccessToGeoLocation && (
-              <DistanceComponent
-                id={null}
-                latitude={latitude}
-                longitude={longitude}
-                classes="truncate w-1/5 text-right text-sm"
-                proximityToUnlock={null}
-              />
-            )}
-          </>
+          <div className="truncate w-4/5">
+            <TagList tags={route.tags} />
+          </div>
+          {userAllowedAccessToGeoLocation && (
+            <DistanceComponent
+              id={null}
+              latitude={latitude}
+              longitude={longitude}
+              classes="truncate w-1/5 text-right text-sm"
+              proximityToUnlock={null}
+            />
+          )}
         </div>
         <h2 className="mb-2 font-bold">{route.name}</h2>
         <div className="text-xs line-clamp-3">{route.description}</div>
