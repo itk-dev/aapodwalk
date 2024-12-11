@@ -32,7 +32,7 @@ function RoutePoints() {
 
   if (selectedRoute === null) return null;
 
-  return <PointsList points={selectedRoute.pointsOfInterest} />;
+  return <PointsList points={selectedRoute.points} />;
 }
 
 export default RoutePoints;
