@@ -16,7 +16,7 @@ function Point({
   order,
 }) {
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
-  const { userAllowedAccessToGeoLocationMemo: userAllowedAccessToGeoLocation } = useContext(PermissionContext);
+  const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
   const [unlocked, setUnlocked] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [embed, setEmbed] = useState(null);
@@ -52,6 +52,7 @@ function Point({
   }, [listOfUnlocked, id]);
 
   function isNextPointToUnlock() {
+    console.log(!unlocked && userAllowedAccessToGeoLocation);
     // The point is the next in line to be unlocked:
     // - The id matches that of the next in line to be unlocked
     // - It has not already been unlocked
@@ -75,7 +76,7 @@ function Point({
       <button
         type="button"
         onClick={() => playThis()}
-        className={`relative text-left ${unlocked ? "" : "pointer-events-none"}`}
+        className={`relative text-left w-full ${unlocked ? "" : "pointer-events-none"}`}
       >
         <div
           className={`bg-zinc-100 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded flex items-center ${

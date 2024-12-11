@@ -8,19 +8,9 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
   const { lat, long } = useContext(LatLongContext);
   const distance = useMemo(
     () => getDistanceBetweenCoordinates(true, lat, long, latitude, longitude),
-    [lat, long, latitude, longitude],
+    [lat, long, latitude, longitude]
   );
-
-  useEffect(() => {
-    if (!listOfUnlocked.includes(id) && proximityToUnlock !== null) {
-      const unlock = proximityToUnlock > distance && nextUnlockablePointId === id;
-      if (unlock) {
-        unlockThisPoint(id);
-      }
-    }
-  }, [id, listOfUnlocked, nextUnlockablePointId, proximityToUnlock, distance]);
-
-  function unlockThisPoint(id) {
+  function unlockThisPoint() {
     setListOfUnlocked([...listOfUnlocked, ...[id]]);
     const storageKey = `unlocked-experiences-${selectedRoute?.id}`;
     const currentLocalStorage = localStorage.getItem(storageKey);
@@ -37,6 +27,15 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
       localStorage.setItem(storageKey, JSON.stringify([id]));
     }
   }
+
+  useEffect(() => {
+    if (!listOfUnlocked.includes(id) && proximityToUnlock !== null) {
+      const unlock = proximityToUnlock > distance && nextUnlockablePointId === id;
+      if (unlock) {
+        unlockThisPoint();
+      }
+    }
+  }, [id, listOfUnlocked, nextUnlockablePointId, proximityToUnlock, distance]);
 
   return <div className={`${classes} text-emerald-400 dark:text-emerald-800 font-bold text-sm`}>{distance} m</div>;
 }
