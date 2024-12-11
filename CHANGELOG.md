@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-46](https://github.com/itk-dev/aapodwalk/pull/46)
+  - Create the actual route page
+  - Create link to list of points
+  - Fix squashed and round image -> not it fits and is less round (in `PointList`)
 - [PR-45](https://github.com/itk-dev/aapodwalk/pull/45)
   - Save tag filter in url
 - [PR-44](https://github.com/itk-dev/aapodwalk/pull/44)

@@ -1,7 +1,7 @@
 import { React, useState, useContext, useEffect } from "react";
 import MapConsentBanner from "./MapConsentBanner";
 import LandingPage from "./LandingPage";
-import TagList from "./tags/TagList";
+import TagFilterList from "./tags/TagFilterList";
 import SelectedTagContext from "../context/SelectedTagContext";
 import RouteList from "./routes/RouteList";
 import RouteContext from "../context/RouteContext";
@@ -18,7 +18,7 @@ function FrontPage() {
     <div>
       <LandingPage />
       <SelectedTagContext.Provider value={{ selectedTag, setSelectedTag }}>
-        <TagList />
+        <TagFilterList />
         <RouteList />
       </SelectedTagContext.Provider>
       <MapConsentBanner />

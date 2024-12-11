@@ -7,11 +7,34 @@ import RouteContext from "../../context/RouteContext";
 import Footprints from "../../icons/footprints.svg?url";
 import OrientationArrow from "./OrientationArrow";
 import DistanceComponent from "./DistanceComponent";
+import OrderComponent from "./OrderComponent";
+import PointOverlay from "./PointOverlay";
+import { useSearchParams } from "react-router-dom";
 
-function Point({ point: { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 }, order }) {
+function Point({
+  point: { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100, mediaEmbedCode },
+  order,
+}) {
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
   const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
   const [unlocked, setUnlocked] = useState(false);
+  const [overlay, setOverlay] = useState(false);
+  const [embed, setEmbed] = useState(null);
+  const [searchParams, setSearchParams] = useSearchParams();
+
+  useEffect(() => {
+    if (searchParams.get("point") !== "null") {
+      setOverlay(Number(searchParams.get("point")) === id);
+    }
+  }, []);
+
+  useEffect(() => {
+    if (overlay) {
+      setSearchParams({ point: id });
+      return;
+    }
+    setSearchParams({});
+  }, [overlay]);
 
   useEffect(() => {
     if (listOfUnlocked) {
@@ -35,46 +58,76 @@ function Point({ point: { latitude, longitude, name, image, id, subtitles, proxi
     return (!unlocked && nextUnlockablePointId !== id) || !userAllowedAccessToGeoLocation;
   }
 
+  function playThis() {
+    setEmbed(mediaEmbedCode);
+  }
+
   return (
-    <div className="relative">
-      <div
-        className={`bg-zinc-100 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded flex items-center ${
-          unlocked ? "" : "opacity-35"
-        }`}
-      >
-        <Image src={image} className="w-24 h-24 rounded-full grow w-1/4 ml-2" />
-        <div className="w-3/4 ml-2">
-          <div className="flex place-content-center rounded text-xl w-6 h-6 bg-black justify-center mb-2 items-center flex dark:bg-emerald-800">
-            {order}
+    <>
+      <button type="button" onClick={() => playThis()} className="relative text-left">
+        <div
+          className={`bg-zinc-100 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded flex items-center ${
+            unlocked ? "" : "opacity-35"
+          }`}
+        >
+          <Image src={image} className="w-24 h-24 rounded grow w-1/4 ml-2 object-cover" />
+          <div className="w-3/4 ml-2">
+            <OrderComponent order={order} />
+            <h2 className="text-xl font-bold">{name}</h2>
+            <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
           </div>
-          <h2 className="text-xl font-bold">{name}</h2>
-          <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
+          {isLocked() && (
+            <FontAwesomeIcon
+              icon={faLock}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
+            />
+          )}
         </div>
-        {isLocked() && (
-          <FontAwesomeIcon
-            icon={faLock}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
-          />
+        {isNextPointToUnlock() && (
+          <>
+            <OrientationArrow />
+            <DistanceComponent
+              classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2"
+              id={id}
+              latitude={latitude}
+              longitude={longitude}
+              proximityToUnlock={proximityToUnlock}
+            />
+            <img
+              src={Footprints}
+              alt=""
+              className="w-10 h-10 absolute top-1/2 left-12 transform -translate-x-1/2 -translate-y-1/2"
+            />
+          </>
         )}
-      </div>
-      {isNextPointToUnlock() && (
-        <>
-          <OrientationArrow />
-          <DistanceComponent
-            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 dark:text-emerald-600 font-bold"
-            id={id}
-            latitude={latitude}
-            longitude={longitude}
-            proximityToUnlock={proximityToUnlock}
-          />
-          <img
-            src={Footprints}
-            alt=""
-            className="w-10 h-10 absolute top-1/2 left-12 transform -translate-x-1/2 -translate-y-1/2"
-          />
-        </>
+      </button>
+      {embed && (
+        <div
+          className={`${
+            overlay
+              ? "absolute top-0 left-0 right-0 z-50"
+              : "fixed bottom-0 left-0 right-0 bg-zinc-100 dark:bg-zinc-900"
+          }`}
+        >
+          {!overlay && (
+            <div className="p-3 flex justify-between">
+              <h3>{name}</h3>
+              <button
+                className="text-emerald-400 dark:text-emerald-800 font-bold text-sm"
+                type="button"
+                onClick={() => setOverlay(true)}
+              >
+                Se mere
+              </button>
+            </div>
+          )}
+          <div dangerouslySetInnerHTML={{ __html: embed }} />
+        </div>
       )}
-    </div>
+      {overlay && unlocked && (
+        <PointOverlay description={subtitles} closeOverlay={() => setOverlay(false)} title={name} order={order} />
+      )}
+    </>
   );
 }
 

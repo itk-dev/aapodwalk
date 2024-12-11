@@ -1,32 +1,12 @@
 import { React, useEffect, useState } from "react";
-import useFetch from "../../util/useFetch";
-import Tag from "./Tag";
 
-const TagList = () => {
-  const [tags, setTags] = useState(null);
-  const { data } = useFetch(`tags`);
-
+const TagList = ({ tags, classes = "" }) => {
+  const [displayTags, setDisplayTags] = useState("");
   useEffect(() => {
-    if (data) {
-      setTags(data["hydra:member"]);
-    }
-  }, [data]);
+    setDisplayTags(tags.map(({ title }) => title).join(", "));
+  }, []);
 
-  if (!tags) return null;
-
-  return (
-    <>
-      <fieldset>
-        <legend>Filtrér</legend>
-        <div className="flex flex-wrap">
-          <Tag key="close-to-tag" title="Tæt på denne placering" id={null}></Tag>
-          {tags.map(({ title, id }) => (
-            <Tag key={id} title={title} id={id} />
-          ))}
-        </div>
-      </fieldset>
-    </>
-  );
+  return <span className={`text-emerald-400 dark:text-emerald-800 font-bold text-sm ${classes}`}>{displayTags}</span>;
 };
 
 export default TagList;

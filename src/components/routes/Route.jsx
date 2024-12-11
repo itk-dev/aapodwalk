@@ -4,10 +4,11 @@ import Image from "../Image";
 import PermissionContext from "../../context/permission-context";
 import SelectedRouteContext from "../../context/RouteContext";
 import DistanceComponent from "../points/DistanceComponent";
+import TagList from "../tags/TagList";
 
 function Route({ route }) {
   // The below is to calculate the proximity between user and first point in route
-  const { latitude, longitude } = route.pointsOfInterest[0];
+  const { latitude, longitude } = route.points[0];
   const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
   const { setSelectedRoute } = useContext(SelectedRouteContext);
 
@@ -22,13 +23,11 @@ function Route({ route }) {
       </div>
       <div className="flex flex-col py-3 pl-3 pr-6 overflow-hidden w-full">
         <div className="text-emerald-400 dark:text-emerald-800 font-bold text-sm flex justify-between">
-          {userAllowedAccessToGeoLocation && (
-            <>
-              <div className="truncate w-4/5">
-                {route.tags.map(({ title }) => (
-                  <span key={title}>{title}, </span>
-                ))}
-              </div>
+          <>
+            <div className="truncate w-4/5">
+              <TagList tags={route.tags} />
+            </div>
+            {userAllowedAccessToGeoLocation && (
               <DistanceComponent
                 id={null}
                 latitude={latitude}
@@ -36,8 +35,8 @@ function Route({ route }) {
                 classes="truncate w-1/5 text-right text-sm"
                 proximityToUnlock={null}
               />
-            </>
-          )}
+            )}
+          </>
         </div>
         <h2 className="mb-2 font-bold">{route.name}</h2>
         <div className="text-xs line-clamp-3">{route.description}</div>
