@@ -20,27 +20,12 @@ function App() {
   const [long, setLong] = useState(null);
   const [userAllowedAccessToGeoLocation, setUserAllowedAccessToGeoLocation] = useState(false);
 
-  const openStreetMapConsentMemo = useMemo(
-    () => ({
-      openStreetMapConsent,
-      setOpenStreetMapConsent,
-    }),
-    [openStreetMapConsent]
-  );
-
-  const userAllowedAccessToGeoLocationMemo = useMemo(
-    () => ({
-      userAllowedAccessToGeoLocation,
-    }),
-    [userAllowedAccessToGeoLocation]
-  );
-
   const contextLatLong = useMemo(
     () => ({
       lat,
       long,
     }),
-    [lat, long]
+    [lat, long],
   );
 
   const updateLocation = () => {
@@ -79,7 +64,7 @@ function App() {
         setUserAllowedAccessToGeoLocation(true);
       } else if (state === "prompt") {
         updateLocation();
-        setUserAllowedAccessToGeoLocation(true);
+        setUserAllowedAccessToGeoLocation(false);
       } else if (state === "denied") {
         setUserAllowedAccessToGeoLocation(false);
       }
@@ -94,7 +79,6 @@ function App() {
   };
 
   useEffect(() => {
-    // todo some sort of spinner or some indication that something is happening
     requestPermissions();
   }, [userAllowedAccessToGeoLocation]);
 
@@ -112,7 +96,7 @@ function App() {
         <PermissionContext.Provider
           value={useMemo(
             () => ({ userAllowedAccessToGeoLocation, openStreetMapConsent, setOpenStreetMapConsent }),
-            [userAllowedAccessToGeoLocation, openStreetMapConsent]
+            [userAllowedAccessToGeoLocation, openStreetMapConsent],
           )}
         >
           <RouteContext.Provider
@@ -125,7 +109,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
             )}
           >
             <Navbar />
