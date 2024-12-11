@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Routes, Navigate, Route } from "react-router-dom";
+import { Switch, Route } from "react-router-dom";
 import LatLongContext from "./context/latitude-longitude-context";
 import PermissionContext from "./context/permission-context";
 import RouteContext from "./context/RouteContext";
@@ -12,7 +12,6 @@ import Navbar from "./components/Navbar";
 import FAQ from "./components/FAQ";
 
 function App() {
-  const [geolocationAvailable, setGeolocationAvailable] = useState();
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [listOfUnlocked, setListOfUnlocked] = useState([]);
   const [nextUnlockablePointId, setNextUnlockablePointId] = useState(null);
@@ -52,7 +51,6 @@ function App() {
         name: "geolocation",
       });
       const { state } = permissions;
-      setGeolocationAvailable(state);
       permissions.onchange = (event) => {
         if (event.target.state === "granted") {
           setUserAllowedAccessToGeoLocation(true);
@@ -60,7 +58,6 @@ function App() {
         if (event.target.state === "denied") {
           setUserAllowedAccessToGeoLocation(false);
         }
-        setGeolocationAvailable(event.target.state);
       };
       if (state === "granted") {
         updateLocation();
@@ -95,44 +92,55 @@ function App() {
   }, []);
 
   return (
-    <>
-      <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
-        <LatLongContext.Provider value={contextLatLong}>
-          <PermissionContext.Provider
+    <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+      <LatLongContext.Provider value={contextLatLong}>
+        <PermissionContext.Provider
+          value={{
+            userAllowedAccessToGeoLocation,
+            openStreetMapConsent,
+            setOpenStreetMapConsent,
+          }}
+        >
+          <RouteContext.Provider
             value={{
-              userAllowedAccessToGeoLocation,
-              openStreetMapConsent,
-              setOpenStreetMapConsent,
+              selectedRoute,
+              setSelectedRoute,
+              nextUnlockablePointId,
+              setNextUnlockablePointId,
+              listOfUnlocked,
+              setListOfUnlocked,
             }}
           >
-            <RouteContext.Provider
-              value={{
-                selectedRoute,
-                setSelectedRoute,
-                nextUnlockablePointId,
-                setNextUnlockablePointId,
-                listOfUnlocked,
-                setListOfUnlocked,
-              }}
-            >
-              <Navbar />
-              <div className="relative grow overflow-hidden">
-                <Routes>
-                  <Route path="/" element={<FrontPage />} />
-                  <Route path="/route/:id/points" element={<RoutePoints />} />
-                  <Route path="route/:id" element={<RoutePage />} />
-                  <Route path="faq" element={<FAQ />} />
-                  <Route path="/personal-information-policy" element={<PersonalInformationPolicyPage />} />
-                  <Route path="/navigation-help" element={<div>Todo</div>} />
-                  <Route path="info" element={<Info geolocationAvailable={geolocationAvailable} />} />
-                  <Route path="*" element={<Navigate to="/" />} />
-                </Routes>
-              </div>
-            </RouteContext.Provider>
-          </PermissionContext.Provider>
-        </LatLongContext.Provider>
-      </div>
-    </>
+            <Navbar />
+            <div className="relative grow overflow-hidden">
+              <Switch>
+                <Route path="/route/:id">
+                  <RoutePage />
+                </Route>
+                <Route path="/points/:id">
+                  <RoutePoints />
+                </Route>
+                <Route path="/faq">
+                  <FAQ />
+                </Route>
+                <Route path="/personal-information-policy">
+                  <PersonalInformationPolicyPage />
+                </Route>
+                <Route path="/navigation-help">
+                  <div>Todo</div>
+                </Route>
+                <Route path="/info">
+                  <Info />
+                </Route>
+                <Route path="/">
+                  <FrontPage />
+                </Route>
+              </Switch>
+            </div>
+          </RouteContext.Provider>
+        </PermissionContext.Provider>
+      </LatLongContext.Provider>
+    </div>
   );
 }
 

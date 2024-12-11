@@ -65,7 +65,7 @@ function RoutePage() {
           </div>
           <Link
             className="flex items-center mr-1 rounded relative px-5 mt-1 h-9 text-center w-max font-bold bg-zinc-200 text-black z-50"
-            to={`/route/${id}/points`}
+            to={`/points/${id}`}
           >
             <FontAwesomeIcon icon={faPlayCircle} className="mr-1" />
             Start ruten
