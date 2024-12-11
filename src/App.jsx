@@ -15,6 +15,7 @@ function App() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [listOfUnlocked, setListOfUnlocked] = useState([]);
   const [nextUnlockablePointId, setNextUnlockablePointId] = useState(null);
+  const [testState, setTestState] = useState(null);
   const [openStreetMapConsent, setOpenStreetMapConsent] = useState(null);
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
@@ -25,7 +26,7 @@ function App() {
       lat,
       long,
     }),
-    [lat, long],
+    [lat, long]
   );
 
   const updateLocation = () => {
@@ -52,6 +53,7 @@ function App() {
       });
       const { state } = permissions;
       permissions.onchange = (event) => {
+        setTestState(event.target.state);
         if (event.target.state === "granted") {
           setUserAllowedAccessToGeoLocation(true);
         }
@@ -59,6 +61,7 @@ function App() {
           setUserAllowedAccessToGeoLocation(false);
         }
       };
+      setTestState(state);
       if (state === "granted") {
         updateLocation();
         setUserAllowedAccessToGeoLocation(true);
@@ -96,7 +99,7 @@ function App() {
         <PermissionContext.Provider
           value={useMemo(
             () => ({ userAllowedAccessToGeoLocation, openStreetMapConsent, setOpenStreetMapConsent }),
-            [userAllowedAccessToGeoLocation, openStreetMapConsent],
+            [userAllowedAccessToGeoLocation, openStreetMapConsent]
           )}
         >
           <RouteContext.Provider
@@ -109,11 +112,12 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
             )}
           >
             <Navbar />
             <div className="relative grow overflow-hidden">
+              <h1>{testState}</h1>
               <Switch>
                 <Route path="/route/:id">
                   <RoutePage />
