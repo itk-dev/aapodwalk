@@ -1,8 +1,6 @@
 export const isDeviceIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
 
 export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, lat1, lon1, lat2, lon2) {
-  // No heavy math if user won't allow it anyway
-  if (!userAllowedAccessToGeoLocation) return 0;
   /*
     Formula
     c = 2 ⋅ atan2( √a, √(1−a) )
@@ -28,6 +26,7 @@ export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, la
 
     return d;
   }
+  return 0;
 }
 
 export default {};
