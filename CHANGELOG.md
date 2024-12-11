@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-48](https://github.com/itk-dev/aapodwalk/pull/48)
+  - Downgrade react router dom to make "back-button" work
+  - Make locked points unclickable
+
 ## [1.0.6] - 2024-12-11
 
 - [PR-47](https://github.com/itk-dev/aapodwalk/pull/47)
