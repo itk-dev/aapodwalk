@@ -1,6 +1,6 @@
 import { React } from "react";
 
-const PersonalInformationPolicyPage = ({}) => {
+function PersonalInformationPolicyPage() {
   return (
     <>
       <h1 className="text-2xl font-extrabold">
@@ -48,6 +48,6 @@ const PersonalInformationPolicyPage = ({}) => {
       </p>
     </>
   );
-};
+}
 
 export default PersonalInformationPolicyPage;
