@@ -25,7 +25,7 @@ function App() {
       lat,
       long,
     }),
-    [lat, long]
+    [lat, long],
   );
 
   const updateLocation = () => {
