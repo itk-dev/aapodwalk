@@ -1,40 +1,48 @@
-import { React, useState, useEffect, useContext } from "react";
-import PermissionContext from "../../context/permission-context";
-import Image from "../Image";
+import { React, useState, useEffect, useContext, useMemo } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock } from "@fortawesome/free-solid-svg-icons";
+import { useHistory, useLocation } from "react-router-dom";
+import PermissionContext from "../../context/permission-context";
+import Image from "../Image";
 import RouteContext from "../../context/RouteContext";
 import Footprints from "../../icons/footprints.svg?url";
 import OrientationArrow from "./OrientationArrow";
 import DistanceComponent from "./DistanceComponent";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
-import { useSearchParams } from "react-router-dom";
 
 function Point({
   point: { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100, mediaEmbedCode },
   order,
 }) {
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
-  const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
+  const { userAllowedAccessToGeoLocationMemo: userAllowedAccessToGeoLocation } = useContext(PermissionContext);
   const [unlocked, setUnlocked] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [embed, setEmbed] = useState(null);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { search } = useLocation();
+  const { replace } = useHistory();
 
   useEffect(() => {
-    if (searchParams.get("point") !== "null") {
-      setOverlay(Number(searchParams.get("point")) === id);
+    const query = new URLSearchParams(search);
+    const pointId = query.get("point");
+    if (pointId && Number(pointId) === id) {
+      setOverlay(true);
     }
-  }, []);
+  }, [id, search]);
 
   useEffect(() => {
+    let searchParams = null;
+
     if (overlay) {
-      setSearchParams({ point: id });
-      return;
+      const paramsString = `point=${id}`;
+      searchParams = new URLSearchParams(paramsString);
+    } else {
+      searchParams = new URLSearchParams("");
     }
-    setSearchParams({});
-  }, [overlay]);
+
+    replace({ search: searchParams.toString() });
+  }, [overlay, id, replace]);
 
   useEffect(() => {
     if (listOfUnlocked) {
@@ -64,7 +72,11 @@ function Point({
 
   return (
     <>
-      <button type="button" onClick={() => playThis()} className="relative text-left">
+      <button
+        type="button"
+        onClick={() => playThis()}
+        className={`relative text-left ${unlocked ? "" : "pointer-events-none"}`}
+      >
         <div
           className={`bg-zinc-100 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded flex items-center ${
             unlocked ? "" : "opacity-35"

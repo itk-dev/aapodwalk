@@ -1,22 +1,27 @@
 import { React, useContext, useEffect } from "react";
+import { useHistory, useLocation } from "react-router-dom";
 import SelectedTagContext from "../../context/SelectedTagContext";
-import { useSearchParams } from "react-router-dom";
 
 function Tag({ title, id }) {
   const { setSelectedTag, selectedTag } = useContext(SelectedTagContext);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const { search } = useLocation();
+  const { replace } = useHistory();
 
   useEffect(() => {
-    if (searchParams) {
-      const id = Number(searchParams.get("tag"));
-      setSelectedTag(Number.isNaN(id) || id < 1 ? null : id);
+    const query = new URLSearchParams(search);
+    const tagId = query.get("tag");
+    if (tagId && Number(tagId) === id) {
+      setSelectedTag(id);
     }
-  }, []);
+  }, [id, search, setSelectedTag]);
 
-  function selectTag(id) {
-    setSearchParams({ tag: id });
-    setSelectedTag(id);
-  }
+  useEffect(() => {
+    if (selectedTag === id) {
+      const paramsString = `tag=${id}`;
+      const searchParams = new URLSearchParams(paramsString);
+      replace({ search: searchParams.toString() });
+    }
+  }, [selectedTag, id]);
 
   return (
     <button
@@ -24,7 +29,7 @@ function Tag({ title, id }) {
         selectedTag === id ? "bg-emerald-400 dark:bg-emerald-800 text-white" : ""
       }`}
       type="button"
-      onClick={() => selectTag(id)}
+      onClick={() => setSelectedTag(id)}
     >
       <span className="sr-only">Filtrer listen af ruter efter ruter med tagget </span>
       {title}
