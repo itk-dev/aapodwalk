@@ -7,7 +7,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
-- [PR-46](https://github.com/itk-dev/aapodwalk/pull/47/files)
+- [PR-47](https://github.com/itk-dev/aapodwalk/pull/47)
   - Added skeletons for tag filters and routes
   - Added very simple "error handling"
 
