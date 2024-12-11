@@ -27,9 +27,11 @@ const PointsList = ({ points }) => {
   return (
     <>
       <h1 className="text-ms font-bold mb-2">{selectedRoute.title}</h1>
-      {[...points].reverse().map((point, index) => (
-        <Point point={point} key={point.id} order={points.length - index} />
-      ))}
+      {points &&
+        [...points]
+          .reverse()
+          .map((point, index) => <Point point={point} key={point.id} order={points.length - index} />)}
+      {!points && <div>Der er desværre ikke nogle punkter på denne rute</div>}
     </>
   );
 };

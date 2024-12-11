@@ -20,7 +20,7 @@ function useFetch(restUrl) {
   const fetchReducer = (state, action) => {
     switch (action.type) {
       case "loading":
-        return { ...initialState };
+        return { ...initialState, loading: true };
       case "fetched":
         return { ...initialState, data: action.payload };
       case "error":
