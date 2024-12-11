@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.0.6] - 2024-12-11
+
 - [PR-46](https://github.com/itk-dev/aapodwalk/pull/46)
   - Create the actual route page
   - Create link to list of points
@@ -34,6 +36,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
   - Add support for fontawesome
   - Save if the user closes the "landing-page" in `localstorage`
 
+## [1.0.5] - 2024-12-05
+
+- [PR-40](https://github.com/itk-dev/aapodwalk/pull/40)
+  - Default dark mode
+  - Make consent readable when not on dark mode
 - [PR-39](https://github.com/itk-dev/aapodwalk/pull/39)
   - Remove cache from usefetch and cache context
 
