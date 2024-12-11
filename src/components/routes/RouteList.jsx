@@ -27,13 +27,13 @@ const RouteList = () => {
   if (error) return <div className="mt-10">Der skete desværre en fejl da ruterne skulle hentes</div>;
   if (loading) return <RoutesLoading />;
   if (routes.length === 0) return <div className="mt-10">Der er desværre ikke nogle ruter</div>;
-  
+
   return (
-      <div className="mt-10">
-        {routes.map((route) => (
-          <Route route={route} key={route.id} />
-        ))}
-      </div>
+    <div className="mt-10">
+      {routes.map((route) => (
+        <Route route={route} key={route.id} />
+      ))}
+    </div>
   );
 };
 
