@@ -64,7 +64,7 @@ function App() {
         setUserAllowedAccessToGeoLocation(true);
       } else if (state === "prompt") {
         updateLocation();
-        setUserAllowedAccessToGeoLocation(true);
+        setUserAllowedAccessToGeoLocation(false);
       } else if (state === "denied") {
         setUserAllowedAccessToGeoLocation(false);
       }
