@@ -87,6 +87,7 @@ function Point({
           <div className="w-3/4 ml-2">
             <OrderComponent order={order} />
             <h2 className="text-xl font-bold">{name}</h2>
+            <div>userAllowedAccessToGeoLocation: {userAllowedAccessToGeoLocation ? "JA" : "NEJ"}</div>
             <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
           </div>
           {isLocked() && (
