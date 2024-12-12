@@ -4,7 +4,7 @@ import LatLongContext from "../../context/latitude-longitude-context";
 import { isDeviceIOS } from "../../util/helper";
 
 function OrientationArrow() {
-  const [orientation, setOrientation] = useState(null);
+  const [orientation, setOrientation] = useState("ikke sat");
   const { heading } = useContext(LatLongContext);
 
   function deviceOrientationHandler(e) {
