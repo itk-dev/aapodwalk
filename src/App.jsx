@@ -19,6 +19,7 @@ function App() {
   const [openStreetMapConsent, setOpenStreetMapConsent] = useState(null);
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
+  const locationUpdateInterval = 30000;
 
   const contextLatLong = useMemo(
     () => ({
@@ -34,7 +35,7 @@ function App() {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
       });
-    }, 30000);
+    }, locationUpdateInterval);
   }
 
   useEffect(() => {
