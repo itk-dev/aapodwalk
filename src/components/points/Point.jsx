@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock, faMap } from "@fortawesome/free-solid-svg-icons";
+import { faLock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { useHistory, useLocation } from "react-router-dom";
 import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import Image from "../Image";
@@ -128,7 +128,7 @@ function Point({
             to={`/see-on-map/${latitude}/${longitude}`}
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col cursor-pointer text-emerald-400 dark:text-emerald-800"
           >
-            <FontAwesomeIcon className="h-9" icon={faMap} />
+            <FontAwesomeIcon className="h-9" icon={faMapLocationDot} />
             <span className="sr-only">Se på kort</span>
           </Link>
           <DistanceComponent
