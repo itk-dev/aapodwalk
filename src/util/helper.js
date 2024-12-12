@@ -1,5 +1,6 @@
 export const isDeviceIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
 
+// Borrowed from here: https://www.movable-type.co.uk/scripts/latlong.html?from=48.86,-122.0992&to=48.8599,-122.1449
 export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   /*
     Formula
@@ -42,7 +43,7 @@ export function sortByProximity(routes, lat, long) {
         element.points[0].latitude || 0,
         element.points[0].longitude || 0,
         lat,
-        long,
+        long
       ),
     };
   });
