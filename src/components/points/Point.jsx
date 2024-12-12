@@ -52,7 +52,6 @@ function Point({
   }, [listOfUnlocked, id]);
 
   function isNextPointToUnlock() {
-    console.log(!unlocked && userAllowedAccessToGeoLocation);
     // The point is the next in line to be unlocked:
     // - The id matches that of the next in line to be unlocked
     // - It has not already been unlocked

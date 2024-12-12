@@ -19,16 +19,14 @@ function App() {
   const [openStreetMapConsent, setOpenStreetMapConsent] = useState(null);
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
-  const [heading, setHeading] = useState(null);
   const [userAllowedAccessToGeoLocation, setUserAllowedAccessToGeoLocation] = useState(false);
 
   const contextLatLong = useMemo(
     () => ({
       lat,
       long,
-      heading,
     }),
-    [lat, long, heading]
+    [lat, long]
   );
 
   const updateLocation = () => {
@@ -36,14 +34,12 @@ function App() {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
-        setHeading(position.coords.heading === null ? "INGENTING" : position.coords.heading);
       });
     }
     setTimeout(() => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
-        setHeading(position.coords.heading === null ? "INGENTING" : position.coords.heading);
       });
       updateLocation();
     }, 3000);
@@ -54,7 +50,7 @@ function App() {
       name: "geolocation",
     })
     .then(function (result) {
-      console.log(result, "result");
+      // console.log(result, "result");
       const onLocationFetchSuccess = (position) => {
         /*
          Consume location coordinates here and proceed as required
@@ -63,7 +59,7 @@ function App() {
       };
 
       const onLocationFetchFailure = (error = {}) => {
-        console.log(error, "error");
+        // console.log(error, "error");
         // Error code 1 corresponds to user denying/blocking the location permission
         if (error.code === 1) {
           // Respond to failure case as required
