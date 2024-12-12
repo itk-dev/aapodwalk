@@ -6,7 +6,7 @@ function OrientationArrow() {
   const [orientation, setOrientation] = useState(null);
   const { heading } = useContext(LatLongContext);
 
-  if (!orientation) return null;
+  // if (!orientation) return null;
 
   return (
     <div className="flex justify-between">
