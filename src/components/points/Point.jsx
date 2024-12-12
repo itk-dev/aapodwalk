@@ -98,7 +98,7 @@ function Point({
         </div>
         {isNextPointToUnlock() && (
           <>
-            <OrientationArrow />
+            <OrientationArrow destinationLatitude={latitude} destinationLongitude={longitude} />
             <DistanceComponent
               classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2"
               id={id}

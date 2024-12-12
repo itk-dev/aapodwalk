@@ -29,4 +29,22 @@ export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, la
   return 0;
 }
 
+export function getAngleFromLocationToDestination(lat1, long1, lat2, long2) {
+  const startX = (lat1 * Math.PI) / 180;
+  const startY = (long1 * Math.PI) / 180;
+  const endX = (lat2 * Math.PI) / 180;
+  const endY = (long2 * Math.PI) / 180;
+
+  let bearing = Math.atan2(
+    Math.sin(endY - startY) * Math.cos(endX),
+    Math.cos(startX) * Math.sin(endX) - Math.sin(startX) * Math.cos(endX) * Math.cos(endY - startY)
+  );
+
+  bearing *= 57.2957795;
+
+  bearing = (bearing + 360) % 360;
+
+  return bearing;
+}
+
 export default {};
