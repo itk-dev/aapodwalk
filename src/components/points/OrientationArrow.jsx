@@ -8,11 +8,8 @@ function OrientationArrow() {
   const { heading } = useContext(LatLongContext);
 
   function deviceOrientationHandler(e) {
-    console.log(e);
-    navigator.geolocation.getCurrentPosition(locationHandler);
     setTimeout(() => {
       const orientaionValue = e.webkitCompassHeading || Math.abs(e.alpha - 360);
-      console.log(orientaionValue);
       setOrientation(orientaionValue);
     }, 3000);
   }
