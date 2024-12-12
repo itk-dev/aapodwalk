@@ -25,27 +25,24 @@ function App() {
       lat,
       long,
     }),
-    [lat, long],
+    [lat, long]
   );
 
-  const updateLocation = () => {
-    if (lat === null || long === null) {
+  function startLocationPrompter() {
+    setInterval(() => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
       });
-    }
-    setTimeout(() => {
-      navigator.geolocation.getCurrentPosition((position) => {
-        setLat(position.coords.latitude);
-        setLong(position.coords.longitude);
-      });
-      updateLocation();
-    }, 3000);
-  };
+    }, 30000);
+  }
 
   useEffect(() => {
-    updateLocation();
+    navigator.geolocation.getCurrentPosition((position) => {
+      setLat(position.coords.latitude);
+      setLong(position.coords.longitude);
+    });
+    startLocationPrompter();
   }, []);
 
   useEffect(() => {
@@ -72,7 +69,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
             )}
           >
             <Navbar />
