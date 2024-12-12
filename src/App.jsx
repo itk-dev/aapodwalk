@@ -25,7 +25,7 @@ function App() {
       lat,
       long,
     }),
-    [lat, long]
+    [lat, long],
   );
 
   const updateLocation = () => {
@@ -72,7 +72,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
             )}
           >
             <Navbar />

@@ -42,7 +42,7 @@ export function sortByProximity(routes, lat, long) {
         element.points[0].latitude || 0,
         element.points[0].longitude || 0,
         lat,
-        long
+        long,
       ),
     };
   });
