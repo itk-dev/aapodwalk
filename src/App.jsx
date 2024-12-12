@@ -11,12 +11,15 @@ import PersonalInformationPolicyPage from "./components/PersonalInformationPolic
 import Navbar from "./components/Navbar";
 import FAQ from "./components/FAQ";
 import SeeOnMap from "./components/SeeOnMap";
+import ErrorContext from "./context/ErrorContext";
 
 function App() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [listOfUnlocked, setListOfUnlocked] = useState([]);
   const [nextUnlockablePointId, setNextUnlockablePointId] = useState(null);
   const [openStreetMapConsent, setOpenStreetMapConsent] = useState(null);
+  const [error, setError] = useState(false);
+  const [errorText, setErrorText] = useState("");
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
   const locationUpdateInterval = 30000;
@@ -75,32 +78,44 @@ function App() {
           >
             <Navbar />
             <div className="relative grow overflow-hidden">
-              <Switch>
-                <Route path="/route/:id">
-                  <RoutePage />
-                </Route>
-                <Route path="/points/:id">
-                  <RoutePoints />
-                </Route>
-                <Route path="/faq">
-                  <FAQ />
-                </Route>
-                <Route path="/personal-information-policy">
-                  <PersonalInformationPolicyPage />
-                </Route>
-                <Route path="/navigation-help">
-                  <div>Todo</div>
-                </Route>
-                <Route path="/info">
-                  <Info />
-                </Route>
-                <Route path="/see-on-map/:latitude/:longitude">
-                  <SeeOnMap />
-                </Route>
-                <Route path="/">
-                  <FrontPage />
-                </Route>
-              </Switch>
+              <ErrorContext.Provider
+                value={useMemo(
+                  () => ({
+                    error,
+                    setError,
+                    errorText,
+                    setErrorText,
+                  }),
+                  [error, errorText]
+                )}
+              >
+                <Switch>
+                  <Route path="/route/:id">
+                    <RoutePage />
+                  </Route>
+                  <Route path="/points/:id">
+                    <RoutePoints />
+                  </Route>
+                  <Route path="/faq">
+                    <FAQ />
+                  </Route>
+                  <Route path="/personal-information-policy">
+                    <PersonalInformationPolicyPage />
+                  </Route>
+                  <Route path="/navigation-help">
+                    <div>Todo</div>
+                  </Route>
+                  <Route path="/info">
+                    <Info />
+                  </Route>
+                  <Route path="/see-on-map/:latitude/:longitude">
+                    <SeeOnMap />
+                  </Route>
+                  <Route path="/">
+                    <FrontPage />
+                  </Route>
+                </Switch>
+              </ErrorContext.Provider>
             </div>
           </RouteContext.Provider>
         </PermissionContext.Provider>
