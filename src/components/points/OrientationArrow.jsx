@@ -12,7 +12,9 @@ function OrientationArrow() {
     <div className="flex justify-between">
       <span className="w-1/2">
         <div className="inline w-10">
-          {heading}
+          <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl">
+            {heading}
+          </div>
           {/* <img
             src={LocationArrow}
             style={{
