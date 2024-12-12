@@ -25,7 +25,7 @@ function FrontPage() {
             selectedTag,
             setSelectedTag,
           }),
-          [selectedTag]
+          [selectedTag],
         )}
       >
         <TagFilterList />

@@ -29,7 +29,7 @@ function App() {
       lat,
       long,
     }),
-    [lat, long]
+    [lat, long],
   );
 
   function startLocationPrompter() {
@@ -73,7 +73,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
             )}
           >
             <Navbar />
@@ -86,7 +86,7 @@ function App() {
                     errorText,
                     setErrorText,
                   }),
-                  [error, errorText]
+                  [error, errorText],
                 )}
               >
                 <Switch>
