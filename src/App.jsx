@@ -36,14 +36,14 @@ function App() {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
-        setHeading(position.coords.heading);
+        setHeading(position.coords.heading === null ? "INGENTING" : position.coords.heading);
       });
     }
     setTimeout(() => {
       navigator.geolocation.getCurrentPosition((position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
-        setHeading(position.coords.heading);
+        setHeading(position.coords.heading === null ? "INGENTING" : position.coords.heading);
       });
       updateLocation();
     }, 3000);
