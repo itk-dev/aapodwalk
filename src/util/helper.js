@@ -1,6 +1,6 @@
 export const isDeviceIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
 
-export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, lat1, lon1, lat2, lon2) {
+export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   /*
     Formula
     c = 2 ⋅ atan2( √a, √(1−a) )
@@ -8,7 +8,7 @@ export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, la
     where	φ is latitude, λ is longitude, R is earth’s radius (mean radius = 6,371km);
     note that angles need to be in radians to pass to trig functions!
     */
-  if (userAllowedAccessToGeoLocation) {
+  if (lat1 && lon1 && lat2 && lon2) {
     const R = 6371e3; // metres
     const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
     const φ2 = (lat2 * Math.PI) / 180;
@@ -28,23 +28,3 @@ export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, la
   }
   return 0;
 }
-
-export function getAngleFromLocationToDestination(lat1, long1, lat2, long2) {
-  const startX = (lat1 * Math.PI) / 180;
-  const startY = (long1 * Math.PI) / 180;
-  const endX = (lat2 * Math.PI) / 180;
-  const endY = (long2 * Math.PI) / 180;
-
-  let bearing = Math.atan2(
-    Math.sin(endY - startY) * Math.cos(endX),
-    Math.cos(startX) * Math.sin(endX) - Math.sin(startX) * Math.cos(endX) * Math.cos(endY - startY)
-  );
-
-  bearing *= 57.2957795;
-
-  bearing = (bearing + 360) % 360;
-
-  return bearing;
-}
-
-export default {};

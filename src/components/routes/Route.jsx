@@ -1,15 +1,15 @@
 import { React, useContext } from "react";
 import { Link } from "react-router-dom";
 import Image from "../Image";
-import PermissionContext from "../../context/permission-context";
 import SelectedRouteContext from "../../context/RouteContext";
 import DistanceComponent from "../points/DistanceComponent";
 import TagList from "../tags/TagList";
+import LatLongContext from "../../context/latitude-longitude-context";
 
 function Route({ route }) {
   // The below is to calculate the proximity between user and first point in route
   const { latitude, longitude } = route.points[0];
-  const { userAllowedAccessToGeoLocation } = useContext(PermissionContext);
+  const { lat, long } = useContext(LatLongContext);
   const { setSelectedRoute } = useContext(SelectedRouteContext);
 
   return (
@@ -26,7 +26,7 @@ function Route({ route }) {
           <div className="truncate w-4/5">
             <TagList tags={route.tags} />
           </div>
-          {userAllowedAccessToGeoLocation && (
+          {lat && long && (
             <DistanceComponent
               id={null}
               latitude={latitude}
