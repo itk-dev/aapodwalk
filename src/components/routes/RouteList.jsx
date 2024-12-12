@@ -3,24 +3,24 @@ import useFetch from "../../util/useFetch";
 import Route from "./Route";
 import SelectedTagContext from "../../context/SelectedTagContext";
 import RoutesLoading from "./RoutesLoading";
-const RouteList = () => {
+import { sortByProximity, routesFilteredByTag } from "../../util/helper";
+import LatLongContext from "../../context/latitude-longitude-context";
+
+function RouteList() {
   const { selectedTag } = useContext(SelectedTagContext);
+  const { lat, long } = useContext(LatLongContext);
   const { data, error, loading } = useFetch("routes");
   const [routes, setRoutes] = useState([]);
 
-  function isATagSelected(tags) {
-    return tags.filter(({ id }) => id === selectedTag).length > 0;
-  }
-
   useEffect(() => {
     if (data) {
+      let filteredData = [];
       if (selectedTag === null) {
-        // Todo do the stuff with routes in close proximity
-        setRoutes(data["hydra:member"]);
+        filteredData = sortByProximity(data["hydra:member"], lat, long);
       } else {
-        const filteredData = data["hydra:member"].filter(({ tags }) => isATagSelected(tags));
-        setRoutes(filteredData);
+        filteredData = routesFilteredByTag(data["hydra:member"], selectedTag);
       }
+      setRoutes(filteredData);
     }
   }, [data, selectedTag]);
 
@@ -35,6 +35,6 @@ const RouteList = () => {
       ))}
     </div>
   );
-};
+}
 
 export default RouteList;

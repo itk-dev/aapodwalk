@@ -28,3 +28,33 @@ export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   }
   return 0;
 }
+
+function compareProximity(routeA, routeB) {
+  return routeA.proximityToFirstPoint - routeB.proximityToFirstPoint;
+}
+
+export function sortByProximity(routes, lat, long) {
+  // Every route gets a "proximityToFirstPoint", to avoid calculating these double in the compare function
+  const routesWithProximityToFirstPoint = routes.map((element) => {
+    return {
+      ...element,
+      proximityToFirstPoint: getDistanceBetweenCoordinates(
+        element.points[0].latitude || 0,
+        element.points[0].longitude || 0,
+        lat,
+        long
+      ),
+    };
+  });
+  return routesWithProximityToFirstPoint.sort(compareProximity);
+}
+
+function isATagSelected(tags, selectedTag) {
+  return tags.filter(({ id }) => id === selectedTag).length > 0;
+}
+
+export function routesFilteredByTag(routes, tag) {
+  return routes.filter(({ tags }) => isATagSelected(tags, tag));
+}
+
+export default {};

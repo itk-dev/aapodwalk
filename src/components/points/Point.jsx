@@ -78,8 +78,8 @@ function Point({
         className={`relative text-left w-full ${unlocked ? "" : "pointer-events-none"}`}
       >
         <div
-          className={`bg-zinc-100 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded flex items-center ${
-            unlocked ? "" : "opacity-35"
+          className={`bg-zinc-100 dark:bg-zinc-700 flex flex-row relative h-32 my-2 rounded flex items-center ${
+            unlocked ? "" : "opacity-35 blur-sm bg-zinc-100 dark:bg-zinc-900"
           }`}
         >
           <Image src={image} className="w-24 h-24 rounded grow w-1/4 ml-2 object-cover" />
@@ -88,14 +88,14 @@ function Point({
             <h2 className="text-xl font-bold">{name}</h2>
             <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
           </div>
-          {isLocked() && (
-            <FontAwesomeIcon
-              icon={faLock}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
-            />
-          )}
         </div>
       </button>
+      {isLocked() && (
+        <FontAwesomeIcon
+          icon={faLock}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
+        />
+      )}
       {embed && (
         <div
           className={`${
@@ -128,11 +128,11 @@ function Point({
             to={`/see-on-map/${latitude}/${longitude}`}
             className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col cursor-pointer text-emerald-400 dark:text-emerald-800"
           >
-            <FontAwesomeIcon icon={faMap} />
-            Se på kort
+            <FontAwesomeIcon className="h-9" icon={faMap} />
+            <span className="sr-only">Se på kort</span>
           </Link>
           <DistanceComponent
-            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2"
+            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 text-xl"
             id={id}
             latitude={latitude}
             longitude={longitude}
@@ -141,7 +141,7 @@ function Point({
           <img
             src={Footprints}
             alt=""
-            className="w-10 h-10 absolute top-1/2 left-12 transform -translate-x-1/2 -translate-y-1/2"
+            className="h-16 h-16 absolute top-1/2 left-12 transform -translate-x-1/2 -translate-y-1/2"
           />
         </>
       )}
