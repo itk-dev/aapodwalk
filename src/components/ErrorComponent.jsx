@@ -12,7 +12,7 @@ function ErrorComponent() {
 
   if (!error) return null;
   return (
-    <div className="relative dark:bg-red-50 bg-red-50 text-black border-l-4 border-solid border-red-400 pl-2 pr-10 py-10">
+    <div className="relative dark:bg-red-50 bg-red-50 text-black border-l-4 border-solid border-red-400 pl-5 pr-10 py-10">
       <CloseButton
         closeOverlay={() => resetError()}
         label="Luk denne fejlbesked"
