@@ -25,7 +25,7 @@ function OrientationArrow(destinationLatitude, destinationLongitude) {
     setTimeout(() => {
       const orientaionValue = e.webkitCompassHeading || Math.abs(e.alpha - 360);
       setOrientation(orientaionValue);
-    }, 10000);
+    }, 30000);
   }
 
   function startWaypointer() {
@@ -54,20 +54,14 @@ function OrientationArrow(destinationLatitude, destinationLongitude) {
   }, []);
 
   return (
-    <div className="flex justify-between">
-      <span className="w-1/2">
-        <div className="inline w-10">
-          <img
-            src={LocationArrow}
-            style={{
-              transform: `rotate(${-rotation}deg)`,
-            }}
-            alt=""
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
-          />
-        </div>
-      </span>
-    </div>
+    <img
+      src={LocationArrow}
+      style={{
+        transform: `rotate(${-rotation}deg)`,
+      }}
+      alt=""
+      className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+    />
   );
 }
 
