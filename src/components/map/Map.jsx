@@ -3,7 +3,21 @@ import L from "leaflet";
 import "leaflet/dist/leaflet.css";
 import "./map-wrapper.css";
 
-function Map({ mapData, zoomControl, additionalClass = "" }) {
+function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
+  function getHtmlPin(index) {
+    if (withIndex) {
+      return `
+    <div class="bg-white dark:bg-black pin">
+     <span>${index}</span>
+    </div>
+  `;
+    }
+    return `
+    <div class="bg-white dark:bg-black pin">
+    </div>
+  `;
+  }
+
   return (
     <MapContainer
       center={[56.15355732197891, 10.213148468411132]} // Aarhus <3
@@ -21,11 +35,7 @@ function Map({ mapData, zoomControl, additionalClass = "" }) {
           key={latitude}
           position={[latitude, longitude]}
           icon={L.divIcon({
-            html: `
-              <div class="bg-white dark:bg-black pin">
-                <span>${index}</span>
-              </div>
-            `,
+            html: getHtmlPin(index),
             // The empty string classname below seems like something to remove, but if I remove it, a little square
             // appears in the map... Not sure why
             className: "",

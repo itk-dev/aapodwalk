@@ -1,6 +1,7 @@
 export const isDeviceIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
 
-export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, lat1, lon1, lat2, lon2) {
+// Borrowed from here: https://www.movable-type.co.uk/scripts/latlong.html?from=48.86,-122.0992&to=48.8599,-122.1449
+export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   /*
     Formula
     c = 2 ⋅ atan2( √a, √(1−a) )
@@ -8,7 +9,7 @@ export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, la
     where	φ is latitude, λ is longitude, R is earth’s radius (mean radius = 6,371km);
     note that angles need to be in radians to pass to trig functions!
     */
-  if (userAllowedAccessToGeoLocation) {
+  if (lat1 && lon1 && lat2 && lon2) {
     const R = 6371e3; // metres
     const φ1 = (lat1 * Math.PI) / 180; // φ, λ in radians
     const φ2 = (lat2 * Math.PI) / 180;
@@ -27,6 +28,34 @@ export function getDistanceBetweenCoordinates(userAllowedAccessToGeoLocation, la
     return d;
   }
   return 0;
+}
+
+function compareProximity(routeA, routeB) {
+  return routeA.proximityToFirstPoint - routeB.proximityToFirstPoint;
+}
+
+export function sortByProximity(routes, lat, long) {
+  // Every route gets a "proximityToFirstPoint", to avoid calculating these double in the compare function
+  const routesWithProximityToFirstPoint = routes.map((element) => {
+    return {
+      ...element,
+      proximityToFirstPoint: getDistanceBetweenCoordinates(
+        element.points[0].latitude || 0,
+        element.points[0].longitude || 0,
+        lat,
+        long
+      ),
+    };
+  });
+  return routesWithProximityToFirstPoint.sort(compareProximity);
+}
+
+function isATagSelected(tags, selectedTag) {
+  return tags.filter(({ id }) => id === selectedTag).length > 0;
+}
+
+export function routesFilteredByTag(routes, tag) {
+  return routes.filter(({ tags }) => isATagSelected(tags, tag));
 }
 
 export default {};

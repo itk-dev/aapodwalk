@@ -4,10 +4,9 @@ import PermissionContext from "../../context/permission-context";
 import "./map-wrapper.css";
 import CloseButton from "../CloseButton";
 
-function MapWrapper({ mapData }) {
-  const [focusOnMap, setFocusOnMap] = useState(false);
+function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
+  const [focusOnMap, setFocusOnMap] = useState(!focusable || false);
   const { openStreetMapConsent } = useContext(PermissionContext);
-
   if (!openStreetMapConsent) return null;
 
   return (
@@ -21,10 +20,12 @@ function MapWrapper({ mapData }) {
         }
         onClick={() => setFocusOnMap(true)}
       >
-        {focusOnMap && <Map zoomControl={true} mapData={mapData} />}
-        {!focusOnMap && <Map zoomControl={false} additionalClass="opacity-10" mapData={mapData} />}
+        {focusOnMap && <Map withIndex={withIndex} zoomControl mapData={mapData} />}
+        {!focusOnMap && focusable && (
+          <Map withIndex={withIndex} zoomControl={false} additionalClass={additionalClass} mapData={mapData} />
+        )}
       </button>
-      {focusOnMap && <CloseButton closeOverlay={() => setFocusOnMap(false)} label="luk kortvising" />}
+      {focusOnMap && focusable && <CloseButton closeOverlay={() => setFocusOnMap(false)} label="luk kortvising" />}
     </>
   );
 }

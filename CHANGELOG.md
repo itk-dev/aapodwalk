@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-50](https://github.com/itk-dev/aapodwalk/pull/50)
+  - Sort route list by proximity
+  - Replace arrow with "see on map"
+  - Simplify geo location stuff, trusting if the browser provides to info we can use the info
 - [PR-48](https://github.com/itk-dev/aapodwalk/pull/48)
   - Downgrade react router dom to make "back-button" work
   - Make locked points unclickable

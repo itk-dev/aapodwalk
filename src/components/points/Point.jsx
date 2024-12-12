@@ -1,22 +1,21 @@
-import { React, useState, useEffect, useContext, useMemo } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faLock } from "@fortawesome/free-solid-svg-icons";
-import { useHistory, useLocation } from "react-router-dom";
-import PermissionContext from "../../context/permission-context";
+import { faLock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import Image from "../Image";
 import RouteContext from "../../context/RouteContext";
 import Footprints from "../../icons/footprints.svg?url";
-import OrientationArrow from "./OrientationArrow";
 import DistanceComponent from "./DistanceComponent";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
+import LatLongContext from "../../context/latitude-longitude-context";
 
 function Point({
   point: { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100, mediaEmbedCode },
   order,
 }) {
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
-  const { userAllowedAccessToGeoLocationMemo: userAllowedAccessToGeoLocation } = useContext(PermissionContext);
+  const { lat, long } = useContext(LatLongContext);
   const [unlocked, setUnlocked] = useState(false);
   const [overlay, setOverlay] = useState(false);
   const [embed, setEmbed] = useState(null);
@@ -56,14 +55,14 @@ function Point({
     // - The id matches that of the next in line to be unlocked
     // - It has not already been unlocked
     // - The user gives access to geolocation
-    return nextUnlockablePointId === id && !unlocked && userAllowedAccessToGeoLocation;
+    return nextUnlockablePointId === id && !unlocked && lat && long;
   }
 
   function isLocked() {
     // The point is locked if:
     // - It is locked, and it is not the next to be unlocked or
     // - The user does not allow geo location access
-    return (!unlocked && nextUnlockablePointId !== id) || !userAllowedAccessToGeoLocation;
+    return (!unlocked && nextUnlockablePointId !== id) || !(lat && long);
   }
 
   function playThis() {
@@ -71,15 +70,15 @@ function Point({
   }
 
   return (
-    <>
+    <div className="relative">
       <button
         type="button"
         onClick={() => playThis()}
-        className={`relative text-left ${unlocked ? "" : "pointer-events-none"}`}
+        className={`relative text-left w-full ${unlocked ? "" : "pointer-events-none"}`}
       >
         <div
-          className={`bg-zinc-100 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded flex items-center ${
-            unlocked ? "" : "opacity-35"
+          className={`bg-zinc-100 dark:bg-zinc-700 flex flex-row relative h-32 my-2 rounded flex items-center ${
+            unlocked ? "" : "opacity-35 blur-sm bg-zinc-100 dark:bg-zinc-900"
           }`}
         >
           <Image src={image} className="w-24 h-24 rounded grow w-1/4 ml-2 object-cover" />
@@ -88,31 +87,14 @@ function Point({
             <h2 className="text-xl font-bold">{name}</h2>
             <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
           </div>
-          {isLocked() && (
-            <FontAwesomeIcon
-              icon={faLock}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
-            />
-          )}
         </div>
-        {isNextPointToUnlock() && (
-          <>
-            <OrientationArrow />
-            <DistanceComponent
-              classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2"
-              id={id}
-              latitude={latitude}
-              longitude={longitude}
-              proximityToUnlock={proximityToUnlock}
-            />
-            <img
-              src={Footprints}
-              alt=""
-              className="w-10 h-10 absolute top-1/2 left-12 transform -translate-x-1/2 -translate-y-1/2"
-            />
-          </>
-        )}
       </button>
+      {isLocked() && (
+        <FontAwesomeIcon
+          icon={faLock}
+          className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 text-4xl"
+        />
+      )}
       {embed && (
         <div
           className={`${
@@ -139,7 +121,30 @@ function Point({
       {overlay && unlocked && (
         <PointOverlay description={subtitles} closeOverlay={() => setOverlay(false)} title={name} order={order} />
       )}
-    </>
+      {isNextPointToUnlock() && (
+        <>
+          <Link
+            to={`/see-on-map/${latitude}/${longitude}`}
+            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col cursor-pointer text-emerald-400 dark:text-emerald-800"
+          >
+            <FontAwesomeIcon className="h-9" icon={faMapLocationDot} />
+            <span className="sr-only">Se på kort</span>
+          </Link>
+          <DistanceComponent
+            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 text-xl"
+            id={id}
+            latitude={latitude}
+            longitude={longitude}
+            proximityToUnlock={proximityToUnlock}
+          />
+          <img
+            src={Footprints}
+            alt=""
+            className="h-16 h-16 absolute top-1/2 left-12 transform -translate-x-1/2 -translate-y-1/2"
+          />
+        </>
+      )}
+    </div>
   );
 }
 

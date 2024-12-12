@@ -1,11 +1,11 @@
 import { React, useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import useFetch from "../../util/useFetch";
 import RouteContext from "../../context/RouteContext";
 import MapWrapper from "../map/MapWrapper";
 import TagList from "../tags/TagList";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
 function RoutePage() {
   const { id } = useParams();
@@ -72,7 +72,7 @@ function RoutePage() {
           </Link>
         </div>
       </div>
-      <MapWrapper mapData={points} />
+      <MapWrapper withIndex focusable additionalClass="opacity-10" mapData={points} />
     </>
   );
 }
