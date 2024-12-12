@@ -54,14 +54,19 @@ function OrientationArrow(destinationLatitude, destinationLongitude) {
   }, []);
 
   return (
-    <img
-      src={LocationArrow}
-      style={{
-        transform: `rotate(${-rotation}deg)`,
-      }}
-      alt=""
-      className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    />
+    <>
+      <div>agnle: {angle}</div>
+      <div>rot: {rotation}</div>
+      <div>ori:{orientation}</div>
+      <img
+        src={LocationArrow}
+        style={{
+          transform: `rotate(${-rotation}deg)`,
+        }}
+        alt=""
+        className="absolute top-1/4 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+      />
+    </>
   );
 }
 
