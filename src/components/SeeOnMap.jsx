@@ -1,5 +1,5 @@
 import { React, useContext } from "react";
-import { useParams } from "react-router-dom/cjs/react-router-dom.min";
+import { useParams } from "react-router-dom";
 import LatLongContext from "../context/latitude-longitude-context";
 import MapWrapper from "./map/MapWrapper";
 

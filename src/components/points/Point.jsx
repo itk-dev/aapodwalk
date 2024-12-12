@@ -1,8 +1,7 @@
 import { React, useState, useEffect, useContext } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
-import { useHistory, useLocation } from "react-router-dom";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useHistory, useLocation, Link } from "react-router-dom";
 import Image from "../Image";
 import RouteContext from "../../context/RouteContext";
 import Footprints from "../../icons/footprints.svg?url";
