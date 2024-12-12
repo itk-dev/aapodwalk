@@ -1,9 +1,11 @@
-import { React, useEffect, useState } from "react";
+import { React, useEffect, useState, useContext } from "react";
 import useFetch from "../../util/useFetch";
 import Tag from "./Tag";
 import TagsLoading from "./TagsLoading";
+import ErrorContext from "../../context/ErrorContext";
 
 function TagFilterList() {
+  const { setErrorText, setError } = useContext(ErrorContext);
   const [tags, setTags] = useState([]);
   const { data, error, loading } = useFetch("tags");
 
@@ -13,8 +15,15 @@ function TagFilterList() {
     }
   }, [data]);
 
+  useEffect(() => {
+    if (error) {
+      setError(true);
+      setErrorText("Der skete en fejl da kategorierne skulle hentes. Prøv at genindlæs siden.");
+    }
+  }, [error]);
+
   if (loading) return <TagsLoading />;
-  if (error) return <div>Der skete desværre en fejl da filtrene skulle hentes</div>;
+  if (error) return null;
   if (tags.length === 0) return <div>Der er desværre ikke nogle filtre</div>;
 
   return (

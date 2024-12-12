@@ -1,6 +1,7 @@
-import { React, useState, useContext, useEffect } from "react";
+import { React, useState, useContext, useEffect, useMemo } from "react";
 import MapConsentBanner from "./MapConsentBanner";
 import LandingPage from "./LandingPage";
+import ErrorComponent from "./ErrorComponent";
 import TagFilterList from "./tags/TagFilterList";
 import SelectedTagContext from "../context/SelectedTagContext";
 import RouteList from "./routes/RouteList";
@@ -17,7 +18,16 @@ function FrontPage() {
   return (
     <div>
       <LandingPage />
-      <SelectedTagContext.Provider value={{ selectedTag, setSelectedTag }}>
+      <ErrorComponent />
+      <SelectedTagContext.Provider
+        value={useMemo(
+          () => ({
+            selectedTag,
+            setSelectedTag,
+          }),
+          [selectedTag],
+        )}
+      >
         <TagFilterList />
         <RouteList />
       </SelectedTagContext.Provider>

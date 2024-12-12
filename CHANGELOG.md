@@ -7,6 +7,9 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-51](https://github.com/itk-dev/aapodwalk/pull/51)
+  - Added error context
+  - Added error component
 - [PR-50](https://github.com/itk-dev/aapodwalk/pull/50)
   - Sort route list by proximity
   - Replace arrow with "see on map"

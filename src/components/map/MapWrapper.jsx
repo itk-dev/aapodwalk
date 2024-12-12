@@ -25,7 +25,13 @@ function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
           <Map withIndex={withIndex} zoomControl={false} additionalClass={additionalClass} mapData={mapData} />
         )}
       </button>
-      {focusOnMap && focusable && <CloseButton closeOverlay={() => setFocusOnMap(false)} label="luk kortvising" />}
+      {focusOnMap && focusable && (
+        <CloseButton
+          additionalClasses="dark:bg-emerald-800 dark:text-white bg-white"
+          closeOverlay={() => setFocusOnMap(false)}
+          label="luk kortvising"
+        />
+      )}
     </>
   );
 }
