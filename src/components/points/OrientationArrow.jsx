@@ -1,27 +1,22 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useContext } from "react";
 import LocationArrow from "../../icons/location-arrow.svg?url";
 import { getAngleFromLocationToDestination, isDeviceIOS } from "../../util/helper";
+import LatLongContext from "../../context/latitude-longitude-context";
 
-function OrientationArrow(destinationLatitude, destinationLongitude) {
+function OrientationArrow({ destinationLatitude, destinationLongitude }) {
   const [orientation, setOrientation] = useState("ikke sat");
+  const { lat, long } = useContext(LatLongContext);
   const [angle, setAngle] = useState(null);
   const [rotation, setRotation] = useState(0);
 
-  function locationHandler(pos) {
+  function startAngleHandler() {
     setTimeout(() => {
-      setAngle(
-        getAngleFromLocationToDestination(
-          pos.coords.latitude,
-          pos.coords.longitude,
-          destinationLatitude,
-          destinationLongitude
-        )
-      );
+      setAngle(getAngleFromLocationToDestination(lat, long, destinationLatitude, destinationLongitude));
     }, 3000);
   }
 
   function deviceOrientationHandler(e) {
-    navigator.geolocation.getCurrentPosition(locationHandler);
+    startAngleHandler();
     setTimeout(() => {
       const orientaionValue = e.webkitCompassHeading || Math.abs(e.alpha - 360);
       setOrientation(orientaionValue);
