@@ -9,6 +9,7 @@ import DistanceComponent from "./DistanceComponent";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 import LatLongContext from "../../context/latitude-longitude-context";
+import { useScrollToLocation } from "../hooks/UseScrollIntoView";
 
 function Point({
   point: { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100, mediaEmbedCode },
@@ -69,8 +70,10 @@ function Point({
     setEmbed(mediaEmbedCode);
   }
 
+  useScrollToLocation(nextUnlockablePointId === id, id);
+
   return (
-    <div className="relative">
+    <div id={id} className="relative">
       <button
         type="button"
         onClick={() => playThis()}

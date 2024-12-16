@@ -2,7 +2,7 @@ import { React, useContext, useEffect } from "react";
 import Point from "./Point";
 import RouteContext from "../../context/RouteContext";
 
-const PointsList = ({ points }) => {
+function PointsList({ points }) {
   const { listOfUnlocked, setNextUnlockablePointId, selectedRoute } = useContext(RouteContext);
 
   function getIdFromPoint(point) {
@@ -28,7 +28,9 @@ const PointsList = ({ points }) => {
 
   return (
     <>
-      <h1 className="text-ms font-bold mb-2">{selectedRoute.title}</h1>
+      <h1 className="text-ms font-bol fixed w-full top-16 pb-2 bg-zinc-100 dark:bg-zinc-800 z-40">
+        {selectedRoute.title}
+      </h1>
       {points &&
         [...points]
           .reverse()
@@ -36,6 +38,6 @@ const PointsList = ({ points }) => {
       {!points && <div>Der er desværre ikke nogle punkter på denne rute</div>}
     </>
   );
-};
+}
 
 export default PointsList;
