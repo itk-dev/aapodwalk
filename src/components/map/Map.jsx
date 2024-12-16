@@ -18,6 +18,10 @@ function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
   `;
   }
 
+  function avoidZeroIndexingPoints(index) {
+    return index + 1;
+  }
+
   return (
     <MapContainer
       center={[56.15355732197891, 10.213148468411132]} // Aarhus <3
@@ -35,7 +39,7 @@ function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
           key={latitude}
           position={[latitude, longitude]}
           icon={L.divIcon({
-            html: getHtmlPin(index),
+            html: getHtmlPin(avoidZeroIndexingPoints(index)),
             // The empty string classname below seems like something to remove, but if I remove it, a little square
             // appears in the map... Not sure why
             className: "",
