@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-52](https://github.com/itk-dev/aapodwalk/pull/52)
+  - Avoid zero indexing pins
 - [PR-51](https://github.com/itk-dev/aapodwalk/pull/51)
   - Added error context
   - Added error component
