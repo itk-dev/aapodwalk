@@ -10,8 +10,6 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR-54](https://github.com/itk-dev/aapodwalk/pull/54)
   - Add scroll into view hook
   - Scroll last/(perceived first) point in list into view
-- [PR-53](https://github.com/itk-dev/aapodwalk/pull/53)
-  - Always show the current user on the map
 - [PR-52](https://github.com/itk-dev/aapodwalk/pull/52)
   - Avoid zero indexing pins
 - [PR-51](https://github.com/itk-dev/aapodwalk/pull/51)
