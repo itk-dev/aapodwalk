@@ -9,10 +9,12 @@ import DistanceComponent from "./DistanceComponent";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 import LatLongContext from "../../context/latitude-longitude-context";
+import { useScrollToLocation } from "../hooks/UseScrollIntoView";
 
 function Point({
   point: { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100, mediaEmbedCode },
   order,
+  scrollIntoView,
 }) {
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
   const { lat, long } = useContext(LatLongContext);
@@ -69,8 +71,13 @@ function Point({
     setEmbed(mediaEmbedCode);
   }
 
+  const scrollId = "scroll-to-this";
+  if (scrollIntoView) {
+    useScrollToLocation(scrollId);
+  }
+
   return (
-    <div className="relative">
+    <div id={scrollIntoView ? scrollId : id} className="relative">
       <button
         type="button"
         onClick={() => playThis()}
