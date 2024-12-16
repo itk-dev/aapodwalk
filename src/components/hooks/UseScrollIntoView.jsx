@@ -1,10 +1,10 @@
 import { useEffect, useState } from "react";
 
-export const useScrollToLocation = (idOfElement) => {
+export const useScrollToLocation = (scroll, idOfElement) => {
   const [hasScrolled, setHasScrolled] = useState(false);
 
   useEffect(() => {
-    if (!hasScrolled) {
+    if (!hasScrolled && scroll) {
       const elementToScrollTo = document.getElementById(idOfElement);
       if (elementToScrollTo) {
         elementToScrollTo.scrollIntoView({ behavior: "smooth" });
