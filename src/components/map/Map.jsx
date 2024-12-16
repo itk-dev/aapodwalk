@@ -1,4 +1,4 @@
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import L from "leaflet";
 import LatLongContext from "../../context/latitude-longitude-context";
@@ -8,6 +8,7 @@ import "./map-wrapper.css";
 function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
   // The lat long of me
   const { lat, long } = useContext(LatLongContext);
+
   function getHtmlPin(index) {
     if (withIndex) {
       return `
@@ -21,11 +22,6 @@ function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
     </div>
   `;
   }
-
-  useEffect(() => {
-    // Always show "me" on map
-    mapData.push({ latitude: lat, longitude: long });
-  }, [mapData]);
 
   function avoidZeroIndexingPoints(index) {
     return index + 1;
@@ -43,20 +39,22 @@ function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
       />
-      {mapData.map(({ latitude, longitude }, index) => (
-        <Marker
-          key={latitude}
-          position={[latitude, longitude]}
-          icon={L.divIcon({
-            html: getHtmlPin(avoidZeroIndexingPoints(index)),
-            // The empty string classname below seems like something to remove, but if I remove it, a little square
-            // appears in the map... Not sure why
-            className: "",
-            iconSize: [24, 24], // If icon size is changed, it should equally be changed in the map-wrapper.css
-            iconAnchor: [12, 24], // 12 centers it, 24 makes the pointy end point on the right coordinates
-          })}
-        />
-      ))}
+      {lat &&
+        long &&
+        mapData.concat([{ latitude: lat, longitude: long }]).map(({ latitude, longitude }, index) => (
+          <Marker
+            key={latitude}
+            position={[latitude, longitude]}
+            icon={L.divIcon({
+              html: getHtmlPin(avoidZeroIndexingPoints(index)),
+              // The empty string classname below seems like something to remove, but if I remove it, a little square
+              // appears in the map... Not sure why
+              className: "",
+              iconSize: [24, 24], // If icon size is changed, it should equally be changed in the map-wrapper.css
+              iconAnchor: [12, 24], // 12 centers it, 24 makes the pointy end point on the right coordinates
+            })}
+          />
+        ))}
     </MapContainer>
   );
 }
