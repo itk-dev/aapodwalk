@@ -27,6 +27,7 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
       localStorage.setItem(storageKey, JSON.stringify([id]));
     }
   }
+  proximityToUnlock = 3000;
 
   useEffect(() => {
     if (!listOfUnlocked.includes(id) && proximityToUnlock !== null) {

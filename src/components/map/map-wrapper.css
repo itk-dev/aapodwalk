@@ -10,38 +10,11 @@
   height: calc(100vh - 2.5rem - 0.75rem);
 }
 
-.leaflet-marker-icon:focus {
-  .pin {
-    border-style: white;
-    background-color: rgb(6 95 70 / var(--tw-text-opacity));
-    box-shadow: 8px 8px 48px rgba(0, 135, 194, 0.56);
-    cursor: pointer;
-    transform: rotate(45deg) scale(1.25);
-    z-index: 1;
-  }
-  span {
-    color: white;
-  }
-}
-.pin {
+.pin-label {
+  inset: 0;
   position: absolute;
-  bottom: 5px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  border-color: rgb(6 95 70 / var(--tw-text-opacity));
-  border-style: solid;
-  border-radius: 100% 100% 0 100%;
-  border-width: 1px;
-  box-shadow: 8px 8px 16px rgba(42, 44, 46, 0.08);
-  transform: rotate(45deg);
-  width: 24px;
-  height: 24px;
-
-  span {
-    display: block;
-    pointer-events: none;
-    font-size: 16px;
-    transform: rotate(-45deg);
-  }
+  height: 32px;
+  width: 32px;
+  font-size: 18px;
+  margin-top: 1px;
 }

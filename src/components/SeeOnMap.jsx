@@ -16,7 +16,6 @@ function SeeOnMap() {
           additionalClass="h-screen"
           mapData={[
             { latitude, longitude }, // Point
-            { latitude: lat, longitude: long }, // Where I am
           ]}
         />
       )}
