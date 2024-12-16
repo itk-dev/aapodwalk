@@ -1,9 +1,13 @@
+import { useContext, useEffect } from "react";
 import { MapContainer, Marker, TileLayer } from "react-leaflet";
 import L from "leaflet";
+import LatLongContext from "../../context/latitude-longitude-context";
 import "leaflet/dist/leaflet.css";
 import "./map-wrapper.css";
 
 function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
+  // The lat long of me
+  const { lat, long } = useContext(LatLongContext);
   function getHtmlPin(index) {
     if (withIndex) {
       return `
@@ -17,6 +21,11 @@ function Map({ mapData, zoomControl, additionalClass = "", withIndex }) {
     </div>
   `;
   }
+
+  useEffect(() => {
+    // Always show "me" on map
+    mapData.push({ latitude: lat, longitude: long });
+  }, [mapData]);
 
   function avoidZeroIndexingPoints(index) {
     return index + 1;
