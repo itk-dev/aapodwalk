@@ -7,7 +7,7 @@ function SeeOnMap() {
 
   return (
     <>
-      {latitude && longitude && lat && long && (
+      {latitude && longitude && (
         <MapWrapper
           focusable={false}
           withIndex={false}
