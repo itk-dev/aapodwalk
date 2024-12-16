@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-55](https://github.com/itk-dev/aapodwalk/pull/55)
+  - Redesign pins on map
 - [PR-54](https://github.com/itk-dev/aapodwalk/pull/54)
   - Add scroll into view hook
   - Scroll active/next point in list into view
