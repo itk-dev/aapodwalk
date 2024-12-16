@@ -8,7 +8,7 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
   const { lat, long } = useContext(LatLongContext);
   const distance = useMemo(
     () => getDistanceBetweenCoordinates(lat, long, latitude, longitude),
-    [lat, long, latitude, longitude],
+    [lat, long, latitude, longitude]
   );
   function unlockThisPoint() {
     setListOfUnlocked([...listOfUnlocked, ...[id]]);
@@ -27,7 +27,6 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
       localStorage.setItem(storageKey, JSON.stringify([id]));
     }
   }
-  proximityToUnlock = 3000;
 
   useEffect(() => {
     if (!listOfUnlocked.includes(id) && proximityToUnlock !== null) {
