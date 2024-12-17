@@ -43,7 +43,7 @@ export function sortByProximity(routes, lat, long) {
         element.points[0].latitude || 0,
         element.points[0].longitude || 0,
         lat,
-        long,
+        long
       ),
     };
   });
@@ -75,6 +75,16 @@ export function getPinSvg() {
         <path fill-rule="evenodd" clip-rule="evenodd" d="M2.47679 19.7608C4.46038 27.1637 12.0696 31.5569 19.4725 29.5733C26.8753 27.5897 31.2685 19.9805 29.2849 12.5776C27.3013 5.17471 19.6921 0.781523 12.2893 2.76512C4.88638 4.74871 0.493193 12.3579 2.47679 19.7608ZM0.544934 20.2784C2.81441 28.7482 11.5203 33.7746 19.9901 31.5051C28.4599 29.2356 33.4863 20.5297 31.2168 12.0599C28.9473 3.59014 20.2414 -1.43621 11.7716 0.833264C3.30181 3.10274 -1.72454 11.8086 0.544934 20.2784Z" fill="#059669"/>
         <path d="M18.2779 25.1152C13.3372 26.4391 8.25874 23.507 6.93488 18.5663C5.61101 13.6256 8.54305 8.54715 13.4838 7.22329C18.4245 5.89943 23.5029 8.83147 24.8268 13.7722C26.1507 18.7129 23.2186 23.7913 18.2779 25.1152Z" fill="#059669"></path>
       </svg>`;
+}
+
+export function mapArrayForOuterBounds(pointArray, userLat, userLong) {
+  if (userLat && userLong) {
+    return [
+      ...pointArray.map(({ latitude, longitude }) => [latitude, longitude]),
+      ...[[userLat.toString(), userLong.toString()]],
+    ];
+  }
+  return pointArray.map(({ latitude, longitude }) => [latitude, longitude]);
 }
 
 export default {};
