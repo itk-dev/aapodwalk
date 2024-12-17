@@ -1,4 +1,4 @@
-import {  Marker } from "react-leaflet";
+import { Marker } from "react-leaflet";
 import L from "leaflet";
 
 const MapMarker = ({ iconHtml, latitude, longitude }) => {

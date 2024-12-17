@@ -23,11 +23,7 @@ function MapComponent({ mapData, additionalClass = "", withIndex }) {
   if (outerBounds === null) return null;
 
   return (
-    <MapContainer
-      bounds={outerBounds}
-      className={`${additionalClass} rounded`}
-      scrollWheelZoom={true}
-    >
+    <MapContainer bounds={outerBounds} className={`${additionalClass} rounded`} scrollWheelZoom={true}>
       <TileLayer
         attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
