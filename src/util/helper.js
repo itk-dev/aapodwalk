@@ -77,4 +77,14 @@ export function getPinSvg() {
       </svg>`;
 }
 
+export function mapArrayForOuterBounds(pointArray, userLat, userLong) {
+  if (userLat && userLong) {
+    return [
+      ...pointArray.map(({ latitude, longitude }) => [latitude, longitude]),
+      ...[[userLat.toString(), userLong.toString()]],
+    ];
+  }
+  return pointArray.map(({ latitude, longitude }) => [latitude, longitude]);
+}
+
 export default {};
