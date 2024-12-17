@@ -14,7 +14,7 @@ function Route({ route }) {
 
   return (
     <Link
-      className="bg-zinc-100 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded"
+      className="bg-emerald-400 dark:bg-zinc-900 flex flex-row relative h-32 my-2 rounded"
       to={`/route/${route.id}`}
       onClick={() => setSelectedRoute(route)}
     >

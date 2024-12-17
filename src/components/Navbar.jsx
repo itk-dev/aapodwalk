@@ -14,7 +14,7 @@ const Navbar = () => {
         {pathname === "/" && <img src={Logo} alt="" className="w-10 h-10" />}
         {pathname !== "/" && <BackButton />}
         <Link
-          className="flex place-content-center rounded-full text-xl w-9 h-9 bg-black justify-center items-center"
+          className="flex place-content-center rounded-full text-xl w-9 h-9 bg-emerald-400 dark:bg-black justify-center items-center"
           to="/faq"
         >
           <FontAwesomeIcon icon={faQuestion} />

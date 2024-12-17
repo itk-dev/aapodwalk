@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-57](https://github.com/itk-dev/aapodwalk/pull/57)
+  - Improve lightmode
 - [PR-56](https://github.com/itk-dev/aapodwalk/pull/56)
   - Rename component `Map.jsx` -> `MapComponent.jsx` to "[not shadow the global "Map" property](https://eslint.org/docs/latest/rules/no-shadow)"
   - Create a mapper to map lats/longs to fit the outer bounds react-leaflet uses
