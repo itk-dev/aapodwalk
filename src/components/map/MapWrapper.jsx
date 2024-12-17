@@ -1,5 +1,5 @@
 import { useState, useContext } from "react";
-import Map from "./Map";
+import MapComponent from "./MapComponent";
 import PermissionContext from "../../context/permission-context";
 import "./map-wrapper.css";
 import CloseButton from "../CloseButton";
@@ -20,9 +20,9 @@ function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
         }
         onClick={() => setFocusOnMap(true)}
       >
-        {focusOnMap && <Map withIndex={withIndex} zoomControl mapData={mapData} />}
+        {focusOnMap && <MapComponent withIndex={withIndex} mapData={mapData} />}
         {!focusOnMap && focusable && (
-          <Map withIndex={withIndex} zoomControl={false} additionalClass={additionalClass} mapData={mapData} />
+          <MapComponent withIndex={withIndex} additionalClass={additionalClass} mapData={mapData} />
         )}
       </button>
       {focusOnMap && focusable && (
