@@ -80,7 +80,7 @@ function Point({
         className={`relative text-left w-full ${unlocked ? "" : "pointer-events-none"}`}
       >
         <div
-          className={`bg-zinc-100 dark:bg-zinc-700 flex flex-row relative h-32 my-2 rounded flex items-center ${
+          className={`bg-emerald-400 dark:bg-zinc-700 flex flex-row relative h-32 my-2 rounded flex items-center ${
             unlocked ? "" : "opacity-35 blur-sm bg-zinc-100 dark:bg-zinc-900"
           }`}
         >
@@ -88,7 +88,7 @@ function Point({
           <div className="w-3/4 ml-2">
             <OrderComponent order={order} />
             <h2 className="text-xl font-bold">{name}</h2>
-            <div className="line-clamp-2 text-zinc-300 mr-2">{subtitles}</div>
+            <div className="line-clamp-2 text-zinc-900 dark:text-zinc-300 mr-2">{subtitles}</div>
           </div>
         </div>
       </button>

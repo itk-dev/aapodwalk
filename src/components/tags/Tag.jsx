@@ -25,8 +25,10 @@ function Tag({ title, id }) {
 
   return (
     <button
-      className={`block mr-1 rounded px-2 mt-1 h-6 font-bold bg-zinc-200 text-black ${
-        selectedTag === id ? "bg-emerald-400 dark:bg-emerald-800 text-white" : ""
+      className={`${
+        selectedTag === id
+          ? "block mr-1 rounded px-2 mt-1 h-6 font-bold bg-emerald-400 dark:bg-emerald-800 text-black"
+          : "block mr-1 rounded px-2 mt-1 h-6 font-bold bg-zinc-200 text-black"
       }`}
       type="button"
       onClick={() => setSelectedTag(id)}
