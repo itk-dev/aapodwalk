@@ -27,10 +27,10 @@ function Tag({ title, id }) {
     <button
       className={`${
         selectedTag === id
-          ? "block mr-1 rounded px-2 mt-1 h-6 font-bold bg-emerald-400 dark:bg-emerald-800 text-black"
+          ? "block mr-1 rounded px-2 mt-1 h-6 font-bold bg-emerald-400 dark:bg-emerald-800 text-black dark:text-white"
           : "block mr-1 rounded px-2 mt-1 h-6 font-bold bg-zinc-200 text-black"
       }`}
-      type="button"
+      type="submit"
       onClick={() => setSelectedTag(id)}
     >
       <span className="sr-only">Filtrer listen af ruter efter ruter med tagget </span>

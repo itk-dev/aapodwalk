@@ -39,7 +39,8 @@ function RoutePage() {
 
   return (
     <>
-      <div className="p-5 absolute left-0 top-0 right-0 bottom-0 flex flex-col justify-between">
+      <MapWrapper withIndex focusable additionalClass="opacity-10" mapData={points} />
+      <div className="p-5 absolute left-0 top-0 right-0 bottom-0 flex flex-col justify-between z-0">
         <div>
           <TagList classes="z-5 relative text-lg" tags={tags} />
           <h1 className="text-4xl font-extrabold z-50 relative word-break">{title}</h1>
@@ -72,7 +73,6 @@ function RoutePage() {
           </Link>
         </div>
       </div>
-      <MapWrapper withIndex focusable additionalClass="opacity-10" mapData={points} />
     </>
   );
 }

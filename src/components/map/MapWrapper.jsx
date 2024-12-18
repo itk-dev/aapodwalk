@@ -1,8 +1,9 @@
 import { useState, useContext } from "react";
 import MapComponent from "./MapComponent";
 import PermissionContext from "../../context/permission-context";
-import "./map-wrapper.css";
 import CloseButton from "../CloseButton";
+import { FocusTrap } from "focus-trap-react";
+import "./map-wrapper.css";
 
 function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
   const [focusOnMap, setFocusOnMap] = useState(!focusable || false);
@@ -11,26 +12,41 @@ function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
 
   return (
     <>
-      <button
-        type="button"
-        className={
-          focusOnMap
-            ? "map-container absolute left-0 top-0 right-0 z-50 h-screen"
-            : "map-container absolute left-0 top-0 right-0 z-0"
-        }
-        onClick={() => setFocusOnMap(true)}
-      >
-        {focusOnMap && <MapComponent withIndex={withIndex} mapData={mapData} />}
-        {!focusOnMap && focusable && (
-          <MapComponent withIndex={withIndex} additionalClass={additionalClass} mapData={mapData} />
-        )}
-      </button>
-      {focusOnMap && focusable && (
-        <CloseButton
-          additionalClasses="dark:bg-emerald-800 dark:text-white bg-white"
-          closeOverlay={() => setFocusOnMap(false)}
-          label="luk kortvising"
-        />
+      {focusOnMap && (
+        <FocusTrap>
+          <div className="map-container absolute left-0 top-0 right-0 h-full">
+            <CloseButton
+              additionalClasses="dark:bg-emerald-800 dark:text-white bg-white z-50"
+              closeOverlay={() => setFocusOnMap(false)}
+              label="luk kortvising"
+            />
+            <MapComponent focusOnMap={focusOnMap} withIndex={withIndex} mapData={mapData} additionalClass="z-40" />
+          </div>
+        </FocusTrap>
+      )}
+      {!focusOnMap && (
+        <button type="button" onClick={() => setFocusOnMap(true)}>
+          {!focusOnMap && focusable && (
+            <div
+              className={
+                focusOnMap
+                  ? "map-container absolute left-0 top-0 right-0 z-50 h-full"
+                  : "map-container absolute left-0 top-0 right-0 z-0"
+              }
+              // I wish to hide the map from tabbing order for everyone. But this seems impossible. So now I am hiding
+              // it from screen users. (This is the map for presentation, not the map for navigation)
+              aria-hidden={true}
+            >
+              <MapComponent
+                focusOnMap={focusOnMap}
+                withIndex={withIndex}
+                additionalClass={`${additionalClass}`}
+                mapData={mapData}
+              />
+            </div>
+          )}
+          <span className="sr-only">Åben kortvisning</span>
+        </button>
       )}
     </>
   );

@@ -17,13 +17,13 @@ const FAQ = () => {
       </section>
       <section className="bg-emerald-400 dark:bg-zinc-900 flex flex-row relative my-2 rounded font-bold p-5 flex flex-col mt-5">
         Sådan bruger du navigationen
-        <Link to={"/navigation-help"} className="text-zinc-900 dark:text-emerald-800 font-bold underline mt-3">
+        <Link to={"/navigation-help"} className="text-zinc-900 dark:text-emerald-600 font-bold underline mt-3">
           Vedledning til navigation
         </Link>
       </section>
       <section className="bg-emerald-400 dark:bg-zinc-900 flex flex-row relative my-2 rounded font-bold p-5 flex flex-col mt-5">
         Tilgængelighedserklæring
-        <Link className="text-zinc-900 dark:text-emerald-800 font-bold underline mt-5">
+        <Link className="text-zinc-900 dark:text-emerald-600 font-bold underline mt-5">
           {/* todo add Tilgængelighedserklæring */}
           Tilgængelighed og en erklæring herom
         </Link>

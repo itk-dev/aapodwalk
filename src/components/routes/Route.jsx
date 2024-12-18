@@ -27,16 +27,10 @@ function Route({ route }) {
             <TagList tags={route.tags} />
           </div>
           {lat && long && (
-            <DistanceComponent
-              id={null}
-              latitude={latitude}
-              longitude={longitude}
-              classes="truncate w-1/5 text-right text-sm"
-              proximityToUnlock={null}
-            />
+            <DistanceComponent data={{ latitude, longitude }} classes="truncate w-1/5 text-right text-sm" />
           )}
         </div>
-        <h2 className="mb-2 font-bold">{route.name}</h2>
+        <h2 className="mb-2 font-bold">{route.title}</h2>
         <div className="text-xs line-clamp-3">{route.description}</div>
       </div>
     </Link>

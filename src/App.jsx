@@ -9,6 +9,7 @@ import RoutePage from "./components/routes/RoutePage";
 import RoutePoints from "./components/routes/RoutePoints";
 import PersonalInformationPolicyPage from "./components/PersonalInformationPolicyPage";
 import Navbar from "./components/Navbar";
+import SkipLinks from "./components/SkipLinks";
 import FAQ from "./components/FAQ";
 import SeeOnMap from "./components/SeeOnMap";
 import ErrorContext from "./context/ErrorContext";
@@ -76,8 +77,12 @@ function App() {
               [selectedRoute, nextUnlockablePointId, listOfUnlocked],
             )}
           >
+            <SkipLinks />
             <Navbar />
-            <div className="relative grow overflow-hidden">
+            <main id="main" className="relative grow overflow-hidden">
+              <a id="main-content" href="/" tabIndex="-1" className="sr-only">
+                Hovedindhold
+              </a>
               <ErrorContext.Provider
                 value={useMemo(
                   () => ({
@@ -116,7 +121,7 @@ function App() {
                   </Route>
                 </Switch>
               </ErrorContext.Provider>
-            </div>
+            </main>
           </RouteContext.Provider>
         </PermissionContext.Provider>
       </LatLongContext.Provider>
