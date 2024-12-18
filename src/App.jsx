@@ -15,6 +15,7 @@ import SeeOnMap from "./components/SeeOnMap";
 import MessageContext from "./context/MessageContext";
 import { Link } from "react-router-dom";
 import NavigationHelp from "./components/NavigationHelp";
+import MapConsentBanner from "./components/MapConsentBanner";
 
 function App() {
   const [selectedRoute, setSelectedRoute] = useState(null);
@@ -83,6 +84,14 @@ function App() {
     }
   }, []);
 
+  useEffect(() => {
+    if (openStreetMapConsent === null) {
+      localStorage.removeItem("data-consent");
+    } else {
+      localStorage.setItem("data-consent", openStreetMapConsent);
+    }
+  }, [openStreetMapConsent]);
+
   return (
     <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
       <LatLongContext.Provider value={contextLatLong}>
@@ -149,6 +158,7 @@ function App() {
                     <FrontPage />
                   </Route>
                 </Switch>
+                <MapConsentBanner />
               </MessageContext.Provider>
             </main>
           </RouteContext.Provider>

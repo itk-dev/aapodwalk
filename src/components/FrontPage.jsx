@@ -31,7 +31,6 @@ function FrontPage() {
         <TagFilterList />
         <RouteList />
       </SelectedTagContext.Provider>
-      <MapConsentBanner />
     </div>
   );
 }

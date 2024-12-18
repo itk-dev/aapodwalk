@@ -1,16 +1,19 @@
 import { React, useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import useFetch from "../../util/useFetch";
+import PermissionContext from "../../context/permission-context";
 import RouteContext from "../../context/RouteContext";
+import useFetch from "../../util/useFetch";
 import MapWrapper from "../map/MapWrapper";
 import TagList from "../tags/TagList";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 
 function RoutePage() {
   const { id } = useParams();
+  const { openStreetMapConsent, setOpenStreetMapConsent } = useContext(PermissionContext);
   const { selectedRoute, setSelectedRoute, setListOfUnlocked } = useContext(RouteContext);
   const [dataFetched, setDataFetched] = useState(false);
+  const [focusOnText, setFocusOnText] = useState(false);
   function isRouteAlreadySet() {
     return selectedRoute === null && dataFetched;
   }
@@ -35,6 +38,11 @@ function RoutePage() {
 
   if (selectedRoute === null) return null;
 
+  function resetPermission() {
+    setFocusOnText(false);
+    setOpenStreetMapConsent(null);
+  }
+
   const { title, tags, points, totalDuration, distance, description } = selectedRoute;
 
   return (
@@ -46,7 +54,19 @@ function RoutePage() {
           <h1 className="text-4xl font-extrabold z-50 relative word-break">{title}</h1>
         </div>
         <div className="flex flex-col items-end">
-          <div className="w-3/5 mb-10 text-end">Tryk på kortet for at undersøge ruten</div>
+          {openStreetMapConsent && <div className="w-3/5 mb-10 text-end">Tryk på kortet for at undersøge ruten</div>}
+
+          {!openStreetMapConsent && !focusOnText && (
+            <button type="button" onClick={() => setFocusOnText(true)} className="opacity-35 mb-10 text-center">
+              Du har ikke givet samtykke, derfor kan vi ikke vise er kort her. Vil du ændre det, kan du trykke her
+            </button>
+          )}
+          {!openStreetMapConsent && focusOnText && (
+            <button type="button" onClick={() => resetPermission()} className="mb-10 text-center">
+              Du har ikke givet samtykke, derfor kan vi ikke vise er kort her. Vil du ændre det, kan du trykke her
+            </button>
+          )}
+
           <div className="bg-emerald-400 w-full dark:bg-emerald-800 mb-3 rounded-md p-3 flex z-50 relative">
             <div>
               <div className="font-bold">Distance</div>

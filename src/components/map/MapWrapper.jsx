@@ -12,7 +12,7 @@ function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
 
   return (
     <>
-      {focusOnMap && (
+      {focusOnMap && focusable && (
         <FocusTrap>
           <div className="map-container absolute left-0 top-0 right-0 h-full">
             <CloseButton
@@ -23,6 +23,11 @@ function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
             <MapComponent focusOnMap={focusOnMap} withIndex={withIndex} mapData={mapData} additionalClass="z-40" />
           </div>
         </FocusTrap>
+      )}
+      {focusOnMap && !focusable && (
+        <div className="map-container absolute left-0 top-0 right-0 h-full">
+          <MapComponent focusOnMap={focusOnMap} withIndex={withIndex} mapData={mapData} additionalClass="z-40" />
+        </div>
       )}
       {!focusOnMap && (
         <button type="button" onClick={() => setFocusOnMap(true)}>

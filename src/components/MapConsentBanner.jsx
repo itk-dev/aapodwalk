@@ -6,7 +6,6 @@ function MapConsentBanner() {
   const { setOpenStreetMapConsent, openStreetMapConsent } = useContext(PermissionContext);
 
   function updateConsent(consent) {
-    localStorage.setItem("data-consent", consent);
     setOpenStreetMapConsent(consent);
   }
 
