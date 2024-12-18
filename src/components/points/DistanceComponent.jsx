@@ -8,7 +8,7 @@ function DistanceComponent({ data: { id = null, latitude, longitude, proximityTo
   const { lat, long } = useContext(LatLongContext);
   const distance = useMemo(
     () => getDistanceBetweenCoordinates(lat, long, latitude, longitude),
-    [lat, long, latitude, longitude]
+    [lat, long, latitude, longitude],
   );
   function unlockThisPoint() {
     setListOfUnlocked([...listOfUnlocked, ...[id]]);
