@@ -46,7 +46,11 @@ function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleAc
   if (!active) return null;
 
   return (
-    <FocusTrap>
+    <FocusTrap
+      focusTrapOptions={{
+        allowOutsideClick: true,
+      }}
+    >
       <section
         className={`${
           fullScreen
