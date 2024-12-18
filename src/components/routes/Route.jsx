@@ -36,7 +36,7 @@ function Route({ route }) {
             />
           )}
         </div>
-        <h2 className="mb-2 font-bold">{route.name}</h2>
+        <h2 className="mb-2 font-bold">{route.title}</h2>
         <div className="text-xs line-clamp-3">{route.description}</div>
       </div>
     </Link>
