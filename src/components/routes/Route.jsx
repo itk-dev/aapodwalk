@@ -29,8 +29,7 @@ function Route({ route }) {
           {lat && long && (
             <DistanceComponent
               id={null}
-              latitude={latitude}
-              longitude={longitude}
+              data={{ latitude, longitude, id }}
               classes="truncate w-1/5 text-right text-sm"
               proximityToUnlock={null}
             />

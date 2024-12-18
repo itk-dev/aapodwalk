@@ -92,7 +92,7 @@ function Point({ point, order }) {
             <span className="sr-only">Se punkt {name} på kort</span>
           </Link>
           <DistanceComponent
-            point={point}
+            data={point}
             classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 text-xl"
           />
           <img
