@@ -1,6 +1,6 @@
 import { React, useState, useEffect } from "react";
 import Steps from "../icons/steps.svg?url";
-import Xmark from "../icons/xmark-solid.svg?url";
+import CloseButton from "./CloseButton";
 
 const LandingPage = () => {
   const [infoClosed, setInfoClosed] = useState(localStorage.getItem("info-closed") === "true");
@@ -23,16 +23,13 @@ const LandingPage = () => {
         </p>
         <p className="mt-5 font-bold">Vælg en rute nedenfor og start din lytteoplevelse.</p>
       </div>
+      <CloseButton
+        label="Luk introduktion"
+        closeOverlay={() => setInfoClosed(true)}
+        additionalClasses="flex justify-center items-center dark:bg-emerald-700 w-9 h-9 rounded-full justify-content-center z-40"
+      />
       <div className="w-2/5 flex justify-center relative">
-        <button
-          className="flex justify-center items-center dark:bg-emerald-700 dark:text-white absolute right-0 top-0 w-9 h-9 rounded-full justify-content-center"
-          type="button"
-          onClick={() => setInfoClosed(true)}
-        >
-          <img src={Xmark} alt="" className="w-6 h-6" />
-          <span className="sr-only">Luk introduktion</span>
-        </button>
-        <img src={Steps} alt="Tilbage" />
+        <img src={Steps} alt="" />
       </div>
     </div>
   );
