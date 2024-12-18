@@ -9,6 +9,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.7.1",
     "@fortawesome/react-fontawesome": "^0.2.2",
     "@vitejs/plugin-react": "^4.3.0",
+    "focus-trap-react": "^11.0.1",
     "leaflet": "^1.9.4",
     "ol": "^7.4.0",
     "proj4": "^2.9.0",
