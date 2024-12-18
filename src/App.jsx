@@ -12,7 +12,9 @@ import Navbar from "./components/Navbar";
 import SkipLinks from "./components/SkipLinks";
 import FAQ from "./components/FAQ";
 import SeeOnMap from "./components/SeeOnMap";
-import ErrorContext from "./context/ErrorContext";
+import MessageContext from "./context/MessageContext";
+import { Link } from "react-router-dom";
+import NavigationHelp from "./components/NavigationHelp";
 
 function App() {
   const [selectedRoute, setSelectedRoute] = useState(null);
@@ -21,6 +23,8 @@ function App() {
   const [openStreetMapConsent, setOpenStreetMapConsent] = useState(null);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
+  const [info, setInfo] = useState(false);
+  const [infoText, setInfoText] = useState("");
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
   const locationUpdateInterval = 30000;
@@ -30,8 +34,27 @@ function App() {
       lat,
       long,
     }),
-    [lat, long],
+    [lat, long]
   );
+
+  function handlePermissionInfoBanner() {
+    navigator.permissions.query({ name: "geolocation" }).then((result) => {
+      if (result.state !== "granted") {
+        setInfo(true);
+        setInfoText(
+          <span>
+            Du har ikke accepteret, at vi må få adgang til din lokation. For at denne applikation skal fungere, skal den
+            bruge din lokation. Hvis du vil vide mere om hvordan du giver denne angang, kan du besøge{" "}
+            <Link className="underline" to="/navigation-help">Hjælp til navigation</Link>
+          </span>
+        );
+      }
+    });
+  }
+
+  useEffect(() => {
+    handlePermissionInfoBanner();
+  }, []);
 
   function startLocationPrompter() {
     setInterval(() => {
@@ -74,7 +97,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
             )}
           >
             <SkipLinks />
@@ -83,15 +106,19 @@ function App() {
               <a id="main-content" href="/" tabIndex="-1" className="sr-only">
                 Hovedindhold
               </a>
-              <ErrorContext.Provider
+              <MessageContext.Provider
                 value={useMemo(
                   () => ({
                     error,
                     setError,
                     errorText,
                     setErrorText,
+                    info,
+                    setInfo,
+                    infoText,
+                    setInfoText,
                   }),
-                  [error, errorText],
+                  [error, errorText, info, infoText]
                 )}
               >
                 <Switch>
@@ -108,7 +135,7 @@ function App() {
                     <PersonalInformationPolicyPage />
                   </Route>
                   <Route path="/navigation-help">
-                    <div>Todo</div>
+                    <NavigationHelp />
                   </Route>
                   <Route path="/info">
                     <Info />
@@ -120,7 +147,7 @@ function App() {
                     <FrontPage />
                   </Route>
                 </Switch>
-              </ErrorContext.Provider>
+              </MessageContext.Provider>
             </main>
           </RouteContext.Provider>
         </PermissionContext.Provider>
