@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-59](https://github.com/itk-dev/aapodwalk/pull/59)
+  - Rename `ErrorComponent.jsx` to `MessageComponent.jsx`
+  - Rename `ErrorContext.jsx` to `MessageContext.jsx`
+  - Add `NavigationHelp.jsx`and write location services guide for safari/chrome 🥱
+  - Check user permission to evaluate whether to display the info box
 - [PR-58](https://github.com/itk-dev/aapodwalk/pull/58)
   - This pr handles accessibility
   - Add [focus trap](https://www.npmjs.com/package/focus-trap-react) for "modals"
