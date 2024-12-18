@@ -17,7 +17,10 @@ function MessageComponent() {
   return (
     <>
       {error && (
-        <div role="banner" className="relative dark:bg-red-50 bg-red-50 text-black border-l-4 border-solid border-red-400 pl-5 pr-10 py-10 mb-2">
+        <div
+          role="banner"
+          className="relative dark:bg-red-50 bg-red-50 text-black border-l-4 border-solid border-red-400 pl-5 pr-10 py-10 mb-2"
+        >
           <CloseButton
             closeOverlay={() => resetError()}
             label="Luk denne fejlbesked"
@@ -27,7 +30,10 @@ function MessageComponent() {
         </div>
       )}
       {info && (
-        <div role="banner" className="relative dark:bg-red-50 bg-yellow-50 text-black border-l-4 border-solid border-yellow-400 pl-5 pr-10 py-10 mb-2">
+        <div
+          role="banner"
+          className="relative dark:bg-red-50 bg-yellow-50 text-black border-l-4 border-solid border-yellow-400 pl-5 pr-10 py-10 mb-2"
+        >
           <CloseButton
             closeOverlay={() => resetInfo()}
             label="Luk denne infomation"

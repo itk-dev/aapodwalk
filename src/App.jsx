@@ -34,7 +34,7 @@ function App() {
       lat,
       long,
     }),
-    [lat, long]
+    [lat, long],
   );
 
   function handlePermissionInfoBanner() {
@@ -45,8 +45,10 @@ function App() {
           <span>
             Du har ikke accepteret, at vi må få adgang til din lokation. For at denne applikation skal fungere, skal den
             bruge din lokation. Hvis du vil vide mere om hvordan du giver denne angang, kan du besøge{" "}
-            <Link className="underline" to="/navigation-help">Hjælp til navigation</Link>
-          </span>
+            <Link className="underline" to="/navigation-help">
+              Hjælp til navigation
+            </Link>
+          </span>,
         );
       }
     });
@@ -97,7 +99,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
             )}
           >
             <SkipLinks />
@@ -118,7 +120,7 @@ function App() {
                     infoText,
                     setInfoText,
                   }),
-                  [error, errorText, info, infoText]
+                  [error, errorText, info, infoText],
                 )}
               >
                 <Switch>
