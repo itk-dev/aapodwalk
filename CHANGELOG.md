@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-58](https://github.com/itk-dev/aapodwalk/pull/58)
+  - This pr handles accessibility
+  - Add [focus trap](https://www.npmjs.com/package/focus-trap-react) for "modals"
+  - Add skip link for main navigation
+  - Lock open street map on "presentation" mode
+  - Juggle a little contrast (we are now AA, not AAA)
+  - Add ARIA-labels and aria-hidden on decorative stuff
 - [PR-57](https://github.com/itk-dev/aapodwalk/pull/57)
   - Improve lightmode
 - [PR-56](https://github.com/itk-dev/aapodwalk/pull/56)
