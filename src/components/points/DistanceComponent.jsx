@@ -3,7 +3,7 @@ import { getDistanceBetweenCoordinates } from "../../util/helper";
 import LatLongContext from "../../context/latitude-longitude-context";
 import RouteContext from "../../context/RouteContext";
 
-function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock }) {
+function DistanceComponent({ point: { id, latitude, longitude, classes, proximityToUnlock } }) {
   const { listOfUnlocked, setListOfUnlocked, nextUnlockablePointId, selectedRoute } = useContext(RouteContext);
   const { lat, long } = useContext(LatLongContext);
   const distance = useMemo(
@@ -37,7 +37,12 @@ function DistanceComponent({ id, latitude, longitude, classes, proximityToUnlock
     }
   }, [id, listOfUnlocked, nextUnlockablePointId, proximityToUnlock, distance]);
 
-  return <div className={`${classes} text-emerald-400 dark:text-emerald-800 font-bold text-sm`}>{distance} m</div>;
+  return (
+    <div className={`${classes} text-emerald-400 dark:text-emerald-600 font-bold text-sm`}>
+      <span className="sr-only">Der er </span>
+      {distance} m <span className="sr-only"> til denne</span>
+    </div>
+  );
 }
 
 export default DistanceComponent;
