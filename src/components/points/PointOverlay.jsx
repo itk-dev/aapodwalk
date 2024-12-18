@@ -59,8 +59,15 @@ function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleAc
           closeOverlay={() => close()}
           label="luk afspilningen"
         />
-        <UpDownButton toggleOverlay={() => setFullScreen(!fullScreen)} up={!fullScreen} label="Åben punkt" />
-
+        <UpDownButton
+          toggleOverlay={() => setFullScreen(!fullScreen)}
+          up={!fullScreen}
+          label={`${
+            !fullScreen
+              ? "Åben modal med information om dette punkt på ruten"
+              : "Luk modal med information om dette punkt på ruten"
+          }`}
+        />
         <div className="p-4 flex justify-between">
           <div className="flex align-between">
             {fullScreen && <OrderComponent order={order} />}
