@@ -6,27 +6,23 @@ This is the frontend of a project that creates guided audio tours.
 
 ### Point of interst
 
-A point of interest is a geo location which plays audio.
+A point is a geo location which plays a piece of audio or a video.
 
 ### Route
 
-A route consists of multiple connected points of interst.
+A route consists of multiple connected points.
 
 ### Tag
 
-A tag can be connected to multiple points of interst. The tags are used to group different points of interst together.
-In the frontend, the entrypoint to a content is through tags. So, if the points of interest in a route are not tagged,
-they are not displayed.
-
-A point of interest can have multiple tags. A Route can have multiple points of interest.
+A tag can be connected to multiple routes. The tags are used to group different routes together. A route can have multiple points and tags.
 
 ``` mermaid
 ---
 title: Podwalk
 ---
 classDiagram
-    PointOfInterest --> Tag
-    Route --> PointOfInterest
+    Route --> Tag
+    Route --> Point
 ```
 
 ### Map
