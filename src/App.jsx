@@ -94,11 +94,11 @@ function App() {
 
   return (
     <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
-      <LatLongContext.Provider value={contextLatLong}>
-        <PermissionContext.Provider
+      <LatLongContext value={contextLatLong}>
+        <PermissionContext
           value={useMemo(() => ({ openStreetMapConsent, setOpenStreetMapConsent }), [openStreetMapConsent])}
         >
-          <RouteContext.Provider
+          <RouteContext
             value={useMemo(
               () => ({
                 selectedRoute,
@@ -117,7 +117,7 @@ function App() {
               <a id="main-content" href="/" tabIndex="-1" className="sr-only">
                 Hovedindhold
               </a>
-              <MessageContext.Provider
+              <MessageContext
                 value={useMemo(
                   () => ({
                     error,
@@ -159,11 +159,11 @@ function App() {
                   </Route>
                 </Switch>
                 <MapConsentBanner />
-              </MessageContext.Provider>
+              </MessageContext>
             </main>
-          </RouteContext.Provider>
-        </PermissionContext.Provider>
-      </LatLongContext.Provider>
+          </RouteContext>
+        </PermissionContext>
+      </LatLongContext>
     </div>
   );
 }
