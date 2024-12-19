@@ -9,7 +9,6 @@ import DistanceComponent from "./DistanceComponent";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 import LatLongContext from "../../context/latitude-longitude-context";
-import { useScrollToLocation } from "../hooks/UseScrollIntoView";
 import PermissionContext from "../../context/permission-context";
 
 function Point({ point, order }) {
@@ -17,8 +16,19 @@ function Point({ point, order }) {
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
   const { openStreetMapConsent, setOpenStreetMapConsent } = useContext(PermissionContext);
   const { lat, long } = useContext(LatLongContext);
+  const [hasScrolled, setHasScrolled] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
   const [playThis, setPlayThis] = useState(false);
+
+  useEffect(() => {
+    if (!hasScrolled && nextUnlockablePointId === id) {
+      const elementToScrollTo = document.getElementById(id);
+      if (elementToScrollTo) {
+        elementToScrollTo.scrollIntoView({ behavior: "smooth" });
+        setHasScrolled(true);
+      }
+    }
+  }, [nextUnlockablePointId]);
 
   useEffect(() => {
     if (listOfUnlocked) {
@@ -41,8 +51,6 @@ function Point({ point, order }) {
     // - The user does not allow geo location access
     return (!unlocked && nextUnlockablePointId !== id) || !(lat && long);
   }
-
-  useScrollToLocation(nextUnlockablePointId === id, id);
 
   function getAriaLabelForButton() {
     if (isNextPointToUnlock) {
