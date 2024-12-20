@@ -44,6 +44,8 @@ function RoutePage() {
   }
 
   const { title, tags, points, totalDuration, distance, description } = selectedRoute;
+  const consentText =
+    "Du har ikke givet samtykke, derfor kan vi ikke vise et kort her. Vil du ændre det, kan du trykke her.";
 
   return (
     <>
@@ -58,12 +60,12 @@ function RoutePage() {
 
           {!openStreetMapConsent && !focusOnText && (
             <button type="button" onClick={() => setFocusOnText(true)} className="opacity-35 mb-10 text-center">
-              Du har ikke givet samtykke, derfor kan vi ikke vise et kort her. Vil du ændre det, kan du trykke her.
+              {consentText}
             </button>
           )}
           {!openStreetMapConsent && focusOnText && (
             <button type="button" onClick={() => resetPermission()} className="mb-10 text-center">
-              Du har ikke givet samtykke, derfor kan vi ikke vise et kort her. Vil du ændre det, kan du trykke her.
+              {consentText}
             </button>
           )}
 
