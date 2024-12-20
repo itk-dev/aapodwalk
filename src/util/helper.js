@@ -45,7 +45,7 @@ export function sortByProximity(routes, lat, long) {
         element.points[0].latitude || 0,
         element.points[0].longitude || 0,
         lat,
-        long,
+        long
       ),
     };
   });
@@ -83,10 +83,13 @@ export function getPinSvg() {
 }
 
 export function mapArrayForOuterBounds(pointArray, userLat, userLong) {
-  return [
-    ...pointArray.map(({ latitude, longitude }) => [latitude, longitude]),
-    ...[[userLat.toString(), userLong.toString()]],
-  ];
+  if (userLat && userLong) {
+    return [
+      ...pointArray.map(({ latitude, longitude }) => [latitude, longitude]),
+      ...[[userLat.toString(), userLong.toString()]],
+    ];
+  }
+  return [...pointArray.map(({ latitude, longitude }) => [latitude, longitude])];
 }
 
 export function getYouAreHerePin() {
