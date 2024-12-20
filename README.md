@@ -28,7 +28,7 @@ classDiagram
 
 ### Map
 
-This project relies on a [Open Street Map](https://www.openstreetmap.org/), implemented with [React
+This project relies on a [OpenStreetMap](https://www.openstreetmap.org/), implemented with [React
 Leaflet](https://react-leaflet.js.org/).
 
 ## Development setup - running the app in docker
