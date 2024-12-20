@@ -35,8 +35,8 @@ function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
             <div
               className={
                 focusOnMap
-                  ? "map-container absolute left-0 top-0 right-0 z-50 h-full"
-                  : "map-container absolute left-0 top-0 right-0 z-0"
+                  ? "map-container absolute left-0 top-0 right-0 h-full"
+                  : "map-container absolute left-0 top-0 right-0"
               }
               // I wish to hide the map from tabbing order for everyone. But this seems impossible. So now I am hiding
               // it from screen users. (This is the map for presentation, not the map for navigation)
