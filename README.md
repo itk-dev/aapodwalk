@@ -14,7 +14,8 @@ A route consists of multiple connected points.
 
 ### Tag
 
-A tag can be connected to multiple routes. The tags are used to group different routes together. A route can have multiple points and tags.
+A tag can be connected to multiple routes. The tags are used to group different routes together. A route can have
+multiple points and tags.
 
 ``` mermaid
 ---
@@ -27,7 +28,8 @@ classDiagram
 
 ### Map
 
-This project relies on a [Open Street Map](https://www.openstreetmap.org/), implemented with [React Leaflet](https://react-leaflet.js.org/).
+This project relies on a [Open Street Map](https://www.openstreetmap.org/), implemented with [React
+Leaflet](https://react-leaflet.js.org/).
 
 ## Development setup - running the app in docker
 
