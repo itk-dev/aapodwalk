@@ -98,7 +98,7 @@ function App() {
         <PermissionContext.Provider
           value={useMemo(() => ({ openStreetMapConsent, setOpenStreetMapConsent }), [openStreetMapConsent])}
         >
-          <RouteContext.Provider
+          <RouteContext
             value={useMemo(
               () => ({
                 selectedRoute,
@@ -117,7 +117,7 @@ function App() {
               <a id="main-content" href="/" tabIndex="-1" className="sr-only">
                 Hovedindhold
               </a>
-              <MessageContext.Provider
+              <MessageContext
                 value={useMemo(
                   () => ({
                     error,
@@ -159,11 +159,11 @@ function App() {
                   </Route>
                 </Switch>
                 <MapConsentBanner />
-              </MessageContext.Provider>
+              </MessageContext>
             </main>
-          </RouteContext.Provider>
-        </PermissionContext.Provider>
-      </LatLongContext.Provider>
+          </RouteContext>
+        </PermissionContext>
+      </LatLongContext>
     </div>
   );
 }
