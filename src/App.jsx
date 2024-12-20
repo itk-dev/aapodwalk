@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import LatLongContext from "./context/latitude-longitude-context";
 import PermissionContext from "./context/permission-context";
 import RouteContext from "./context/RouteContext";
@@ -13,7 +13,6 @@ import SkipLinks from "./components/SkipLinks";
 import FAQ from "./components/FAQ";
 import SeeOnMap from "./components/SeeOnMap";
 import MessageContext from "./context/MessageContext";
-import { Link } from "react-router-dom";
 import NavigationHelp from "./components/NavigationHelp";
 import MapConsentBanner from "./components/MapConsentBanner";
 
@@ -93,7 +92,7 @@ function App() {
   }, [openStreetMapConsent]);
 
   return (
-    <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+    <div className="App md:max-w-4xl ml-auto mr-auto flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
       <LatLongContext value={contextLatLong}>
         <PermissionContext
           value={useMemo(() => ({ openStreetMapConsent, setOpenStreetMapConsent }), [openStreetMapConsent])}
