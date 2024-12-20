@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-64](https://github.com/itk-dev/aapodwalk/pull/64)
+  - Clean up some rough edges in the design
 - [PR-61](https://github.com/itk-dev/aapodwalk/pull/61)
   - Remove `useScrollToLocation`
   - Scroll moved to `Point.jsx`, and scroll on refresh
