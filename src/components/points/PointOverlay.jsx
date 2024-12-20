@@ -54,12 +54,12 @@ function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleAc
       <section
         className={`${
           fullScreen
-            ? "fixed bottom-0 left-0 right-0 top-0 bg-zinc-100 dark:bg-zinc-900 z-50 rounded m-2 p-4 flex justify-between flex-col"
-            : "bg-zinc-100 dark:bg-zinc-900 z-50 rounded fixed bottom-0 left-0 right-0 bg-zinc-100 dark:bg-zinc-900"
+            ? "fixed bottom-0 left-0 right-0 top-0 bg-zinc-100 dark:bg-zinc-900 rounded m-2 p-4 flex justify-between flex-col"
+            : "bg-zinc-100 dark:bg-zinc-900 rounded fixed bottom-0 left-0 right-0 bg-zinc-100 dark:bg-zinc-900"
         }`}
       >
         <CloseButton
-          additionalClasses="dark:bg-emerald-800 dark:text-white bg-white z-50"
+          additionalClasses="dark:bg-emerald-800 dark:text-white bg-white"
           closeOverlay={() => close()}
           label="luk afspilningen"
         />
