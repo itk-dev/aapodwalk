@@ -63,7 +63,7 @@ function RoutePage() {
           )}
           {!openStreetMapConsent && focusOnText && (
             <button type="button" onClick={() => resetPermission()} className="mb-10 text-center">
-              Du har ikke givet samtykke, derfor kan vi ikke vise er kort her. Vil du ændre det, kan du trykke her
+              Du har ikke givet samtykke, derfor kan vi ikke vise et kort her. Vil du ændre det, kan du trykke her.
             </button>
           )}
 
