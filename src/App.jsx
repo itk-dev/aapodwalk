@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Switch, Route } from "react-router-dom";
+import { Switch, Route, Link } from "react-router-dom";
 import LatLongContext from "./context/latitude-longitude-context";
 import PermissionContext from "./context/permission-context";
 import RouteContext from "./context/RouteContext";
@@ -13,7 +13,6 @@ import SkipLinks from "./components/SkipLinks";
 import FAQ from "./components/FAQ";
 import SeeOnMap from "./components/SeeOnMap";
 import MessageContext from "./context/MessageContext";
-import { Link } from "react-router-dom";
 import NavigationHelp from "./components/NavigationHelp";
 import MapConsentBanner from "./components/MapConsentBanner";
 
@@ -162,8 +161,8 @@ function App() {
               </MessageContext>
             </main>
           </RouteContext>
-        </PermissionContext>
-      </LatLongContext>
+        </PermissionContext.Provider>
+      </LatLongContext.Provider>
     </div>
   );
 }
