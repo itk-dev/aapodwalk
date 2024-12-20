@@ -23,14 +23,14 @@ const LandingPage = () => {
         </p>
         <p className="mt-5 font-bold">Vælg en rute nedenfor og start din lytteoplevelse.</p>
       </div>
-      <CloseButton
-        label="Luk introduktion"
-        closeOverlay={() => setInfoClosed(true)}
-        additionalClasses="flex justify-center items-center dark:bg-emerald-700 w-9 h-9 rounded-full justify-content-center z-40"
-      />
       <div className="w-2/5 flex justify-center relative">
         <img src={Steps} alt="" />
       </div>
+      <CloseButton
+        label="Luk introduktion"
+        closeOverlay={() => setInfoClosed(true)}
+        additionalClasses="flex justify-center items-center dark:bg-emerald-700 w-9 h-9 rounded-full justify-content-center"
+      />
     </div>
   );
 };
