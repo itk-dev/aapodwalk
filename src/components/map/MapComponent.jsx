@@ -9,12 +9,13 @@ import "./map-wrapper.css";
 function MapComponent({ mapData, additionalClass = "", withIndex, focusOnMap }) {
   const { lat, long } = useContext(LatLongContext);
   const [outerBounds, setOuterBounds] = useState(null);
+
   function getLabelForPin(index) {
     return index + 1;
   }
 
   useEffect(() => {
-    if (mapData.length > -1 && lat && long) {
+    if (mapData.length > -1) {
       setOuterBounds(mapArrayForOuterBounds(mapData, lat, long));
     }
   }, [mapData, lat, long]);
