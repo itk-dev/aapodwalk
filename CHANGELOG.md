@@ -7,6 +7,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-63](https://github.com/itk-dev/aapodwalk/pull/63)
+  - react 18 -> [react 19](https://react.dev/blog/2024/12/05/react-19)
+  - react-dom 18 -> 19
+  - react-leaflet 4 -> [5.0.0](https://github.com/PaulLeCam/react-leaflet/releases/tag/v5.0.0)
 - [PR-61](https://github.com/itk-dev/aapodwalk/pull/61)
   - Remove `useScrollToLocation`
   - Scroll moved to `Point.jsx`, and scroll on refresh
