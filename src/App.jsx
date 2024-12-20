@@ -161,8 +161,8 @@ function App() {
               </MessageContext>
             </main>
           </RouteContext>
-        </PermissionContext.Provider>
-      </LatLongContext.Provider>
+        </PermissionContext>
+      </LatLongContext>
     </div>
   );
 }
