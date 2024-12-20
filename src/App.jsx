@@ -35,7 +35,7 @@ function App() {
       lat,
       long,
     }),
-    [lat, long]
+    [lat, long],
   );
 
   function handlePermissionInfoBanner() {
@@ -49,7 +49,7 @@ function App() {
             <Link className="underline" to="/navigation-help">
               Hjælp til navigation
             </Link>
-          </span>
+          </span>,
         );
       }
     });
@@ -108,7 +108,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
             )}
           >
             <SkipLinks />
@@ -129,7 +129,7 @@ function App() {
                     infoText,
                     setInfoText,
                   }),
-                  [error, errorText, info, infoText]
+                  [error, errorText, info, infoText],
                 )}
               >
                 <Switch>
