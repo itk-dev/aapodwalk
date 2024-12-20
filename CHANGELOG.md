@@ -7,6 +7,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-60](https://github.com/itk-dev/aapodwalk/pull/60)
+  - Make it possible to reevaluate ip-tracking consent and therefore permission to Open Street Map
+  - Move `MapConsentBanner` component to be able to display on other pages that frontpage
+  - Make `App.jsx`responsible for resetting localstorage map permission on change
+  - Create buttons to toggle permission banner in `RoutePage.jsx` and in `Point.jsx`
 - [PR-59](https://github.com/itk-dev/aapodwalk/pull/59)
   - Rename `ErrorComponent.jsx` to `MessageComponent.jsx`
   - Rename `ErrorContext.jsx` to `MessageContext.jsx`

@@ -10,10 +10,12 @@ import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 import LatLongContext from "../../context/latitude-longitude-context";
 import { useScrollToLocation } from "../hooks/UseScrollIntoView";
+import PermissionContext from "../../context/permission-context";
 
 function Point({ point, order }) {
   const { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 } = point;
   const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
+  const { openStreetMapConsent, setOpenStreetMapConsent } = useContext(PermissionContext);
   const { lat, long } = useContext(LatLongContext);
   const [unlocked, setUnlocked] = useState(false);
   const [playThis, setPlayThis] = useState(false);
@@ -84,13 +86,25 @@ function Point({ point, order }) {
       )}
       {isNextPointToUnlock() && (
         <>
-          <Link
-            to={`/see-on-map/${latitude}/${longitude}`}
-            className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col cursor-pointer text-emerald-400 dark:text-emerald-600"
-          >
-            <FontAwesomeIcon className="h-9" icon={faMapLocationDot} />
-            <span className="sr-only">Se punkt {name} på kort</span>
-          </Link>
+          {openStreetMapConsent && (
+            <Link
+              to={`/see-on-map/${latitude}/${longitude}`}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col cursor-pointer text-emerald-400 dark:text-emerald-600"
+            >
+              <FontAwesomeIcon className="h-9" icon={faMapLocationDot} />
+              <span className="sr-only">Se punkt {name} på kort</span>
+            </Link>
+          )}
+          {!openStreetMapConsent && (
+            <button
+              type="button"
+              onClick={() => setOpenStreetMapConsent(null)}
+              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer text-emerald-400 dark:text-emerald-600"
+            >
+              <FontAwesomeIcon className="h-9" icon={faMapLocationDot} />
+              <span className="sr-only">Tag stilling til tilladelser i forhold til kortet igen</span>
+            </button>
+          )}
           <DistanceComponent
             data={point}
             classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 text-xl"
