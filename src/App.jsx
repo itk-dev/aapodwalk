@@ -35,7 +35,7 @@ function App() {
       lat,
       long,
     }),
-    [lat, long],
+    [lat, long]
   );
 
   function handlePermissionInfoBanner() {
@@ -49,7 +49,7 @@ function App() {
             <Link className="underline" to="/navigation-help">
               Hjælp til navigation
             </Link>
-          </span>,
+          </span>
         );
       }
     });
@@ -93,7 +93,7 @@ function App() {
   }, [openStreetMapConsent]);
 
   return (
-    <div className="App flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
+    <div className="App md:max-w-4xl ml-auto mr-auto flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
       <LatLongContext.Provider value={contextLatLong}>
         <PermissionContext.Provider
           value={useMemo(() => ({ openStreetMapConsent, setOpenStreetMapConsent }), [openStreetMapConsent])}
@@ -108,7 +108,7 @@ function App() {
                 listOfUnlocked,
                 setListOfUnlocked,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked]
             )}
           >
             <SkipLinks />
@@ -129,7 +129,7 @@ function App() {
                     infoText,
                     setInfoText,
                   }),
-                  [error, errorText, info, infoText],
+                  [error, errorText, info, infoText]
                 )}
               >
                 <Switch>
