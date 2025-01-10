@@ -9,7 +9,7 @@ function CloseButton({ closeOverlay, label = "luk", additionalClasses = "" }) {
       type="button"
       onClick={() => closeOverlay()}
     >
-      <FontAwesomeIcon className="z-40 w-5 h-5" icon={faClose} />
+      <FontAwesomeIcon className="w-5 h-5" icon={faClose} />
       <span className="sr-only">{label}</span>
     </button>
   );

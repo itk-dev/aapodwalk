@@ -9,7 +9,7 @@ const Navbar = () => {
   const { pathname } = useLocation();
 
   return (
-    <nav className="fixed top-0 left-0 right-0 p-3 bg-zinc-100 dark:bg-zinc-800 z-50">
+    <nav className="fixed top-0 left-0 right-0 p-3 bg-zinc-100 dark:bg-zinc-800">
       <div className="mb-6 mt-4 flex justify-between">
         {pathname === "/" && (
           <Link to="/">

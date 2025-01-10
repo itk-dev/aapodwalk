@@ -28,9 +28,7 @@ function PointsList({ points }) {
 
   return (
     <>
-      <h1 className="text-ms font-bol fixed w-full top-16 pb-2 bg-zinc-100 dark:bg-zinc-800 z-40">
-        {selectedRoute.title}
-      </h1>
+      <h1 className="text-ms font-bol fixed w-full top-16 pb-2 bg-zinc-100 dark:bg-zinc-800">{selectedRoute.title}</h1>
       {points &&
         [...points]
           .reverse()

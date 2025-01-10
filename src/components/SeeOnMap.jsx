@@ -1,15 +1,13 @@
-import { React, useContext } from "react";
+import { React } from "react";
 import { useParams } from "react-router-dom";
-import LatLongContext from "../context/latitude-longitude-context";
 import MapWrapper from "./map/MapWrapper";
 
 function SeeOnMap() {
   const { latitude, longitude } = useParams();
-  const { lat, long } = useContext(LatLongContext);
 
   return (
     <>
-      {latitude && longitude && lat && long && (
+      {latitude && longitude && (
         <MapWrapper
           focusable={false}
           withIndex={false}

@@ -83,10 +83,13 @@ export function getPinSvg() {
 }
 
 export function mapArrayForOuterBounds(pointArray, userLat, userLong) {
-  return [
-    ...pointArray.map(({ latitude, longitude }) => [latitude, longitude]),
-    ...[[userLat.toString(), userLong.toString()]],
-  ];
+  if (userLat && userLong) {
+    return [
+      ...pointArray.map(({ latitude, longitude }) => [latitude, longitude]),
+      ...[[userLat.toString(), userLong.toString()]],
+    ];
+  }
+  return [...pointArray.map(({ latitude, longitude }) => [latitude, longitude])];
 }
 
 export function getYouAreHerePin() {
