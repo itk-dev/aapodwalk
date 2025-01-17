@@ -4,47 +4,85 @@ function PersonalInformationPolicyPage() {
   return (
     <>
       <h1 className="text-2xl font-extrabold">
-        Oplysninger om Aarhus Kommune Kultur og Borgerservices behandling af dine personoplysninger ved anvendelse af
-        Podwalk
+        Oplysninger om Kultur og Borgerservices behandling af dine personoplysninger ved brug af appen Podwalk
       </h1>
+      <p>
+        På denne side kan du læse mere om vores dataansvar og behandling af personoplysninger og rettigheder efter
+        reglerne om databeskyttelse. Oplysningerne er alene til orientering. Du behøver derfor ikke foretage dig noget,
+        og du mister ingen rettigheder ved ikke at læse oplysningerne. Vi behandler kun de nødvendige personoplysninger
+        som du giver os eller som vi indsamler, i overensstemmelse med gældende regler.
+      </p>
       <h2 className="font-extrabold mt-5">Hvad er formålet med og reglerne for behandlingen af personoplysningerne?</h2>
+      <p>Vi behandler personoplysningerne til følgende formål:</p>
+      <ol>
+        <li>Procesoptimere din interaktion med OpenStreetMaps kortløsning.</li>
+      </ol>
       <p>
-        Vi behandler personoplysningerne til følgende formål: Podwalk anvender OpenStreetMap som kortløsning og ved brug
-        af denne indsamles brugerens ip.
+        Reglerne for vores behandling af personoplysningerne følger af nedenstående lovgivning, bekendtgørelser og
+        vejledninger til disse:
       </p>
+      <ol>
+        <li>Persondataforordningens artikel 6, stk. 1 litra e</li>
+      </ol>
       <h2 className="font-extrabold mt-5">Hvilke kategorier af personoplysninger behandler vi?</h2>
-      <p>Aarhus Kommune Kultur og Borgerservice behandler følgende kategorier af personoplysninger:</p>
+      <p>Vi behandler følgende kategorier af personoplysninger:</p>
       <ul>
-        <li>Almindelige personoplysninger: brugerens ip</li>
+        <li>Almindelige personoplysninger: ip-adresse og din interaktion ift. brug af kortløsningen</li>
       </ul>
-      <h2 className="font-extrabold mt-5">Hvem modtager personoplysningerne? </h2>
-      <p>Ved brug af Podwalk overlader personoplysningerne til følgende modtagere: </p>
-      <p>
-        Kultur og Borgerservices databehandler Open Street Map, der behandler personoplysninger sikkert på vegne af på
-        baggrund af instruks i en lovpligt databehandleraftale. Hvis Kultur og Borgerservice efter en konkret vurdering
-        videregiver oplysninger til en anden selvstændig dataansvarlig, har denne ansvaret for, at du får besked om, at
-        der er indsamlet personoplysninger ved Kultur og Borgerservice. En sådan videregivelse vil kun finde sted i
-        overensstemmelse med lovgivningen, og vil altid kun omfatte nødvendige relevante data. For videregivelser til
-        forskere gælder altid at en eventuel offentliggørelse af undersøgelsens resultat ikke må ske på en sådan måde,
-        at det er muligt at identificere enkeltpersoner.
-      </p>
+      <h2 className="font-extrabold mt-5">Hvor stammer personoplysningerne fra?</h2>
+      <p>Oplysningerne bliver hentet automatisk når du tilgår kortløsningen.</p>
       <h2 className="font-extrabold mt-5">Hvordan opbevarer vi personoplysningerne?</h2>
-      Kultur og Borgerservice opbevarer personoplysningerne så længe det er nødvendigt og sagligt for at opfylde de
-      faglige formål, der er angivet under afsnittet om formål. Derudover er Kultur og Borgerservice pålagt at opbevare
-      personoplysningerne, indtil overlevering til arkiv efter arkivlovens regler. Vi kan på nuværende tidspunkt ikke
-      sige, hvor For udvalgte oplysninger gælder dog at oplysningerne gemmes længere end det faglige formål kræver.
-      Oplysninger gemmes i denne længere opbevaring kun til statistiske formål som beskrevet i første afsnit.
+      <p>Ip-adresse og tilhørende historik slettes automatisk efter 180 dage.</p>
       <h2 className="font-extrabold mt-5">Dine rettigheder</h2>
       <p>
         Du har efter databeskyttelsesforordningen en række rettigheder i forhold til vores behandling af
-        personoplysningerne. Du har normalt efter databeskyttelsesforordningen en række rettigheder så som indsigt,
-        indsigelse og berigtigelse. Da denne behandling er en statistisk behandling hjemlet i
-        databeskyttelsesforordningens artikel 6.1.e bortfalder disse rettigheder jf. databeskyttelseslovens §22, stk. 5
-        om begrænsninger i rettigheder ved videnskabelige og statistiske behandlinger. Datatilsynet har udgivet en
-        vejledning om de registreredes rettigheder, som du finder på www.datatilsynet.dk. Hvis du har spørgsmål til
-        Kultur og Borgerservices behandling af dine personoplysninger kan du kontakte Aarhus Kommune, Kultur og
-        Borgerservice,
-        <a href="mailto:itkdev@mkb.aarhus.dk">ITK itkdev@mkb.aarhus.dk</a>
+        personoplysningerne.
+      </p>
+      <p>
+        Det samtykke, du har giv, kan til enhver tid trækkes tilbage, dog uden at ændrer på lovligheden af den
+        behandling, der allerede måtte være foretaget.
+      </p>
+      <p>
+        Du har ret til at anmode om indsigt i oplysningerne vi har om dig. Du har også ret til at anmode om berigtigelse
+        eller sletning af oplysninger, og du kan også bede om en begrænsning af behandlingen af oplysningerne. Du skal
+        dog være opmærksom på, at kommunen typisk er forpligtet til at gemme de oplysninger vi har noteret om dig,
+        indtil den ovennævnte slettefrist indtræder.
+      </p>
+      <p>Du har ret til at gøre indsigelse mod behandlingen.</p>
+      <p>Hvis du vil gøre brug af dine rettigheder eller har spørgsmål skal du kontakte:</p>
+      <p>Kultur og Borgerservice, Aarhus Kommune</p>
+      <p>CVR-nr.: 55133018</p>
+      <p> Email: itkdev@mkb.aarhus.dk</p>
+      <p>
+        Datatilsynet har udgivet en vejledning om de registreredes rettigheder, som du finder på www.datatilsynet.dk.
+      </p>
+      <h3 className="font-extrabold mt-3">Kontaktoplysninger på databeskyttelsesrådgiveren</h3>
+      <p>
+        Hvis du har spørgsmål til Aarhus Kommunes beskyttelse af personoplysninger, kan du også kontakte Aarhus Kommunes
+        databeskyttelsesrådgiver:
+      </p>
+      <p>
+        E-mail:{" "}
+        <a className="underline" href="mailto:databeskyttelsesraadgiver@aarhus.dk">
+          databeskyttelsesraadgiver@aarhus.dk
+        </a>
+        (
+        <a
+          className="underline"
+          href="https://post.borger.dk/send/2ea2e7ff-bad5-471d-a5c0-a63cbbd076d6/2988716d-6af4-47e2-874a-d0ed8c76f831/"
+        >
+          Her er linket til sikker mail her for databeskyttelsesrådgiveren
+        </a>
+        )
+      </p>
+      <p>Telefon: 89 40 22 20</p>
+      <h3 className="font-extrabold mt-3">Klage til Datatilsynet</h3>
+      <p>
+        Du kan klage til Datatilsynet, hvis du er utilfreds med den måde, vi behandler personoplysninger på. Du finder
+        Datatilsynets kontaktoplysninger på{" "}
+        <a className="underline" href="www.datatilsynet.dk">
+          www.datatilsynet.dk
+        </a>
       </p>
     </>
   );

@@ -21,12 +21,8 @@ function MapConsentBanner() {
             <p>
               Aarhus Kommune ønsker i forbindelse med Podwalk at indhente dit samtykke til, at vi behandler
               personoplysninger om dig. Podwalk anvender OpenStreetMap som kortløsning og ved brug af denne indsamles
-              brugrens ip. Hvis du vælger ikke at samtykke vil kortet ikke være tilgængelig i Podwalk. Det samtykke, du
-              har givet til behandlingen, kan til enhver tid trækkes tilbage, dog uden at ændrer på lovligheden af den
-              behandling, der allerede måtte være foretaget. Du kan tilbagetrække et afgivet samtykke ved at henvende
-              dig, mundtligt eller skriftligt, til Aarhus Kommune, Kultur- og Borgerservice
-              <a href="mailto:itkdev@mkb.aarhus.dk"> itkdev@mkb.aarhus.dk</a> itkdev@mkb.aarhus.dk og bede om at få
-              samtykket trukket tilbage. Læs mere om, hvordan vi behandler dine personoplysninger.
+              din ip-adresse for at kunne give dig en hurtig adgang til - og opdatering af kortet. Hvis du vælger ikke
+              at give samtykke vil kortet ikke være tilgængelig i Podwalk.
             </p>
             <Link className="underline" to="/personal-information-policy">
               Læs mere om, hvordan vi behandler dine personoplysninger.
