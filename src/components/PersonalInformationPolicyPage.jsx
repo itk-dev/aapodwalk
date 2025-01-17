@@ -4,8 +4,7 @@ function PersonalInformationPolicyPage() {
   return (
     <>
       <h1 className="text-2xl font-extrabold">
-        Oplysninger om Kultur og Borgerservices behandling af dine personoplysninger ved brug af appen
-        Podwalk
+        Oplysninger om Kultur og Borgerservices behandling af dine personoplysninger ved brug af appen Podwalk
       </h1>
       <p>
         På denne side kan du læse mere om vores dataansvar og behandling af personoplysninger og rettigheder efter
