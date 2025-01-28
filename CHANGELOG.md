@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+## [1.0.7] - 2025-28-01
+
 - [PR-66](https://github.com/itk-dev/aapodwalk/pull/66)
   - Update consent statement
 - [PR-65](https://github.com/itk-dev/aapodwalk/pull/65)
