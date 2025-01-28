@@ -37,6 +37,6 @@ steps:
       user:
         from_secret: user
       actions:
-        - /usr/bin/docker run --rm -v .:/app -v ./../shared/.env.local:/app/.env.local --workdir=/app node:20 npm install
-        - /usr/bin/docker run --rm -v .:/app -v ./../shared/.env.local:/app/.env.local --workdir=/app node:20 npm run build
+        - /usr/bin/docker run --rm -v .:/app -v ./../../shared/.env.local:/app/.env.local --workdir=/app node:20 npm install
+        - /usr/bin/docker run --rm -v .:/app -v ./../../shared/.env.local:/app/.env.local --workdir=/app node:20 npm run build
         - /usr/bin/docker run --rm -v .:/app --workdir=/app node:20 rm -rf node_modules
