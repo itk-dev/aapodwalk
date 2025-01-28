@@ -21,3 +21,22 @@ steps:
       playbook: 'release'
       pre_up:
         - itkdev-docker-compose-server run --rm phpfpm bin/console cache:clear
+
+  - name: Run post deploy
+    image: itkdev/ansible-plugin:1
+    pull: true
+    settings:
+      id:
+        from_secret: id
+      secret:
+        from_secret: secret
+      host:
+        from_secret: host
+      path:
+        from_secret: path
+      user:
+        from_secret: user
+      actions:
+        - /usr/bin/docker run --rm -v .:/app -v ./../../shared/.env.local:/app/.env.local --workdir=/app node:20 npm install
+        - /usr/bin/docker run --rm -v .:/app -v ./../../shared/.env.local:/app/.env.local --workdir=/app node:20 npm run build
+        - /usr/bin/docker run --rm -v .:/app --workdir=/app node:20 npm run build
