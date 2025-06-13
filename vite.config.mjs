@@ -7,6 +7,7 @@ export default defineConfig({
   base: "/",
   plugins: [react(), svgLoader()],
   server: {
+    allowedHosts: ['aapodwalk.local.itkdev.dk'],
     open: false,
     strictPort: true,
     port: 3000,
