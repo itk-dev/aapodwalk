@@ -4,10 +4,16 @@ import svgLoader from "vite-svg-loader";
 
 export default defineConfig({
   // depending on your application, base can also be "/"
+  // @TODO pass allowed hosts via __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS through container in .env
   base: "/",
   plugins: [react(), svgLoader()],
   server: {
-    allowedHosts: ['aapodwalk.local.itkdev.dk'],
+    allowedHosts: [
+        // Development domain
+        ".local.itkdev.dk",
+        // Production domain
+        "podwalk.itkdev.dk"
+    ],
     open: false,
     strictPort: true,
     port: 3000,
