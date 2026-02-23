@@ -27,7 +27,6 @@ function App() {
   const [infoText, setInfoText] = useState("");
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
-  const locationUpdateInterval = 30000;
 
   const contextLatLong = useMemo(
     () => ({
@@ -37,42 +36,52 @@ function App() {
     [lat, long],
   );
 
-  function handlePermissionInfoBanner() {
-    navigator.permissions.query({ name: "geolocation" }).then((result) => {
-      if (result.state !== "granted") {
-        setInfo(true);
-        setInfoText(
-          <span>
-            Du har ikke accepteret, at vi må få adgang til din lokation. For at denne applikation skal fungere, skal den
-            bruge din lokation. Hvis du vil vide mere om hvordan du giver denne angang, kan du besøge{" "}
-            <Link className="underline" to="/navigation-help">
-              Hjælp til navigation
-            </Link>
-          </span>,
-        );
-      }
-    });
-  }
+  const permissionDeniedBanner = (
+    <span>
+      Du har ikke accepteret, at vi må få adgang til din lokation. For at denne applikation skal fungere, skal den bruge
+      din lokation. Hvis du vil vide mere om hvordan du giver denne adgang, kan du besøge{" "}
+      <Link className="underline" to="/navigation-help">
+        Hjælp til navigation
+      </Link>
+    </span>
+  );
 
   useEffect(() => {
-    handlePermissionInfoBanner();
+    if (navigator.permissions && navigator.permissions.query) {
+      navigator.permissions
+        .query({ name: "geolocation" })
+        .then((result) => {
+          if (result.state === "denied") {
+            setInfo(true);
+            setInfoText(permissionDeniedBanner);
+          }
+        })
+        .catch(() => {});
+    }
   }, []);
 
-  function startLocationPrompter() {
-    setInterval(() => {
-      navigator.geolocation.getCurrentPosition((position) => {
+  useEffect(() => {
+    const watchId = navigator.geolocation.watchPosition(
+      (position) => {
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
-      });
-    }, locationUpdateInterval);
-  }
+      },
+      (err) => {
+        if (err.code === err.PERMISSION_DENIED) {
+          setInfo(true);
+          setInfoText(permissionDeniedBanner);
+        } else if (err.code === err.POSITION_UNAVAILABLE) {
+          setError(true);
+          setErrorText("Din lokation kunne ikke bestemmes.");
+        } else if (err.code === err.TIMEOUT) {
+          setError(true);
+          setErrorText("Forespørgslen om din lokation tog for lang tid.");
+        }
+      },
+      { enableHighAccuracy: true, timeout: 30000, maximumAge: 10000 },
+    );
 
-  useEffect(() => {
-    navigator.geolocation.getCurrentPosition((position) => {
-      setLat(position.coords.latitude);
-      setLong(position.coords.longitude);
-    });
-    startLocationPrompter();
+    return () => navigator.geolocation.clearWatch(watchId);
   }, []);
 
   useEffect(() => {
