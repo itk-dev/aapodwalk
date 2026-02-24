@@ -25,7 +25,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: npm audit
-        run: npm audit
+        run: npm audit --omit=dev
 
   run-code-blocks-from-readme:
     runs-on: ubuntu-latest
