@@ -1,6 +1,6 @@
 import { React } from "react";
 
-const RoutesLoading = ({}) => {
+const RoutesLoading = () => {
   return (
     <div className="mt-10">
       {[1, 2, 3].map((number) => (

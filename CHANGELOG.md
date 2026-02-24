@@ -7,6 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Security and dependency updates
+  - Fix 8 security vulnerabilities (vite, ajv, js-yaml CVEs)
+  - Update React 19.0.0 to 19.2.4
+  - Migrate ESLint v8 to v9 with flat config
+  - Update Prettier 2.x to 3.x
+  - Remove unused Babel presets (CRA leftovers) and `.babelrc`
+  - Remove unused `@tailwindcss/line-clamp`
+  - Update browserslist database
+
 ## [1.0.8] - 2025-28-01
 
 - Updated deployment steps.
