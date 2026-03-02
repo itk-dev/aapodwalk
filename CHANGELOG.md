@@ -22,6 +22,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - [PR-65](https://github.com/itk-dev/aapodwalk/pull/65)
   - Remove a bunch of z-indexes
   - Make map visible without user location
+- [PR-64](https://github.com/itk-dev/aapodwalk/pull/64)
+  - Clean up some rough edges in the design
 - [PR-63](https://github.com/itk-dev/aapodwalk/pull/63)
   - react 18 -> [react 19](https://react.dev/blog/2024/12/05/react-19)
   - react-dom 18 -> 19
