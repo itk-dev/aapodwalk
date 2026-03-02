@@ -90,6 +90,16 @@ docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --check src
 docker run --rm --volume "$PWD:/work" tmknom/prettier:latest --write src
 ```
 
+### Check and fix with ESLint
+
+```shell name=eslint-check
+docker compose run --rm node npm run lint:js
+```
+
+```shell name=eslint-fix
+docker compose run --rm node npm run lint:js:fix
+```
+
 ### Check and apply markdownlint
 
 ```shell name=markdown-check

@@ -34,6 +34,7 @@ jobs:
         blocks:
           - development-install prettier-check
           - development-install markdown-check
+          - development-install eslint-check
     steps:
       - name: Check out repository
         uses: actions/checkout@v4
