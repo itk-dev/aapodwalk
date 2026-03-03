@@ -1,12 +1,12 @@
 import { defineConfig } from "vite";
 import react from "@vitejs/plugin-react";
-import svgLoader from "vite-svg-loader";
+import tailwindcss from "@tailwindcss/vite";
 
 export default defineConfig({
   // depending on your application, base can also be "/"
   // @TODO pass allowed hosts via __VITE_ADDITIONAL_SERVER_ALLOWED_HOSTS through container in .env
   base: "/",
-  plugins: [react(), svgLoader()],
+  plugins: [react(), tailwindcss()],
   server: {
     allowedHosts: [
         // Development domain
