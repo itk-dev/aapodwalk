@@ -8,6 +8,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## Unreleased
 
 - Update build and styling tooling (Tailwind CSS v4, `@vitejs/plugin-react` v5, removed PostCSS/autoprefixer)
+- Fix iOS Safari geolocation re-prompting on every page reload (use `watchPosition`, guard `permissions.query`)
 - Security and dependency updates (8 vulnerabilities fixed, ESLint v9, React/Prettier updated)
 
 ## [1.0.8] - 2025-28-01
