@@ -63,6 +63,8 @@ function App() {
   useEffect(() => {
     const watchId = navigator.geolocation.watchPosition(
       (position) => {
+        setInfo(false);
+        setInfoText("");
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
       },
