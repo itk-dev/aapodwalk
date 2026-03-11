@@ -37,6 +37,8 @@ function DistanceComponent({ data: { id = null, latitude, longitude, proximityTo
     }
   }, [id, listOfUnlocked, nextUnlockablePointId, proximityToUnlock, distance]);
 
+  // Format distance: show "0 m" for falsy/zero values,
+  // convert to km with one decimal when >= 1000 m, otherwise show meters.
   const formattedDistance =
     distance === false || distance === 0
       ? "0 m"
