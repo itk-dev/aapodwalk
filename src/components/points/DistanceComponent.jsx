@@ -37,9 +37,12 @@ function DistanceComponent({ data: { id = null, latitude, longitude, proximityTo
     }
   }, [id, listOfUnlocked, nextUnlockablePointId, proximityToUnlock, distance]);
 
-  const formattedDistance = distance >= 1000
-    ? `${(distance / 1000).toFixed(1)} km`
-    : `${distance} m`;
+  const formattedDistance =
+    distance === false || distance === 0
+      ? "0 m"
+      : distance >= 1000
+        ? `${(distance / 1000).toFixed(1)} km`
+        : `${distance} m`;
 
   return (
     <div className={`${classes} text-emerald-400 dark:text-emerald-600 font-bold text-sm`}>

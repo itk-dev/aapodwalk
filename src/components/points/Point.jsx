@@ -48,8 +48,8 @@ function Point({ point, order }) {
 
   function openNativeNavigation() {
     const url = isDeviceIOS
-      ? `https://maps.apple.com/?q=${latitude},${longitude}`
-      : `https://maps.google.com/?q=${latitude},${longitude}`;
+      ? `https://maps.apple.com/?daddr=${latitude},${longitude}`
+      : `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
     window.open(url, "_blank");
   }
 
@@ -102,15 +102,13 @@ function Point({ point, order }) {
       )}
       {isNextPointToUnlock() && (
         <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex items-start justify-around px-4">
-          <button
-            type="button"
-            onClick={openNativeNavigation}
-            className="flex flex-col items-center cursor-pointer"
-          >
+          <button type="button" onClick={openNativeNavigation} className="flex flex-col items-center cursor-pointer">
             <div className="h-12 flex items-center justify-center">
               <img src={Footprints} alt="" className="h-10 w-10" />
             </div>
-            <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">Åbn navigation</span>
+            <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">
+              Åbn navigation
+            </span>
           </button>
           {openStreetMapConsent && (
             <Link
@@ -118,7 +116,7 @@ function Point({ point, order }) {
               className="flex flex-col items-center cursor-pointer text-emerald-400 dark:text-emerald-600"
             >
               <div className="h-12 flex items-center justify-center">
-                <FontAwesomeIcon style={{ height: '1.4rem', width: '1.4rem' }} icon={faMapLocationDot} />
+                <FontAwesomeIcon style={{ height: "1.4rem", width: "1.4rem" }} icon={faMapLocationDot} />
               </div>
               <span className="text-xs font-bold mt-1 whitespace-nowrap">Åbn kort</span>
               <span className="sr-only">Se punkt {name} på kort</span>
@@ -131,7 +129,7 @@ function Point({ point, order }) {
               className="flex flex-col items-center cursor-pointer text-emerald-400 dark:text-emerald-600"
             >
               <div className="h-12 flex items-center justify-center">
-                <FontAwesomeIcon style={{ height: '1.4rem', width: '1.4rem' }} icon={faMapLocationDot} />
+                <FontAwesomeIcon style={{ height: "1.4rem", width: "1.4rem" }} icon={faMapLocationDot} />
               </div>
               <span className="text-xs font-bold mt-1 whitespace-nowrap">Åbn kort</span>
               <span className="sr-only">Tag stilling til tilladelser i forhold til kortet igen</span>
@@ -141,7 +139,9 @@ function Point({ point, order }) {
             <div className="h-12 flex items-center">
               <DistanceComponent data={point} classes="text-xl" />
             </div>
-            <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">Afstand</span>
+            <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">
+              Afstand
+            </span>
           </div>
         </div>
       )}
