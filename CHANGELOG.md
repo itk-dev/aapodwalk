@@ -7,11 +7,15 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Add navigation button on next-to-unlock point overlay (opens native maps app)
+- Add descriptive labels below point overlay icons (navigation, map, distance)
+- Improve distance display: show rounded km when >= 1 km, meters when below
 - Update build and styling tooling (Tailwind CSS v4, `@vitejs/plugin-react` v5, removed PostCSS/autoprefixer)
 - Fix iOS Safari geolocation re-prompting on every page reload (use `watchPosition`, guard `permissions.query`)
 - Security and dependency updates (8 vulnerabilities fixed, ESLint v9, React/Prettier updated)
 - Fix "you are here" marker not visible on iOS Safari (corrupted SVG)
 - Fix route page content not scrollable when overflowing viewport
+- Fix map icon not scaling in point overlay (add explicit width alongside height)
 
 ## [1.0.8] - 2025-28-01
 
