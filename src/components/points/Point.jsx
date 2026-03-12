@@ -10,6 +10,7 @@ import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 import LatLongContext from "../../context/latitude-longitude-context";
 import PermissionContext from "../../context/permission-context";
+import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 
 function Point({ point, order }) {
   const { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 } = point;
@@ -43,6 +44,25 @@ function Point({ point, order }) {
     // - It has not already been unlocked
     // - The user gives access to geolocation
     return nextUnlockablePointId === id && !unlocked && lat && long;
+  }
+
+  // Opens navigation to the point's coordinates using the device's preferred maps app.
+  // - iOS: Apple Maps directions URL (the native default on iOS).
+  // - Android: geo: URI, which triggers the OS intent chooser so the user can open
+  //   in their preferred maps app (Google Maps, Waze, OsmAnd, etc.).
+  //   Trade-off: the geo: URI shows the destination as a pin rather than auto-starting
+  //   turn-by-turn directions — the user taps "Navigate" once in their chosen app.
+  // - Fallback: Google Maps directions URL for desktop and other platforms.
+  function openNativeNavigation() {
+    let url;
+    if (isDeviceIOS) {
+      url = `https://maps.apple.com/?daddr=${latitude},${longitude}`;
+    } else if (isDeviceAndroid) {
+      url = `geo:${latitude},${longitude}`;
+    } else {
+      url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    }
+    window.open(url, "_blank");
   }
 
   function isLocked() {
@@ -93,13 +113,24 @@ function Point({ point, order }) {
         <PointOverlay point={point} order={order} active={playThis} toggleActive={() => setPlayThis(!playThis)} />
       )}
       {isNextPointToUnlock() && (
-        <>
+        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex items-start justify-around px-4">
+          <button type="button" onClick={openNativeNavigation} className="flex flex-col items-center cursor-pointer">
+            <div className="h-12 flex items-center justify-center">
+              <img src={Footprints} alt="" className="h-10 w-10" />
+            </div>
+            <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">
+              Åbn navigation
+            </span>
+          </button>
           {openStreetMapConsent && (
             <Link
               to={`/see-on-map/${latitude}/${longitude}`}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 flex flex-col cursor-pointer text-emerald-400 dark:text-emerald-600"
+              className="flex flex-col items-center cursor-pointer text-emerald-400 dark:text-emerald-600"
             >
-              <FontAwesomeIcon className="h-9" icon={faMapLocationDot} />
+              <div className="h-12 flex items-center justify-center">
+                <FontAwesomeIcon style={{ height: "1.4rem", width: "1.4rem" }} icon={faMapLocationDot} />
+              </div>
+              <span className="text-xs font-bold mt-1 whitespace-nowrap">Åbn kort</span>
               <span className="sr-only">Se punkt {name} på kort</span>
             </Link>
           )}
@@ -107,22 +138,24 @@ function Point({ point, order }) {
             <button
               type="button"
               onClick={() => setOpenStreetMapConsent(null)}
-              className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 cursor-pointer text-emerald-400 dark:text-emerald-600"
+              className="flex flex-col items-center cursor-pointer text-emerald-400 dark:text-emerald-600"
             >
-              <FontAwesomeIcon className="h-9" icon={faMapLocationDot} />
+              <div className="h-12 flex items-center justify-center">
+                <FontAwesomeIcon style={{ height: "1.4rem", width: "1.4rem" }} icon={faMapLocationDot} />
+              </div>
+              <span className="text-xs font-bold mt-1 whitespace-nowrap">Åbn kort</span>
               <span className="sr-only">Tag stilling til tilladelser i forhold til kortet igen</span>
             </button>
           )}
-          <DistanceComponent
-            data={point}
-            classes="absolute top-1/2 right-5 transform -translate-x-1/2 -translate-y-1/2 text-xl"
-          />
-          <img
-            src={Footprints}
-            alt=""
-            className="h-16 h-16 absolute top-1/2 left-12 transform -translate-x-1/2 -translate-y-1/2"
-          />
-        </>
+          <div className="flex flex-col items-center">
+            <div className="h-12 flex items-center">
+              <DistanceComponent data={point} classes="text-xl" />
+            </div>
+            <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">
+              Afstand
+            </span>
+          </div>
+        </div>
       )}
     </div>
   );
