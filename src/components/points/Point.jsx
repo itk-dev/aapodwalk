@@ -10,7 +10,7 @@ import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 import LatLongContext from "../../context/latitude-longitude-context";
 import PermissionContext from "../../context/permission-context";
-import { isDeviceIOS } from "../../util/helper";
+import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 
 function Point({ point, order }) {
   const { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 } = point;
@@ -46,10 +46,22 @@ function Point({ point, order }) {
     return nextUnlockablePointId === id && !unlocked && lat && long;
   }
 
+  // Opens navigation to the point's coordinates using the device's preferred maps app.
+  // - iOS: Apple Maps directions URL (the native default on iOS).
+  // - Android: geo: URI, which triggers the OS intent chooser so the user can open
+  //   in their preferred maps app (Google Maps, Waze, OsmAnd, etc.).
+  //   Trade-off: the geo: URI shows the destination as a pin rather than auto-starting
+  //   turn-by-turn directions — the user taps "Navigate" once in their chosen app.
+  // - Fallback: Google Maps directions URL for desktop and other platforms.
   function openNativeNavigation() {
-    const url = isDeviceIOS
-      ? `https://maps.apple.com/?daddr=${latitude},${longitude}`
-      : `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    let url;
+    if (isDeviceIOS) {
+      url = `https://maps.apple.com/?daddr=${latitude},${longitude}`;
+    } else if (isDeviceAndroid) {
+      url = `geo:${latitude},${longitude}`;
+    } else {
+      url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
+    }
     window.open(url, "_blank");
   }
 

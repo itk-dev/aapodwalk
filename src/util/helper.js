@@ -1,6 +1,7 @@
 import YouAreHere from "./../icons/you-are-here-icon.svg?raw";
 
 export const isDeviceIOS = navigator.userAgent.match(/(iPod|iPhone|iPad)/) && navigator.userAgent.match(/AppleWebKit/);
+export const isDeviceAndroid = /Android/i.test(navigator.userAgent);
 
 // Borrowed from here: https://www.movable-type.co.uk/scripts/latlong.html?from=48.86,-122.0992&to=48.8599,-122.1449
 export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
