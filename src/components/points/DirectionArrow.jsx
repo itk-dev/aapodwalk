@@ -42,13 +42,34 @@ function readHeading(event) {
   return null;
 }
 
-// Hook for pages that want the device-orientation permission requested
-// automatically on the user's first gesture. iOS Safari rejects
-// `DeviceOrientationEvent.requestPermission()` outside a trusted gesture,
-// so we attach a one-shot capture-phase click listener and trigger the
-// request from there. Other platforms either don't need permission
-// (Android Chrome) or don't support orientation events at all — both
-// cases short-circuit immediately.
+// Call this from inside a real click/tap handler (e.g. the "Start ruten" button).
+// iOS Safari only honours `DeviceOrientationEvent.requestPermission()` when it is
+// invoked synchronously from a trusted user gesture — async waits or window-level
+// capture-phase listeners are unreliable. Calling this directly inside a button
+// onClick is the safe pattern. No-op on platforms that don't need permission.
+export function requestDeviceOrientationPermissionIfNeeded() {
+  if (typeof window === "undefined" || !window.DeviceOrientationEvent) return;
+  if (typeof DeviceOrientationEvent.requestPermission !== "function") return;
+  const cached = sessionStorage.getItem(PERMISSION_STORAGE_KEY);
+  if (cached === "granted" || cached === "denied") return;
+
+  // Don't await — we must call requestPermission synchronously inside the gesture.
+  DeviceOrientationEvent.requestPermission()
+    .then((result) => {
+      const next = result === "granted" ? "granted" : "denied";
+      sessionStorage.setItem(PERMISSION_STORAGE_KEY, next);
+      window.dispatchEvent(new CustomEvent(PERMISSION_EVENT, { detail: next }));
+    })
+    .catch(() => {
+      sessionStorage.setItem(PERMISSION_STORAGE_KEY, "denied");
+      window.dispatchEvent(new CustomEvent(PERMISSION_EVENT, { detail: "denied" }));
+    });
+}
+
+// Fallback hook for pages reached via deep link (skipping the "Start ruten" button).
+// Attaches a one-shot click/touchend handler so the user's first interaction
+// triggers the prompt. Less reliable than a direct button click on iOS — kept
+// as a safety net.
 export function useDeviceOrientationAutoPermission() {
   useEffect(() => {
     if (typeof window === "undefined" || !window.DeviceOrientationEvent) return undefined;
@@ -57,20 +78,12 @@ export function useDeviceOrientationAutoPermission() {
     if (cached === "granted" || cached === "denied") return undefined;
 
     let triggered = false;
-    async function handler() {
+    function handler() {
       if (triggered) return;
       triggered = true;
       window.removeEventListener("click", handler, true);
       window.removeEventListener("touchend", handler, true);
-      try {
-        const result = await DeviceOrientationEvent.requestPermission();
-        const next = result === "granted" ? "granted" : "denied";
-        sessionStorage.setItem(PERMISSION_STORAGE_KEY, next);
-        window.dispatchEvent(new CustomEvent(PERMISSION_EVENT, { detail: next }));
-      } catch {
-        sessionStorage.setItem(PERMISSION_STORAGE_KEY, "denied");
-        window.dispatchEvent(new CustomEvent(PERMISSION_EVENT, { detail: "denied" }));
-      }
+      requestDeviceOrientationPermissionIfNeeded();
     }
     window.addEventListener("click", handler, true);
     window.addEventListener("touchend", handler, true);

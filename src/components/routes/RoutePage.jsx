@@ -7,6 +7,7 @@ import MapWrapper from "../map/MapWrapper";
 import TagList from "../tags/TagList";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
+import { requestDeviceOrientationPermissionIfNeeded } from "../points/DirectionArrow";
 
 function RoutePage() {
   const { id } = useParams();
@@ -93,6 +94,7 @@ function RoutePage() {
           <Link
             className="flex items-center mr-1 rounded relative px-5 mt-1 h-9 text-center w-max font-bold bg-zinc-200 text-black z-50 shrink-0"
             to={`/points/${id}`}
+            onClick={requestDeviceOrientationPermissionIfNeeded}
           >
             <FontAwesomeIcon icon={faPlayCircle} className="mr-1" />
             Start ruten

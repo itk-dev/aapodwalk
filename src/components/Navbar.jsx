@@ -13,7 +13,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 p-3 bg-zinc-100 dark:bg-zinc-800 shadow-md">
-      <div className="mt-4 mb-2 flex justify-between items-center">
+      <div className="flex justify-between items-center">
         {pathname === "/" && (
           <Link to="/">
             <span className="sr-only">Hjem</span>
@@ -30,7 +30,7 @@ const Navbar = () => {
         </Link>
       </div>
       {showRouteTitle && (
-        <h1 className="text-center text-base font-bold truncate px-14">{selectedRoute.title}</h1>
+        <h1 className="text-center text-base font-bold truncate px-14 mt-2">{selectedRoute.title}</h1>
       )}
     </nav>
   );
