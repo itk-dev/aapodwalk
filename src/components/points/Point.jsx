@@ -63,7 +63,7 @@ function Point({ point, order }) {
     } else {
       url = `https://www.google.com/maps/dir/?api=1&destination=${latitude},${longitude}`;
     }
-    window.open(url, "_blank");
+    window.location.href = url;
   }
 
   function isLocked() {

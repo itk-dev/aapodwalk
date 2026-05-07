@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo } from "react";
-import { Switch, Route, Link } from "react-router-dom";
+import { Switch, Route, Link, useLocation } from "react-router-dom";
 import LatLongContext from "./context/latitude-longitude-context";
 import PermissionContext from "./context/permission-context";
 import RouteContext from "./context/RouteContext";
@@ -17,6 +17,7 @@ import NavigationHelp from "./components/NavigationHelp";
 import MapConsentBanner from "./components/MapConsentBanner";
 
 function App() {
+  const { pathname } = useLocation();
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [listOfUnlocked, setListOfUnlocked] = useState([]);
   const [nextUnlockablePointId, setNextUnlockablePointId] = useState(null);
@@ -102,6 +103,12 @@ function App() {
       localStorage.setItem("data-consent", openStreetMapConsent);
     }
   }, [openStreetMapConsent]);
+
+  // Reset scroll on every route change so the user lands at the top of the new view
+  // (back navigation, forward navigation, deep link — useEffect on pathname covers all).
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
 
   return (
     <div className="App md:max-w-4xl ml-auto mr-auto flex flex-col h-full pt-24 min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden">
