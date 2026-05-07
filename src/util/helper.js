@@ -33,6 +33,23 @@ export function getDistanceBetweenCoordinates(lat1, lon1, lat2, lon2) {
   return 0;
 }
 
+// Initial bearing from (lat1, lon1) toward (lat2, lon2). Result is in degrees in [0, 360),
+// clockwise from true north. Returns null when any argument is falsy so callers can
+// distinguish "no data" from "due north".
+// Formula: https://www.movable-type.co.uk/scripts/latlong.html
+export function getBearingBetweenCoordinates(lat1, lon1, lat2, lon2) {
+  if (!lat1 || !lon1 || !lat2 || !lon2) {
+    return null;
+  }
+  const φ1 = (lat1 * Math.PI) / 180;
+  const φ2 = (lat2 * Math.PI) / 180;
+  const Δλ = ((lon2 - lon1) * Math.PI) / 180;
+  const y = Math.sin(Δλ) * Math.cos(φ2);
+  const x = Math.cos(φ1) * Math.sin(φ2) - Math.sin(φ1) * Math.cos(φ2) * Math.cos(Δλ);
+  const θ = Math.atan2(y, x);
+  return ((θ * 180) / Math.PI + 360) % 360;
+}
+
 function compareProximity(routeA, routeB) {
   return routeA.proximityToFirstPoint - routeB.proximityToFirstPoint;
 }

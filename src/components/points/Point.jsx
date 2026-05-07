@@ -6,6 +6,7 @@ import Image from "../Image";
 import RouteContext from "../../context/RouteContext";
 import Footprints from "../../icons/footprints.svg?url";
 import DistanceComponent from "./DistanceComponent";
+import DirectionArrow from "./DirectionArrow";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 import LatLongContext from "../../context/latitude-longitude-context";
@@ -148,8 +149,13 @@ function Point({ point, order }) {
             </button>
           )}
           <div className="flex flex-col items-center">
-            <div className="h-12 flex items-center">
-              <DistanceComponent data={point} classes="text-xl" />
+            <div className="h-12 flex flex-col items-center justify-center">
+              <DirectionArrow
+                latitude={latitude}
+                longitude={longitude}
+                classes="h-6 w-6 text-emerald-400 dark:text-emerald-600"
+              />
+              <DistanceComponent data={point} classes="" />
             </div>
             <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">
               Afstand
