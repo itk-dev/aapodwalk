@@ -114,7 +114,7 @@ function App() {
     <div
       className={`App md:max-w-4xl ml-auto mr-auto flex flex-col h-full ${
         pathname.startsWith("/points/") ? "pt-24" : "pt-16"
-      } min-h-screen dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden`}
+      } min-h-dvh dark:text-white w-screen pl-3 pr-3 pb-3 text-zinc-800 bg-zinc-100 dark:bg-zinc-800 overflow-hidden`}
     >
       <LatLongContext value={contextLatLong}>
         <PermissionContext
