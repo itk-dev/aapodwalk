@@ -73,9 +73,9 @@ function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleAc
   return (
     <FocusTrap focusTrapOptions={FOCUS_TRAP_OPTIONS}>
       <section
-        className={`${
+        className={`z-40 ${
           fullScreen
-            ? "fixed bottom-0 left-0 right-0 top-0 bg-zinc-100 dark:bg-zinc-900 rounded m-2 p-4 flex justify-between flex-col"
+            ? "fixed bottom-0 left-0 right-0 top-28 bg-zinc-100 dark:bg-zinc-900 rounded m-2 p-4 flex justify-between flex-col"
             : "bg-zinc-100 dark:bg-zinc-900 rounded fixed bottom-0 left-0 right-0 bg-zinc-100 dark:bg-zinc-900"
         }`}
       >
@@ -100,7 +100,11 @@ function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleAc
           </div>
         </div>
         {mediaEmbedCode && (
-          <div className={fullScreen ? "fixed left-1 top-1/4 right-1 transform -translate-y-1/4" : ""}>
+          <div
+            className={`relative overflow-hidden [&_iframe]:!max-w-full [&_iframe]:!w-full ${
+              fullScreen ? "mx-1 mt-2 aspect-video" : "mx-3 mb-3 aspect-video"
+            }`}
+          >
             <MediaEmbed html={mediaEmbedCode} />
           </div>
         )}

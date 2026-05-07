@@ -15,12 +15,12 @@ import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 
 function Point({ point, order }) {
   const { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 } = point;
-  const { nextUnlockablePointId, listOfUnlocked } = useContext(RouteContext);
+  const { nextUnlockablePointId, listOfUnlocked, activePointId, setActivePointId } = useContext(RouteContext);
   const { openStreetMapConsent, setOpenStreetMapConsent } = useContext(PermissionContext);
   const { lat, long } = useContext(LatLongContext);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
-  const [playThis, setPlayThis] = useState(false);
+  const isActive = activePointId === id;
 
   useEffect(() => {
     if (!hasScrolled && nextUnlockablePointId === id) {
@@ -87,7 +87,7 @@ function Point({ point, order }) {
     <div id={id} className="relative">
       <button
         type="button"
-        onClick={() => setPlayThis(true)}
+        onClick={() => setActivePointId(id)}
         className={`relative text-left w-full ${unlocked ? "" : "pointer-events-none"}`}
         aria-label={getAriaLabelForButton()}
       >
@@ -111,7 +111,12 @@ function Point({ point, order }) {
         />
       )}
       {unlocked && (
-        <PointOverlay point={point} order={order} active={playThis} toggleActive={() => setPlayThis(!playThis)} />
+        <PointOverlay
+          point={point}
+          order={order}
+          active={isActive}
+          toggleActive={() => setActivePointId(isActive ? null : id)}
+        />
       )}
       {isNextPointToUnlock() && (
         <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex items-start justify-around px-4">

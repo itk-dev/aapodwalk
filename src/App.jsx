@@ -20,6 +20,7 @@ function App() {
   const [selectedRoute, setSelectedRoute] = useState(null);
   const [listOfUnlocked, setListOfUnlocked] = useState([]);
   const [nextUnlockablePointId, setNextUnlockablePointId] = useState(null);
+  const [activePointId, setActivePointId] = useState(null);
   const [openStreetMapConsent, setOpenStreetMapConsent] = useState(null);
   const [error, setError] = useState(false);
   const [errorText, setErrorText] = useState("");
@@ -117,8 +118,10 @@ function App() {
                 setNextUnlockablePointId,
                 listOfUnlocked,
                 setListOfUnlocked,
+                activePointId,
+                setActivePointId,
               }),
-              [selectedRoute, nextUnlockablePointId, listOfUnlocked],
+              [selectedRoute, nextUnlockablePointId, listOfUnlocked, activePointId],
             )}
           >
             <SkipLinks />

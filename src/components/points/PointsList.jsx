@@ -3,7 +3,7 @@ import Point from "./Point";
 import RouteContext from "../../context/RouteContext";
 
 function PointsList({ points }) {
-  const { listOfUnlocked, setNextUnlockablePointId, selectedRoute } = useContext(RouteContext);
+  const { listOfUnlocked, setNextUnlockablePointId } = useContext(RouteContext);
 
   function getIdFromPoint(point) {
     return point?.id || null;
@@ -28,16 +28,11 @@ function PointsList({ points }) {
 
   return (
     <>
-      <h1 className="text-ms font-bol fixed left-0 right-0 top-28 z-40 px-3 pb-2 bg-zinc-100 dark:bg-zinc-800">
-        {selectedRoute.title}
-      </h1>
-      <div className="pt-10">
-        {points &&
-          [...points]
-            .reverse()
-            .map((point, index) => <Point point={point} key={point.id} order={points.length - index} />)}
-        {!points && <div>Der er desværre ikke nogle punkter på denne rute</div>}
-      </div>
+      {points &&
+        [...points]
+          .reverse()
+          .map((point, index) => <Point point={point} key={point.id} order={points.length - index} />)}
+      {!points && <div>Der er desværre ikke nogle punkter på denne rute</div>}
     </>
   );
 }
