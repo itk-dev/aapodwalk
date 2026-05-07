@@ -13,7 +13,7 @@ function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
   return (
     <>
       {focusOnMap && focusable && (
-        <FocusTrap>
+        <FocusTrap focusTrapOptions={{ allowOutsideClick: true, clickOutsideDeactivates: true }}>
           <div className="map-container absolute left-0 top-0 right-0 h-full">
             <CloseButton
               additionalClasses="dark:bg-emerald-800 dark:text-white bg-white z-50"
