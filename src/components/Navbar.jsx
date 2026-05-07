@@ -1,16 +1,19 @@
-import { React } from "react";
+import { React, useContext } from "react";
 import Logo from "../icons/logo.svg?url";
 import BackButton from "./BackButton";
 import { Link, useLocation } from "react-router-dom";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import RouteContext from "../context/RouteContext";
 
 const Navbar = () => {
   const { pathname } = useLocation();
+  const { selectedRoute } = useContext(RouteContext);
+  const showRouteTitle = pathname.startsWith("/points/") && selectedRoute?.title;
 
   return (
-    <nav className="md:max-w-4xl ml-auto mr-auto fixed top-0 left-0 right-0 z-50 p-3 bg-zinc-100 dark:bg-zinc-800 shadow-md">
-      <div className="mb-6 mt-4 flex justify-between">
+    <nav className="fixed top-0 left-0 right-0 z-50 p-3 bg-zinc-100 dark:bg-zinc-800 shadow-md">
+      <div className="mt-4 mb-2 flex justify-between items-center">
         {pathname === "/" && (
           <Link to="/">
             <span className="sr-only">Hjem</span>
@@ -26,6 +29,9 @@ const Navbar = () => {
           <span className="sr-only">FAQ</span>
         </Link>
       </div>
+      {showRouteTitle && (
+        <h1 className="text-center text-base font-bold truncate px-14">{selectedRoute.title}</h1>
+      )}
     </nav>
   );
 };

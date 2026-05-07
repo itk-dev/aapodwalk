@@ -1,10 +1,35 @@
-import { React, useState, useEffect } from "react";
+import { React, useState, useEffect, useLayoutEffect, useRef, memo } from "react";
 import OrderComponent from "./OrderComponent";
 import CloseButton from "../CloseButton";
 import { FocusTrap } from "focus-trap-react";
 import { useHistory } from "react-router-dom";
 import { useLocation } from "react-router-dom";
 import UpDownButton from "../UpDownButton";
+
+// The videotool iframe must NOT be re-rendered or replaced by React after it
+// first mounts — every reconciliation pass on the host element is a chance
+// for the embedded player to reload, which causes the audible "pausing /
+// flashing" and the `play() interrupted by a new load request` console error.
+//
+// We bypass React's reconciliation for this subtree by:
+//   1. memoizing the component (parent re-renders don't enter this subtree),
+//   2. injecting the embed HTML imperatively in a layout effect so React
+//      never owns the iframe element. After the layout effect runs once,
+//      React only sees an empty `<div>` and leaves it alone.
+const MediaEmbed = memo(function MediaEmbed({ html }) {
+  const hostRef = useRef(null);
+  useLayoutEffect(() => {
+    const host = hostRef.current;
+    if (!host) return undefined;
+    host.innerHTML = html;
+    return () => {
+      host.innerHTML = "";
+    };
+  }, [html]);
+  return <div ref={hostRef} />;
+});
+
+const FOCUS_TRAP_OPTIONS = { allowOutsideClick: true };
 
 function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleActive, active, order }) {
   const { replace } = useHistory();
@@ -46,11 +71,7 @@ function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleAc
   if (!active) return null;
 
   return (
-    <FocusTrap
-      focusTrapOptions={{
-        allowOutsideClick: true,
-      }}
-    >
+    <FocusTrap focusTrapOptions={FOCUS_TRAP_OPTIONS}>
       <section
         className={`${
           fullScreen
@@ -79,10 +100,9 @@ function PointOverlay({ point: { name, subtitles, mediaEmbedCode, id }, toggleAc
           </div>
         </div>
         {mediaEmbedCode && (
-          <div
-            className={`${fullScreen ? "fixed left-1 top-1/4 right-1 transform -translate-y-1/4" : ""}`}
-            dangerouslySetInnerHTML={{ __html: mediaEmbedCode }}
-          />
+          <div className={fullScreen ? "fixed left-1 top-1/4 right-1 transform -translate-y-1/4" : ""}>
+            <MediaEmbed html={mediaEmbedCode} />
+          </div>
         )}
         {fullScreen && <p className="ml-2">{subtitles}</p>}
       </section>
