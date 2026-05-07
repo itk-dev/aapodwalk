@@ -1,5 +1,5 @@
 import { React, useState, useEffect, useMemo, useContext, useRef } from "react";
-import { getBearingBetweenCoordinates, isDeviceIOS } from "../../util/helper";
+import { getBearingBetweenCoordinates } from "../../util/helper";
 import LatLongContext from "../../context/latitude-longitude-context";
 
 // Renders a small arrow that rotates to point from the user's current location toward
@@ -15,6 +15,7 @@ import LatLongContext from "../../context/latitude-longitude-context";
 //   be wrong; we accept that limitation in v1.
 
 const PERMISSION_STORAGE_KEY = "device-orientation-permission";
+const PERMISSION_EVENT = "device-orientation-permission-changed";
 
 function getInitialPermissionState() {
   if (typeof window === "undefined" || !window.DeviceOrientationEvent) {
@@ -41,6 +42,45 @@ function readHeading(event) {
   return null;
 }
 
+// Hook for pages that want the device-orientation permission requested
+// automatically on the user's first gesture. iOS Safari rejects
+// `DeviceOrientationEvent.requestPermission()` outside a trusted gesture,
+// so we attach a one-shot capture-phase click listener and trigger the
+// request from there. Other platforms either don't need permission
+// (Android Chrome) or don't support orientation events at all — both
+// cases short-circuit immediately.
+export function useDeviceOrientationAutoPermission() {
+  useEffect(() => {
+    if (typeof window === "undefined" || !window.DeviceOrientationEvent) return undefined;
+    if (typeof DeviceOrientationEvent.requestPermission !== "function") return undefined;
+    const cached = sessionStorage.getItem(PERMISSION_STORAGE_KEY);
+    if (cached === "granted" || cached === "denied") return undefined;
+
+    let triggered = false;
+    async function handler() {
+      if (triggered) return;
+      triggered = true;
+      window.removeEventListener("click", handler, true);
+      window.removeEventListener("touchend", handler, true);
+      try {
+        const result = await DeviceOrientationEvent.requestPermission();
+        const next = result === "granted" ? "granted" : "denied";
+        sessionStorage.setItem(PERMISSION_STORAGE_KEY, next);
+        window.dispatchEvent(new CustomEvent(PERMISSION_EVENT, { detail: next }));
+      } catch {
+        sessionStorage.setItem(PERMISSION_STORAGE_KEY, "denied");
+        window.dispatchEvent(new CustomEvent(PERMISSION_EVENT, { detail: "denied" }));
+      }
+    }
+    window.addEventListener("click", handler, true);
+    window.addEventListener("touchend", handler, true);
+    return () => {
+      window.removeEventListener("click", handler, true);
+      window.removeEventListener("touchend", handler, true);
+    };
+  }, []);
+}
+
 function DirectionArrow({ latitude, longitude, classes }) {
   const { lat, long } = useContext(LatLongContext);
   const [compass, setCompass] = useState(null);
@@ -53,6 +93,19 @@ function DirectionArrow({ latitude, longitude, classes }) {
     latitude,
     longitude,
   ]);
+
+  // Pick up permission resolution dispatched by useDeviceOrientationAutoPermission
+  // (or any other code path that updates the cache), so the arrow starts working
+  // mid-session without needing a remount.
+  useEffect(() => {
+    function onChange(e) {
+      if (e.detail === "granted" || e.detail === "denied") {
+        setPermissionState(e.detail);
+      }
+    }
+    window.addEventListener(PERMISSION_EVENT, onChange);
+    return () => window.removeEventListener(PERMISSION_EVENT, onChange);
+  }, []);
 
   useEffect(() => {
     if (permissionState !== "granted") return undefined;
@@ -81,37 +134,8 @@ function DirectionArrow({ latitude, longitude, classes }) {
     };
   }, [permissionState]);
 
-  async function requestPermission() {
-    try {
-      const result = await DeviceOrientationEvent.requestPermission();
-      const next = result === "granted" ? "granted" : "denied";
-      sessionStorage.setItem(PERMISSION_STORAGE_KEY, next);
-      setPermissionState(next);
-    } catch {
-      sessionStorage.setItem(PERMISSION_STORAGE_KEY, "denied");
-      setPermissionState("denied");
-    }
-  }
-
-  if (permissionState === "unsupported" || permissionState === "denied") {
+  if (permissionState !== "granted") {
     return null;
-  }
-
-  if (permissionState === "unknown") {
-    // iOS, never asked. Tap to enable. Use a static compass icon so the slot is meaningful
-    // before permission is granted.
-    return (
-      <button
-        type="button"
-        onClick={requestPermission}
-        className={classes}
-        aria-label={`Vis retning til ${isDeviceIOS ? "punktet" : "næste punkt"}`}
-      >
-        <svg viewBox="0 0 32 32" aria-hidden="true" className="w-full h-full" fill="currentColor">
-          <path d="M16 2 L22 18 L16 14 L10 18 Z" />
-        </svg>
-      </button>
-    );
   }
 
   if (bearing === null || compass === null) {

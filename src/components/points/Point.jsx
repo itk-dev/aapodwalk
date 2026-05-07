@@ -85,6 +85,9 @@ function Point({ point, order }) {
 
   return (
     <div id={id} className="relative">
+      {isNextPointToUnlock() && (
+        <p className="text-center text-sm font-bold text-emerald-400 dark:text-emerald-600 -mb-1">Næste punkt</p>
+      )}
       <button
         type="button"
         onClick={() => setActivePointId(id)}

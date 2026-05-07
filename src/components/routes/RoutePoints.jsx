@@ -3,11 +3,13 @@ import { useParams } from "react-router-dom";
 import useFetch from "../../util/useFetch";
 import RouteContext from "../../context/RouteContext";
 import PointsList from "../points/PointsList";
+import { useDeviceOrientationAutoPermission } from "../points/DirectionArrow";
 
 function RoutePoints() {
   const { id } = useParams();
   const { selectedRoute, setSelectedRoute, setListOfUnlocked } = useContext(RouteContext);
   const [dataFetched, setDataFetched] = useState(false);
+  useDeviceOrientationAutoPermission();
   function isRouteAlreadySet() {
     return selectedRoute === null && dataFetched;
   }
