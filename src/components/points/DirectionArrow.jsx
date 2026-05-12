@@ -42,18 +42,10 @@ function readHeading(event) {
   return null;
 }
 
-// Call this from inside a real click/tap handler (e.g. the "Start ruten" button).
-// iOS Safari only honours `DeviceOrientationEvent.requestPermission()` when it is
-// invoked synchronously from a trusted user gesture — async waits or window-level
-// capture-phase listeners are unreliable. Calling this directly inside a button
-// onClick is the safe pattern. No-op on platforms that don't need permission.
-export function requestDeviceOrientationPermissionIfNeeded() {
-  if (typeof window === "undefined" || !window.DeviceOrientationEvent) return;
-  if (typeof DeviceOrientationEvent.requestPermission !== "function") return;
-  const cached = sessionStorage.getItem(PERMISSION_STORAGE_KEY);
-  if (cached === "granted" || cached === "denied") return;
-
-  // Don't await — we must call requestPermission synchronously inside the gesture.
+// Shared core: synchronously fires the platform permission request. Must run
+// inside a real user-gesture handler (click/tap) — iOS Safari rejects any
+// async-deferred call. We intentionally do NOT await the promise here.
+function fireRequest() {
   DeviceOrientationEvent.requestPermission()
     .then((result) => {
       const next = result === "granted" ? "granted" : "denied";
@@ -64,6 +56,31 @@ export function requestDeviceOrientationPermissionIfNeeded() {
       sessionStorage.setItem(PERMISSION_STORAGE_KEY, "denied");
       window.dispatchEvent(new CustomEvent(PERMISSION_EVENT, { detail: "denied" }));
     });
+}
+
+// Auto-trigger flavour — used by automatic flows (Start ruten click,
+// useDeviceOrientationAutoPermission). Skips entirely if we've already
+// recorded a decision (granted OR denied) so the prompt doesn't pop up
+// every time the user navigates around the app.
+export function requestDeviceOrientationPermissionIfNeeded() {
+  if (typeof window === "undefined" || !window.DeviceOrientationEvent) return;
+  if (typeof DeviceOrientationEvent.requestPermission !== "function") return;
+  const cached = sessionStorage.getItem(PERMISSION_STORAGE_KEY);
+  if (cached === "granted" || cached === "denied") return;
+  fireRequest();
+}
+
+// Manual-retry flavour — used when the user explicitly opts in again (e.g.
+// taps the distance column on a POI card after dismissing the prompt). Only
+// short-circuits when permission is already granted; otherwise it re-asks
+// regardless of any previously cached denial, so the user can change their
+// mind without reloading the page.
+export function requestDeviceOrientationPermission() {
+  if (typeof window === "undefined" || !window.DeviceOrientationEvent) return;
+  if (typeof DeviceOrientationEvent.requestPermission !== "function") return;
+  const cached = sessionStorage.getItem(PERMISSION_STORAGE_KEY);
+  if (cached === "granted") return;
+  fireRequest();
 }
 
 // Fallback hook for pages reached via deep link (skipping the "Start ruten" button).

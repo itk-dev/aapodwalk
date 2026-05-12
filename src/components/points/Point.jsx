@@ -1,4 +1,5 @@
 import { React, useState, useEffect, useContext, useRef } from "react";
+import { flushSync } from "react-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -9,7 +10,7 @@ import LatLongContext from "../../context/latitude-longitude-context";
 import PermissionContext from "../../context/permission-context";
 import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 import DistanceComponent from "./DistanceComponent";
-import DirectionArrow from "./DirectionArrow";
+import DirectionArrow, { requestDeviceOrientationPermission } from "./DirectionArrow";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
 
@@ -94,6 +95,11 @@ function Point({ point, order }) {
   }
 
   function handleDistanceClick() {
+    // Every tap re-requests device-orientation permission (no-op once granted)
+    // so the user can re-enable the direction arrow after dismissing the iOS
+    // prompt. In dev builds, the same taps also count toward the 10-tap
+    // proximity simulator below.
+    requestDeviceOrientationPermission();
     if (!import.meta.env.DEV) return;
     distanceClickCount.current += 1;
     if (distanceClickCount.current >= 10) {
@@ -130,10 +136,14 @@ function Point({ point, order }) {
   }
 
   function isLocked() {
-    // During the unlock animation the POI shouldn't display the lock icon
-    // (it's mid-celebration). Otherwise the existing rules apply.
+    // Already unlocked points stay unlocked, even if we lose the user's location.
+    if (unlocked) return false;
+    // During the unlock animation the POI shouldn't display the lock icon.
     if (unlocking) return false;
-    return (!unlocked && nextUnlockablePointId !== id) || !(lat && long);
+    // Not yet unlocked and not the next in line: locked.
+    if (nextUnlockablePointId !== id) return true;
+    // Next in line, but waiting on geolocation before we can render distance.
+    return !(lat && long);
   }
 
   function getAriaLabelForButton() {
@@ -150,7 +160,12 @@ function Point({ point, order }) {
     <div id={id} className="relative">
       <button
         type="button"
-        onClick={() => setActivePointId(id)}
+        onClick={() =>
+          // flushSync forces React to commit synchronously inside the click
+          // handler so PointOverlay mounts and the audio's callback ref fires
+          // play() while iOS Safari's user-gesture token is still valid.
+          flushSync(() => setActivePointId(id))
+        }
         className={`relative text-left w-full ${unlocked || unlocking ? "" : "pointer-events-none"}`}
         aria-label={getAriaLabelForButton()}
       >
@@ -229,9 +244,11 @@ function Point({ point, order }) {
               <span className="sr-only">Tag stilling til tilladelser i forhold til kortet igen</span>
             </button>
           )}
-          {/* Distance column. In dev builds, tapping it 10 times unlocks the
-              POI without needing real proximity — see `handleDistanceClick`. */}
-          <button type="button" onClick={handleDistanceClick} className="flex flex-col items-center cursor-pointer">
+          <button
+            type="button"
+            onClick={handleDistanceClick}
+            className="flex flex-col items-center cursor-pointer"
+          >
             <div className="h-12 flex flex-col items-center justify-center">
               <DirectionArrow
                 latitude={latitude}
