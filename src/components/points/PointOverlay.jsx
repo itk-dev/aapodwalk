@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useCallback } from "react";
+import { React, useState, useEffect, useCallback, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
 import OrderComponent from "./OrderComponent";
@@ -100,11 +100,38 @@ function PointOverlay({
     }
   }
 
-  function handleSeek(e) {
+  // Pointer-driven scrubbing. setPointerCapture keeps the timeline element
+  // receiving pointermove events even if the pointer drifts outside its
+  // bounds, so the user can drag past the bar edge without losing the grab.
+  // A ref (not state) tracks the drag flag — we don't want a re-render per
+  // pointermove tick.
+  const isDraggingRef = useRef(false);
+
+  function seekToClientX(timelineEl, clientX) {
     if (!audioEl || !duration) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const ratio = Math.min(Math.max((e.clientX - rect.left) / rect.width, 0), 1);
+    const rect = timelineEl.getBoundingClientRect();
+    const ratio = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
     audioEl.currentTime = duration * ratio;
+  }
+
+  function onTimelinePointerDown(e) {
+    if (!audioEl || !duration) return;
+    e.currentTarget.setPointerCapture(e.pointerId);
+    isDraggingRef.current = true;
+    seekToClientX(e.currentTarget, e.clientX);
+  }
+
+  function onTimelinePointerMove(e) {
+    if (!isDraggingRef.current) return;
+    seekToClientX(e.currentTarget, e.clientX);
+  }
+
+  function onTimelinePointerUp(e) {
+    if (!isDraggingRef.current) return;
+    if (e.currentTarget.hasPointerCapture(e.pointerId)) {
+      e.currentTarget.releasePointerCapture(e.pointerId);
+    }
+    isDraggingRef.current = false;
   }
 
   function resetSearchParams() {
@@ -241,17 +268,35 @@ function PointOverlay({
               </button>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-bold truncate">{name}</div>
-                <button
-                  type="button"
-                  onClick={handleSeek}
-                  className="block w-full h-1 rounded bg-zinc-300 dark:bg-zinc-700 relative mt-1"
+                {/* Timeline. The outer div is the interactive area (taller
+                    than the visible track for an easier tap/drag target) and
+                    handles pointer events. The dot is rendered with
+                    pointer-events-none so the user grabs the timeline itself,
+                    not the dot — that way pointer capture stays on the
+                    timeline element through the whole drag. */}
+                <div
+                  role="slider"
+                  tabIndex={0}
                   aria-label="Spol i lyden"
+                  aria-valuemin={0}
+                  aria-valuemax={Math.floor(duration) || 0}
+                  aria-valuenow={Math.floor(currentTime) || 0}
+                  onPointerDown={onTimelinePointerDown}
+                  onPointerMove={onTimelinePointerMove}
+                  onPointerUp={onTimelinePointerUp}
+                  onPointerCancel={onTimelinePointerUp}
+                  className="relative w-full h-4 mt-1 cursor-pointer touch-none flex items-center"
                 >
+                  <span className="absolute left-0 right-0 h-1 rounded bg-zinc-300 dark:bg-zinc-700" />
                   <span
-                    className="absolute left-0 top-0 bottom-0 bg-emerald-400 dark:bg-emerald-600 rounded"
+                    className="absolute left-0 h-1 rounded bg-emerald-400 dark:bg-emerald-600"
                     style={{ width: duration ? `${(currentTime / duration) * 100}%` : "0%" }}
                   />
-                </button>
+                  <span
+                    className="absolute w-3 h-3 rounded-full bg-emerald-400 dark:bg-emerald-600 -translate-x-1/2 pointer-events-none"
+                    style={{ left: duration ? `${(currentTime / duration) * 100}%` : "0%" }}
+                  />
+                </div>
                 <div className="text-xs mt-1 text-zinc-500 dark:text-zinc-400">
                   {formatTime(currentTime)} / {formatTime(duration)}
                 </div>
