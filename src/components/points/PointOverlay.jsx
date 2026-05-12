@@ -40,6 +40,9 @@ function PointOverlay({
   // any re-mount, and `isPlaying` / `currentTime` never updated.
   const [audioEl, setAudioEl] = useState(null);
   const [isPlaying, setIsPlaying] = useState(false);
+  // True while the audio is fetching/buffering and not yet playing — used to
+  // swap the play/pause icon for a spinner so the UI doesn't look stuck.
+  const [isLoading, setIsLoading] = useState(false);
   const [currentTime, setCurrentTime] = useState(0);
   const [duration, setDuration] = useState(0);
 
@@ -60,6 +63,10 @@ function PointOverlay({
   const setAudioRef = useCallback(
     (el) => {
       if (el) {
+        // Show the loading spinner from the moment the audio element mounts —
+        // until the `playing` event fires there's nothing audible to confirm
+        // the click did anything.
+        setIsLoading(true);
         // Restore any previously saved progress for this POI before starting
         // playback. Browsers queue the seek until enough data is loaded, so
         // setting currentTime on a freshly mounted element with `src` set is
@@ -69,7 +76,9 @@ function PointOverlay({
           el.currentTime = saved;
         }
         el.play().catch(() => {
-          /* Rejection is harmless — the play button is the visible fallback. */
+          // Rejection is harmless — the play button is the visible fallback,
+          // but clear the spinner since playback never started.
+          setIsLoading(false);
         });
       }
       setAudioEl(el);
@@ -81,9 +90,19 @@ function PointOverlay({
     if (!audioEl) return undefined;
     const storageKey = getProgressStorageKey(id);
     const onPlay = () => setIsPlaying(true);
-    const onPlaying = () => setIsPlaying(true);
+    const onPlaying = () => {
+      setIsPlaying(true);
+      // We're now actually outputting audio — hide the spinner.
+      setIsLoading(false);
+    };
+    const onWaiting = () => {
+      // The browser ran out of buffered data mid-playback; show the spinner
+      // again until enough is loaded for the next `playing` event.
+      setIsLoading(true);
+    };
     const onPause = () => {
       setIsPlaying(false);
+      setIsLoading(false);
       // Save the current position when the user pauses so closing the player
       // (or letting it auto-close on navigation) preserves it.
       if (Number.isFinite(audioEl.currentTime) && audioEl.currentTime > 0) {
@@ -92,6 +111,7 @@ function PointOverlay({
     };
     const onEnded = () => {
       setIsPlaying(false);
+      setIsLoading(false);
       // Clear the saved position when playback completes — reopening the POI
       // should start over rather than resume at the very end.
       localStorage.removeItem(storageKey);
@@ -100,6 +120,7 @@ function PointOverlay({
     const onMeta = () => setDuration(audioEl.duration || 0);
     audioEl.addEventListener("play", onPlay);
     audioEl.addEventListener("playing", onPlaying);
+    audioEl.addEventListener("waiting", onWaiting);
     audioEl.addEventListener("pause", onPause);
     audioEl.addEventListener("ended", onEnded);
     audioEl.addEventListener("timeupdate", onTime);
@@ -124,6 +145,7 @@ function PointOverlay({
       }
       audioEl.removeEventListener("play", onPlay);
       audioEl.removeEventListener("playing", onPlaying);
+      audioEl.removeEventListener("waiting", onWaiting);
       audioEl.removeEventListener("pause", onPause);
       audioEl.removeEventListener("ended", onEnded);
       audioEl.removeEventListener("timeupdate", onTime);
@@ -304,9 +326,16 @@ function PointOverlay({
                 type="button"
                 onClick={togglePlay}
                 className="shrink-0 w-10 h-10 rounded-full bg-white dark:bg-emerald-800 dark:text-white flex items-center justify-center text-sm"
-                aria-label={isPlaying ? "Pause" : "Afspil"}
+                aria-label={isLoading ? "Indlæser" : isPlaying ? "Pause" : "Afspil"}
               >
-                <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+                {isLoading ? (
+                  <span
+                    className="block h-5 w-5 rounded-full border-2 border-current border-t-transparent animate-spin"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <FontAwesomeIcon icon={isPlaying ? faPause : faPlay} />
+                )}
               </button>
               <div className="flex-1 min-w-0">
                 <div className="text-sm font-bold truncate">{name}</div>
@@ -330,14 +359,22 @@ function PointOverlay({
                   className="relative w-full h-4 mt-1 cursor-pointer touch-none flex items-center"
                 >
                   <span className="absolute left-0 right-0 h-1 rounded bg-zinc-300 dark:bg-zinc-700" />
-                  <span
-                    className="absolute left-0 h-1 rounded bg-emerald-400 dark:bg-emerald-600"
-                    style={{ width: duration ? `${(currentTime / duration) * 100}%` : "0%" }}
-                  />
-                  <span
-                    className="absolute w-3 h-3 rounded-full bg-emerald-400 dark:bg-emerald-600 -translate-x-1/2 pointer-events-none"
-                    style={{ left: duration ? `${(currentTime / duration) * 100}%` : "0%" }}
-                  />
+                  {/* Fill + dot are hidden while the audio is still loading
+                      so they don't visibly jump from 0:00 to the resumed
+                      position the moment metadata arrives. They appear when
+                      playback actually starts. */}
+                  {!isLoading && (
+                    <>
+                      <span
+                        className="absolute left-0 h-1 rounded bg-emerald-400 dark:bg-emerald-600"
+                        style={{ width: duration ? `${(currentTime / duration) * 100}%` : "0%" }}
+                      />
+                      <span
+                        className="absolute w-3 h-3 rounded-full bg-emerald-400 dark:bg-emerald-600 -translate-x-1/2 pointer-events-none"
+                        style={{ left: duration ? `${(currentTime / duration) * 100}%` : "0%" }}
+                      />
+                    </>
+                  )}
                 </div>
                 <div className="text-xs mt-1 text-zinc-500 dark:text-zinc-400">
                   {formatTime(currentTime)} / {formatTime(duration)}
