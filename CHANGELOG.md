@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-82](https://github.com/itk-dev/aapodwalk/pull/82)
+  - Added html5 player for playing media.
 - [PR-81](https://github.com/itk-dev/aapodwalk/pull/81)
   - Direction arrow, general UI adjustments
   - Replace skeleton loaders with a branded loading overlay, cache fetched data,
