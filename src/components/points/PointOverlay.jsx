@@ -10,6 +10,12 @@ import MediaPlayer, { isDirectMediaUrl } from "./MediaPlayer";
 
 const FOCUS_TRAP_OPTIONS = { allowOutsideClick: true };
 
+// localStorage key for per-POI playback resume. Each POI gets its own slot
+// so listening progress on one doesn't bleed into another.
+function getProgressStorageKey(pointId) {
+  return `media-progress-${pointId}`;
+}
+
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) return "0:00";
   const m = Math.floor(seconds / 60);
@@ -51,21 +57,45 @@ function PointOverlay({
   // PointOverlay returns null) removes it, re-opening adds a fresh one.
   // So no gate is needed — every audio-mount is an open, and every open
   // should auto-play.
-  const setAudioRef = useCallback((el) => {
-    if (el) {
-      el.play().catch(() => {
-        /* Rejection is harmless — the play button is the visible fallback. */
-      });
-    }
-    setAudioEl(el);
-  }, []);
+  const setAudioRef = useCallback(
+    (el) => {
+      if (el) {
+        // Restore any previously saved progress for this POI before starting
+        // playback. Browsers queue the seek until enough data is loaded, so
+        // setting currentTime on a freshly mounted element with `src` set is
+        // safe even though metadata may not have loaded yet.
+        const saved = parseFloat(localStorage.getItem(getProgressStorageKey(id)) || "0");
+        if (Number.isFinite(saved) && saved > 0) {
+          el.currentTime = saved;
+        }
+        el.play().catch(() => {
+          /* Rejection is harmless — the play button is the visible fallback. */
+        });
+      }
+      setAudioEl(el);
+    },
+    [id],
+  );
 
   useEffect(() => {
     if (!audioEl) return undefined;
+    const storageKey = getProgressStorageKey(id);
     const onPlay = () => setIsPlaying(true);
     const onPlaying = () => setIsPlaying(true);
-    const onPause = () => setIsPlaying(false);
-    const onEnded = () => setIsPlaying(false);
+    const onPause = () => {
+      setIsPlaying(false);
+      // Save the current position when the user pauses so closing the player
+      // (or letting it auto-close on navigation) preserves it.
+      if (Number.isFinite(audioEl.currentTime) && audioEl.currentTime > 0) {
+        localStorage.setItem(storageKey, String(audioEl.currentTime));
+      }
+    };
+    const onEnded = () => {
+      setIsPlaying(false);
+      // Clear the saved position when playback completes — reopening the POI
+      // should start over rather than resume at the very end.
+      localStorage.removeItem(storageKey);
+    };
     const onTime = () => setCurrentTime(audioEl.currentTime);
     const onMeta = () => setDuration(audioEl.duration || 0);
     audioEl.addEventListener("play", onPlay);
@@ -80,6 +110,18 @@ function PointOverlay({
     setCurrentTime(audioEl.currentTime || 0);
     setDuration(audioEl.duration || 0);
     return () => {
+      // Save the latest position on unmount (close button, navigation away,
+      // POI switch). If we're within the last second of the track, treat
+      // that as completed and clear the saved progress instead.
+      const t = audioEl.currentTime;
+      const d = audioEl.duration;
+      if (Number.isFinite(t) && t > 0) {
+        if (Number.isFinite(d) && d > 0 && t >= d - 1) {
+          localStorage.removeItem(storageKey);
+        } else {
+          localStorage.setItem(storageKey, String(t));
+        }
+      }
       audioEl.removeEventListener("play", onPlay);
       audioEl.removeEventListener("playing", onPlaying);
       audioEl.removeEventListener("pause", onPause);
@@ -87,7 +129,7 @@ function PointOverlay({
       audioEl.removeEventListener("timeupdate", onTime);
       audioEl.removeEventListener("loadedmetadata", onMeta);
     };
-  }, [audioEl]);
+  }, [audioEl, id]);
 
   function togglePlay() {
     if (!audioEl) return;
