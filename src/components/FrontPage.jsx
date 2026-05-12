@@ -1,11 +1,11 @@
 import { React, useState, useContext, useEffect, useMemo } from "react";
+import SelectedTagContext from "../context/SelectedTagContext";
+import RouteContext from "../context/RouteContext";
 import MapConsentBanner from "./MapConsentBanner";
 import LandingPage from "./LandingPage";
 import MessageComponent from "./MessageComponent";
 import TagFilterList from "./tags/TagFilterList";
-import SelectedTagContext from "../context/SelectedTagContext";
 import RouteList from "./routes/RouteList";
-import RouteContext from "../context/RouteContext";
 
 function FrontPage() {
   const [selectedTag, setSelectedTag] = useState(null);

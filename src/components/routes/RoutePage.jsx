@@ -1,12 +1,12 @@
 import { React, useEffect, useState, useContext } from "react";
 import { Link, useParams } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import PermissionContext from "../../context/permission-context";
 import RouteContext from "../../context/RouteContext";
 import useFetch from "../../util/useFetch";
 import MapWrapper from "../map/MapWrapper";
 import TagList from "../tags/TagList";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlayCircle } from "@fortawesome/free-solid-svg-icons";
 import { requestDeviceOrientationPermissionIfNeeded } from "../points/DirectionArrow";
 
 function RoutePage() {

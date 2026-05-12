@@ -5,13 +5,13 @@ import { Link } from "react-router-dom";
 import Image from "../Image";
 import RouteContext from "../../context/RouteContext";
 import Footprints from "../../icons/footprints.svg?url";
+import LatLongContext from "../../context/latitude-longitude-context";
+import PermissionContext from "../../context/permission-context";
+import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 import DistanceComponent from "./DistanceComponent";
 import DirectionArrow from "./DirectionArrow";
 import OrderComponent from "./OrderComponent";
 import PointOverlay from "./PointOverlay";
-import LatLongContext from "../../context/latitude-longitude-context";
-import PermissionContext from "../../context/permission-context";
-import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 
 function Point({ point, order }) {
   const { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 } = point;
@@ -26,11 +26,13 @@ function Point({ point, order }) {
   // buttons fade out and the card crossfades to its unlocked styling during
   // this window, then `unlocked` flips to true and `unlocking` back to false.
   const [unlocking, setUnlocking] = useState(false);
-  // Anything that arrives within `INITIAL_LOAD_WINDOW_MS` of mount is treated
-  // as the localStorage rehydration of already-unlocked POIs and skipped past
-  // the animation (otherwise every previously-unlocked card would animate on
-  // every page load, which would be a lot of motion).
-  const mountTimeRef = useRef(Date.now());
+  // Anything that arrives within ~1s of mount is treated as the localStorage
+  // rehydration of already-unlocked POIs and skipped past the animation
+  // (otherwise every previously-unlocked card would animate on every page
+  // load, which would be a lot of motion). useState's lazy initializer is
+  // the React-blessed place to call impure functions like Date.now() — it
+  // runs once during initial render, not on subsequent renders.
+  const [mountTime] = useState(() => Date.now());
   const distanceClickCount = useRef(0);
   const isActive = activePointId === id;
 
@@ -47,7 +49,7 @@ function Point({ point, order }) {
   useEffect(() => {
     if (!listOfUnlocked) return;
     const shouldBeUnlocked = listOfUnlocked.includes(id);
-    const isInitialLoad = Date.now() - mountTimeRef.current < 1000;
+    const isInitialLoad = Date.now() - mountTime < 1000;
 
     if (shouldBeUnlocked && !unlocked && !unlocking) {
       if (isInitialLoad) {

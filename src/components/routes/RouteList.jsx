@@ -1,11 +1,11 @@
 import { React, useEffect, useState, useContext } from "react";
 import useFetch from "../../util/useFetch";
-import Route from "./Route";
 import SelectedTagContext from "../../context/SelectedTagContext";
-import RoutesLoading from "./RoutesLoading";
 import { sortByProximity, routesFilteredByTag } from "../../util/helper";
 import LatLongContext from "../../context/latitude-longitude-context";
 import ErrorContext from "../../context/MessageContext";
+import RoutesLoading from "./RoutesLoading";
+import Route from "./Route";
 
 function RouteList() {
   const { selectedTag } = useContext(SelectedTagContext);

@@ -1,10 +1,10 @@
 import { React, useContext } from "react";
-import Logo from "../icons/logo.svg?url";
-import BackButton from "./BackButton";
 import { Link, useLocation } from "react-router-dom";
 import { faQuestion } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Logo from "../icons/logo.svg?url";
 import RouteContext from "../context/RouteContext";
+import BackButton from "./BackButton";
 
 const Navbar = () => {
   const { pathname } = useLocation();

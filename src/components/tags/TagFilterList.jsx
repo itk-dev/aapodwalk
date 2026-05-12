@@ -1,8 +1,8 @@
 import { React, useEffect, useState, useContext } from "react";
 import useFetch from "../../util/useFetch";
+import ErrorContext from "../../context/MessageContext";
 import Tag from "./Tag";
 import TagsLoading from "./TagsLoading";
-import ErrorContext from "../../context/MessageContext";
 
 function TagFilterList() {
   const { setErrorText, setError } = useContext(ErrorContext);

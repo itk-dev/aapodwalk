@@ -1,6 +1,6 @@
 import { React, useContext, useEffect } from "react";
-import Point from "./Point";
 import RouteContext from "../../context/RouteContext";
+import Point from "./Point";
 
 function PointsList({ points }) {
   const { listOfUnlocked, setNextUnlockablePointId } = useContext(RouteContext);

@@ -1,10 +1,9 @@
 import { React, useState, useEffect, useLayoutEffect, useRef, memo } from "react";
-import OrderComponent from "./OrderComponent";
-import CloseButton from "../CloseButton";
 import { FocusTrap } from "focus-trap-react";
-import { useHistory } from "react-router-dom";
-import { useLocation } from "react-router-dom";
+import { useHistory , useLocation } from "react-router-dom";
+import CloseButton from "../CloseButton";
 import UpDownButton from "../UpDownButton";
+import OrderComponent from "./OrderComponent";
 
 // The videotool iframe must NOT be re-rendered or replaced by React after it
 // first mounts — every reconciliation pass on the host element is a chance

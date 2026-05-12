@@ -1,8 +1,8 @@
 import { useState, useContext } from "react";
-import MapComponent from "./MapComponent";
+import { FocusTrap } from "focus-trap-react";
 import PermissionContext from "../../context/permission-context";
 import CloseButton from "../CloseButton";
-import { FocusTrap } from "focus-trap-react";
+import MapComponent from "./MapComponent";
 import "./map-wrapper.css";
 
 function MapWrapper({ mapData, additionalClass = "", focusable, withIndex }) {
