@@ -1,6 +1,6 @@
 import { React, useState, useEffect, useLayoutEffect, useRef, memo } from "react";
 import { FocusTrap } from "focus-trap-react";
-import { useHistory , useLocation } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import CloseButton from "../CloseButton";
 import UpDownButton from "../UpDownButton";
 import OrderComponent from "./OrderComponent";
