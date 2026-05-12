@@ -7,6 +7,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- [PR-81](https://github.com/itk-dev/aapodwalk/pull/81)
+  - Direction arrow, general UI adjustments
 - Prefer device default maps app for navigation button (geo: URI on Android, Apple Maps on iOS, Google Maps fallback)
 - Add navigation button on next-to-unlock point overlay (opens native maps app)
 - Add descriptive labels below point overlay icons (navigation, map, distance)
