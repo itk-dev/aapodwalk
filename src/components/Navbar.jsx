@@ -29,9 +29,7 @@ const Navbar = () => {
           <span className="sr-only">FAQ</span>
         </Link>
       </div>
-      {showRouteTitle && (
-        <h1 className="text-center text-base font-bold truncate px-14 mt-2">{selectedRoute.title}</h1>
-      )}
+      {showRouteTitle && <h1 className="text-center text-base font-bold truncate px-14 mt-2">{selectedRoute.title}</h1>}
     </nav>
   );
 };

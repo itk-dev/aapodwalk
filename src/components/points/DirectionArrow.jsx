@@ -100,12 +100,10 @@ function DirectionArrow({ latitude, longitude, classes }) {
   const [permissionState, setPermissionState] = useState(getInitialPermissionState);
   const sawUsableHeading = useRef(false);
 
-  const bearing = useMemo(() => getBearingBetweenCoordinates(lat, long, latitude, longitude), [
-    lat,
-    long,
-    latitude,
-    longitude,
-  ]);
+  const bearing = useMemo(
+    () => getBearingBetweenCoordinates(lat, long, latitude, longitude),
+    [lat, long, latitude, longitude],
+  );
 
   // Pick up permission resolution dispatched by useDeviceOrientationAutoPermission
   // (or any other code path that updates the cache), so the arrow starts working

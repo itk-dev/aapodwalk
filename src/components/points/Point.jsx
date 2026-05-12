@@ -15,14 +15,8 @@ import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 
 function Point({ point, order }) {
   const { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 } = point;
-  const {
-    nextUnlockablePointId,
-    listOfUnlocked,
-    setListOfUnlocked,
-    activePointId,
-    setActivePointId,
-    selectedRoute,
-  } = useContext(RouteContext);
+  const { nextUnlockablePointId, listOfUnlocked, setListOfUnlocked, activePointId, setActivePointId, selectedRoute } =
+    useContext(RouteContext);
   const { openStreetMapConsent, setOpenStreetMapConsent } = useContext(PermissionContext);
   const { lat, long } = useContext(LatLongContext);
   const [hasScrolled, setHasScrolled] = useState(false);
@@ -235,11 +229,7 @@ function Point({ point, order }) {
           )}
           {/* Distance column. In dev builds, tapping it 10 times unlocks the
               POI without needing real proximity — see `handleDistanceClick`. */}
-          <button
-            type="button"
-            onClick={handleDistanceClick}
-            className="flex flex-col items-center cursor-pointer"
-          >
+          <button type="button" onClick={handleDistanceClick} className="flex flex-col items-center cursor-pointer">
             <div className="h-12 flex flex-col items-center justify-center">
               <DirectionArrow
                 latitude={latitude}

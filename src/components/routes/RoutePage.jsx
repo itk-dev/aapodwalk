@@ -61,11 +61,7 @@ function RoutePage() {
           )}
 
           {!openStreetMapConsent && !focusOnText && (
-            <button
-              type="button"
-              onClick={() => setFocusOnText(true)}
-              className="opacity-35 mb-3 text-center shrink-0"
-            >
+            <button type="button" onClick={() => setFocusOnText(true)} className="opacity-35 mb-3 text-center shrink-0">
               {consentText}
             </button>
           )}
