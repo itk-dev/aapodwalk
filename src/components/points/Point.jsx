@@ -244,11 +244,7 @@ function Point({ point, order }) {
               <span className="sr-only">Tag stilling til tilladelser i forhold til kortet igen</span>
             </button>
           )}
-          <button
-            type="button"
-            onClick={handleDistanceClick}
-            className="flex flex-col items-center cursor-pointer"
-          >
+          <button type="button" onClick={handleDistanceClick} className="flex flex-col items-center cursor-pointer">
             <div className="h-12 flex flex-col items-center justify-center">
               <DirectionArrow
                 latitude={latitude}

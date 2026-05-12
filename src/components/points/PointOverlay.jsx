@@ -1,11 +1,11 @@
 import { React, useState, useEffect, useCallback, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPlay, faPause } from "@fortawesome/free-solid-svg-icons";
-import OrderComponent from "./OrderComponent";
-import CloseButton from "../CloseButton";
 import { FocusTrap } from "focus-trap-react";
 import { useHistory, useLocation } from "react-router-dom";
+import CloseButton from "../CloseButton";
 import UpDownButton from "../UpDownButton";
+import OrderComponent from "./OrderComponent";
 import MediaPlayer, { isDirectMediaUrl } from "./MediaPlayer";
 
 const FOCUS_TRAP_OPTIONS = { allowOutsideClick: true };
@@ -19,7 +19,9 @@ function getProgressStorageKey(pointId) {
 function formatTime(seconds) {
   if (!Number.isFinite(seconds)) return "0:00";
   const m = Math.floor(seconds / 60);
-  const s = Math.floor(seconds % 60).toString().padStart(2, "0");
+  const s = Math.floor(seconds % 60)
+    .toString()
+    .padStart(2, "0");
   return `${m}:${s}`;
 }
 
@@ -175,6 +177,7 @@ function PointOverlay({
     if (!audioEl || !duration) return;
     const rect = timelineEl.getBoundingClientRect();
     const ratio = Math.min(Math.max((clientX - rect.left) / rect.width, 0), 1);
+    // eslint-disable-next-line react-hooks/immutability -- audioEl is a DOM element; setting currentTime is the standard Media API seek call.
     audioEl.currentTime = duration * ratio;
   }
 
@@ -297,9 +300,7 @@ function PointOverlay({
             above the safe-area inset. Stays visually stationary as the
             section's top edge animates up and down. */}
         <div
-          className={`absolute left-0 right-0 ${
-            hasDirectMedia ? "h-20" : ""
-          } p-3 pr-24 flex items-center gap-3`}
+          className={`absolute left-0 right-0 ${hasDirectMedia ? "h-20" : ""} p-3 pr-24 flex items-center gap-3`}
           style={{ bottom: "env(safe-area-inset-bottom)" }}
         >
           <CloseButton

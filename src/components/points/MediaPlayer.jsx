@@ -61,6 +61,7 @@ const MediaPlayer = forwardRef(function MediaPlayer(
     const treatAsAudio = detectIsAudio(mediaUrl, mediaIsAudio);
     const onError = () => setNativeFailed(true);
     return treatAsAudio ? (
+      // eslint-disable-next-line jsx-a11y/media-has-caption -- podwalk audio doesn't ship caption tracks
       <audio
         ref={ref}
         src={mediaUrl}
@@ -70,6 +71,7 @@ const MediaPlayer = forwardRef(function MediaPlayer(
         className={`w-full rounded ${className}`}
       />
     ) : (
+      // eslint-disable-next-line jsx-a11y/media-has-caption -- podwalk video doesn't ship caption tracks
       <video
         ref={ref}
         src={mediaUrl}
@@ -84,9 +86,7 @@ const MediaPlayer = forwardRef(function MediaPlayer(
 
   if (mediaEmbedCode) {
     return (
-      <div
-        className={`relative overflow-hidden aspect-video [&_iframe]:!max-w-full [&_iframe]:!w-full ${className}`}
-      >
+      <div className={`relative overflow-hidden aspect-video [&_iframe]:!max-w-full [&_iframe]:!w-full ${className}`}>
         <EmbedHtmlPlayer html={mediaEmbedCode} />
       </div>
     );
