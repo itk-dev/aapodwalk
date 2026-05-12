@@ -1,4 +1,4 @@
-import { React, useState, useEffect, useContext } from "react";
+import { React, useState, useEffect, useContext, useRef } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faLock, faMapLocationDot } from "@fortawesome/free-solid-svg-icons";
 import { Link } from "react-router-dom";
@@ -15,11 +15,29 @@ import { isDeviceIOS, isDeviceAndroid } from "../../util/helper";
 
 function Point({ point, order }) {
   const { latitude, longitude, name, image, id, subtitles, proximityToUnlock = 100 } = point;
-  const { nextUnlockablePointId, listOfUnlocked, activePointId, setActivePointId } = useContext(RouteContext);
+  const {
+    nextUnlockablePointId,
+    listOfUnlocked,
+    setListOfUnlocked,
+    activePointId,
+    setActivePointId,
+    selectedRoute,
+  } = useContext(RouteContext);
   const { openStreetMapConsent, setOpenStreetMapConsent } = useContext(PermissionContext);
   const { lat, long } = useContext(LatLongContext);
   const [hasScrolled, setHasScrolled] = useState(false);
   const [unlocked, setUnlocked] = useState(false);
+  // `unlocking` is the transition state — true while we're animating from the
+  // "next-to-unlock" appearance to the unlocked appearance. The decoration
+  // buttons fade out and the card crossfades to its unlocked styling during
+  // this window, then `unlocked` flips to true and `unlocking` back to false.
+  const [unlocking, setUnlocking] = useState(false);
+  // Anything that arrives within `INITIAL_LOAD_WINDOW_MS` of mount is treated
+  // as the localStorage rehydration of already-unlocked POIs and skipped past
+  // the animation (otherwise every previously-unlocked card would animate on
+  // every page load, which would be a lot of motion).
+  const mountTimeRef = useRef(Date.now());
+  const distanceClickCount = useRef(0);
   const isActive = activePointId === id;
 
   useEffect(() => {
@@ -33,11 +51,60 @@ function Point({ point, order }) {
   }, [nextUnlockablePointId]);
 
   useEffect(() => {
-    if (listOfUnlocked) {
-      // The point is not locked if the id is in the list of unlocked.
-      setUnlocked(listOfUnlocked.includes(id));
+    if (!listOfUnlocked) return;
+    const shouldBeUnlocked = listOfUnlocked.includes(id);
+    const isInitialLoad = Date.now() - mountTimeRef.current < 1000;
+
+    if (shouldBeUnlocked && !unlocked && !unlocking) {
+      if (isInitialLoad) {
+        // Already unlocked when the page loaded — no animation.
+        setUnlocked(true);
+      } else {
+        // Fresh unlock — play the transition animation.
+        setUnlocking(true);
+      }
+    } else if (!shouldBeUnlocked && unlocked) {
+      setUnlocked(false);
     }
-  }, [listOfUnlocked, id]);
+  }, [listOfUnlocked, id, unlocked, unlocking]);
+
+  useEffect(() => {
+    if (!unlocking) return undefined;
+    const timer = setTimeout(() => {
+      setUnlocked(true);
+      setUnlocking(false);
+    }, 800);
+    return () => clearTimeout(timer);
+  }, [unlocking]);
+
+  // Dev-only simulator: ten taps on the distance column flips this POI into
+  // the unlocked state, so the unlock animation can be exercised without
+  // physically walking into proximity. Stripped from production builds via
+  // import.meta.env.DEV so end users can't accidentally activate it.
+  function simulateProximityUnlock() {
+    if (listOfUnlocked.includes(id)) return;
+    setListOfUnlocked([...listOfUnlocked, id]);
+    const storageKey = `unlocked-experiences-${selectedRoute?.id}`;
+    const currentLocalStorage = localStorage.getItem(storageKey);
+    if (currentLocalStorage) {
+      const updateLocalStorage = JSON.parse(currentLocalStorage);
+      if (!updateLocalStorage.includes(id)) {
+        updateLocalStorage.push(id);
+        localStorage.setItem(storageKey, JSON.stringify(updateLocalStorage));
+      }
+    } else {
+      localStorage.setItem(storageKey, JSON.stringify([id]));
+    }
+  }
+
+  function handleDistanceClick() {
+    if (!import.meta.env.DEV) return;
+    distanceClickCount.current += 1;
+    if (distanceClickCount.current >= 10) {
+      distanceClickCount.current = 0;
+      simulateProximityUnlock();
+    }
+  }
 
   function isNextPointToUnlock() {
     // The point is the next in line to be unlocked:
@@ -67,9 +134,9 @@ function Point({ point, order }) {
   }
 
   function isLocked() {
-    // The point is locked if:
-    // - It is locked, and it is not the next to be unlocked or
-    // - The user does not allow geo location access
+    // During the unlock animation the POI shouldn't display the lock icon
+    // (it's mid-celebration). Otherwise the existing rules apply.
+    if (unlocking) return false;
     return (!unlocked && nextUnlockablePointId !== id) || !(lat && long);
   }
 
@@ -85,18 +152,15 @@ function Point({ point, order }) {
 
   return (
     <div id={id} className="relative">
-      {isNextPointToUnlock() && (
-        <p className="text-center text-sm font-bold text-emerald-400 dark:text-emerald-600 -mb-1">Næste punkt</p>
-      )}
       <button
         type="button"
         onClick={() => setActivePointId(id)}
-        className={`relative text-left w-full ${unlocked ? "" : "pointer-events-none"}`}
+        className={`relative text-left w-full ${unlocked || unlocking ? "" : "pointer-events-none"}`}
         aria-label={getAriaLabelForButton()}
       >
         <div
-          className={`bg-emerald-400 dark:bg-zinc-700 flex flex-row relative h-32 my-2 rounded flex items-center ${
-            unlocked ? "" : "opacity-35 blur-sm bg-zinc-100 dark:bg-zinc-900"
+          className={`bg-emerald-400 dark:bg-zinc-700 flex flex-row relative h-32 my-2 rounded flex items-center transition-all duration-500 ease-out ${
+            unlocked || unlocking ? "" : "opacity-35 blur-sm bg-zinc-100 dark:bg-zinc-900"
           }`}
         >
           <Image src={image} className="w-24 h-24 rounded grow w-1/4 ml-2 object-cover" />
@@ -107,6 +171,15 @@ function Point({ point, order }) {
           </div>
         </div>
       </button>
+      {(isNextPointToUnlock() || unlocking) && (
+        <p
+          className={`absolute top-4 left-0 right-0 text-center text-xs font-bold text-emerald-400 dark:text-emerald-600 transition-opacity duration-500 pointer-events-none ${
+            unlocking ? "opacity-0" : "opacity-100"
+          }`}
+        >
+          Næste punkt
+        </p>
+      )}
       {isLocked() && (
         <FontAwesomeIcon
           icon={faLock}
@@ -121,8 +194,12 @@ function Point({ point, order }) {
           toggleActive={() => setActivePointId(isActive ? null : id)}
         />
       )}
-      {isNextPointToUnlock() && (
-        <div className="absolute top-1/2 left-0 right-0 -translate-y-1/2 flex items-start justify-around px-4">
+      {(isNextPointToUnlock() || unlocking) && (
+        <div
+          className={`absolute top-[60%] left-0 right-0 -translate-y-1/2 flex items-start justify-around px-4 transition-opacity duration-500 ${
+            unlocking ? "opacity-0 pointer-events-none" : "opacity-100"
+          }`}
+        >
           <button type="button" onClick={openNativeNavigation} className="flex flex-col items-center cursor-pointer">
             <div className="h-12 flex items-center justify-center">
               <img src={Footprints} alt="" className="h-10 w-10" />
@@ -156,7 +233,13 @@ function Point({ point, order }) {
               <span className="sr-only">Tag stilling til tilladelser i forhold til kortet igen</span>
             </button>
           )}
-          <div className="flex flex-col items-center">
+          {/* Distance column. In dev builds, tapping it 10 times unlocks the
+              POI without needing real proximity — see `handleDistanceClick`. */}
+          <button
+            type="button"
+            onClick={handleDistanceClick}
+            className="flex flex-col items-center cursor-pointer"
+          >
             <div className="h-12 flex flex-col items-center justify-center">
               <DirectionArrow
                 latitude={latitude}
@@ -168,7 +251,7 @@ function Point({ point, order }) {
             <span className="text-xs font-bold mt-1 whitespace-nowrap text-emerald-400 dark:text-emerald-600">
               Afstand
             </span>
-          </div>
+          </button>
         </div>
       )}
     </div>
