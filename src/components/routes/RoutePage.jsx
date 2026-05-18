@@ -20,11 +20,11 @@ function RoutePage() {
   }
 
   useEffect(() => {
+    // Always replace listOfUnlocked with this route's persisted state on
+    // entry — defaulting to [] when there's nothing in localStorage — so
+    // stale unlocks from a previously visited route can't leak in.
     const experiencesFromLocalStorage = localStorage.getItem(`unlocked-experiences-${id}`);
-    if (experiencesFromLocalStorage) {
-      // add to existing unlocked steps
-      setListOfUnlocked(JSON.parse(experiencesFromLocalStorage));
-    }
+    setListOfUnlocked(experiencesFromLocalStorage ? JSON.parse(experiencesFromLocalStorage) : []);
   }, []);
 
   // If the selected route is null (if the user enters with a link) we fetch the route with the id from the url

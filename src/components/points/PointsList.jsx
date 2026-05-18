@@ -5,25 +5,16 @@ import Point from "./Point";
 function PointsList({ points }) {
   const { listOfUnlocked, setNextUnlockablePointId, activePointId } = useContext(RouteContext);
 
-  function getIdFromPoint(point) {
-    return point?.id || null;
-  }
-
-  function getNextPointToUnlock(id) {
-    return points[listOfUnlocked.indexOf(id) + 1];
-  }
-
   useEffect(() => {
-    if (points) {
-      // The first is the next to unlock
-      setNextUnlockablePointId(getIdFromPoint(points[0]));
-
-      for (const { id } of points) {
-        if (listOfUnlocked.includes(id)) {
-          setNextUnlockablePointId(getIdFromPoint(getNextPointToUnlock(id)));
-        }
-      }
-    }
+    if (!points) return;
+    // The next POI to unlock is always the first one in route order that
+    // hasn't been unlocked yet. Walking `points` (not `listOfUnlocked`)
+    // guarantees we follow the route's order even if listOfUnlocked is in
+    // a different order or contains stale IDs from a previously visited
+    // route — otherwise an index-based lookup against listOfUnlocked can
+    // shift and skip the next POI.
+    const nextPoint = points.find(({ id }) => !listOfUnlocked.includes(id));
+    setNextUnlockablePointId(nextPoint ? nextPoint.id : null);
   }, [listOfUnlocked, points, setNextUnlockablePointId]);
 
   return (

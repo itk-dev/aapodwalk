@@ -24,11 +24,13 @@ function RoutePoints() {
   }
 
   useEffect(() => {
+    // Always replace listOfUnlocked with this route's persisted state on
+    // entry — defaulting to [] when there's nothing in localStorage.
+    // listOfUnlocked is App-level state, so without an unconditional reset
+    // it can leak IDs from a previously visited route and corrupt the
+    // "next POI to unlock" computation in PointsList.
     const experiencesFromLocalStorage = localStorage.getItem(`unlocked-experiences-${id}`);
-    if (experiencesFromLocalStorage) {
-      // add to existing unlocked steps
-      setListOfUnlocked(JSON.parse(experiencesFromLocalStorage));
-    }
+    setListOfUnlocked(experiencesFromLocalStorage ? JSON.parse(experiencesFromLocalStorage) : []);
   }, []);
 
   // If the selected route is null (if the user enters with a link) we fetch the route with the id from the url
