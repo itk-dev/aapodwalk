@@ -19,9 +19,67 @@
     <link rel="manifest" crossorigin="use-credentials" href="/manifest.json" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Podwalk</title>
+    <style>
+      #initial-loader {
+        position: fixed;
+        inset: 0;
+        z-index: 2147483647;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        background-color: #065f46;
+        transition: opacity 500ms ease-out;
+        will-change: opacity;
+        transform: translateZ(0);
+        isolation: isolate;
+      }
+      #initial-loader.is-hidden {
+        opacity: 0;
+        pointer-events: none;
+      }
+      #initial-loader img {
+        width: 112px;
+        height: 112px;
+      }
+      #initial-loader span {
+        margin-top: 12px;
+        font-size: 14px;
+        color: #fff;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      }
+      @media (prefers-reduced-motion: no-preference) {
+        #initial-loader img {
+          animation: initial-loader-pulse 1500ms cubic-bezier(0.4, 0, 0.6, 1) infinite;
+        }
+      }
+      @keyframes initial-loader-pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.5;
+        }
+      }
+    </style>
   </head>
   <body class="dark dark:text-white dark:bg-black text-black bg-white">
+    <div id="initial-loader">
+      <img src="/icon-196.png" alt="" />
+      <span>loading...</span>
+    </div>
     <div id="root"></div>
+    <script>
+      window.__hideInitialLoader = function () {
+        var el = document.getElementById("initial-loader");
+        if (!el) return;
+        el.classList.add("is-hidden");
+        setTimeout(function () {
+          if (el.parentNode) el.parentNode.removeChild(el);
+        }, 600);
+      };
+    </script>
     <script type="module" src="/src/index.jsx"></script>
   </body>
 </html>

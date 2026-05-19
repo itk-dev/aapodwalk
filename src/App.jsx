@@ -110,6 +110,15 @@ function App() {
     window.scrollTo(0, 0);
   }, [pathname]);
 
+  // The static loader in index.html keeps the screen covered from the very first byte,
+  // before the JS bundle has even parsed. Once React has mounted and committed (which
+  // includes any in-page loading overlay), we hand off to React and fade out the static
+  // loader. A short delay leaves room for the first paint to fully composite on iOS Safari.
+  useEffect(() => {
+    const hideTimeout = window.setTimeout(() => window.__hideInitialLoader?.(), 100);
+    return () => clearTimeout(hideTimeout);
+  }, []);
+
   return (
     <div
       className={`App md:max-w-4xl ml-auto mr-auto flex flex-col h-full ${

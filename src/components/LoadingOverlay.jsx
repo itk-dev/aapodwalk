@@ -1,8 +1,10 @@
 import { React } from "react";
+import { createPortal } from "react-dom";
 import Logo from "../icons/logo.svg?url";
 
 const LoadingOverlay = ({ loading }) => {
-  return (
+  if (typeof document === "undefined") return null;
+  return createPortal(
     <div
       role="status"
       aria-live="polite"
@@ -13,7 +15,8 @@ const LoadingOverlay = ({ loading }) => {
     >
       <img src={Logo} alt="" className="w-28 h-28 motion-safe:animate-pulse" />
       <span className="mt-3 text-sm text-white">loading...</span>
-    </div>
+    </div>,
+    document.body,
   );
 };
 
