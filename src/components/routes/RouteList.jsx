@@ -1,40 +1,21 @@
-import { React, useEffect, useState, useContext } from "react";
-import useFetch from "../../util/useFetch";
+import { React, useMemo, useContext } from "react";
 import SelectedTagContext from "../../context/SelectedTagContext";
 import { sortByProximity, routesFilteredByTag } from "../../util/helper";
 import LatLongContext from "../../context/latitude-longitude-context";
-import ErrorContext from "../../context/MessageContext";
-import RoutesLoading from "./RoutesLoading";
 import Route from "./Route";
 
-function RouteList() {
+function RouteList({ routes: rawRoutes, error, loading }) {
   const { selectedTag } = useContext(SelectedTagContext);
-  const { setErrorText, setError } = useContext(ErrorContext);
   const { lat, long } = useContext(LatLongContext);
-  const { data, error, loading } = useFetch("routes");
-  const [routes, setRoutes] = useState([]);
 
-  useEffect(() => {
-    if (data) {
-      let filteredData = [];
-      if (selectedTag === null) {
-        filteredData = sortByProximity(data["hydra:member"], lat, long);
-      } else {
-        filteredData = routesFilteredByTag(data["hydra:member"], selectedTag);
-      }
-      setRoutes(filteredData);
-    }
-  }, [data, selectedTag]);
+  const routes = useMemo(() => {
+    if (!rawRoutes || rawRoutes.length === 0) return [];
+    return selectedTag === null
+      ? sortByProximity(rawRoutes, lat, long)
+      : routesFilteredByTag(rawRoutes, selectedTag);
+  }, [rawRoutes, selectedTag, lat, long]);
 
-  useEffect(() => {
-    if (error) {
-      setError(true);
-      setErrorText("Der skete en fejl da ruterne skulle hentes. Prøv at genindlæs siden.");
-    }
-  }, [error]);
-
-  if (loading) return <RoutesLoading />;
-  if (error) return null;
+  if (loading || error) return null;
   if (routes.length === 0) return <div className="mt-10">Der er desværre ikke nogle ruter</div>;
 
   return (

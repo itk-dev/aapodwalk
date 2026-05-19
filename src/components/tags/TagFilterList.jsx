@@ -1,29 +1,8 @@
-import { React, useEffect, useState, useContext } from "react";
-import useFetch from "../../util/useFetch";
-import ErrorContext from "../../context/MessageContext";
+import { React } from "react";
 import Tag from "./Tag";
-import TagsLoading from "./TagsLoading";
 
-function TagFilterList() {
-  const { setErrorText, setError } = useContext(ErrorContext);
-  const [tags, setTags] = useState([]);
-  const { data, error, loading } = useFetch("tags");
-
-  useEffect(() => {
-    if (data) {
-      setTags(data["hydra:member"]);
-    }
-  }, [data]);
-
-  useEffect(() => {
-    if (error) {
-      setError(true);
-      setErrorText("Der skete en fejl da kategorierne skulle hentes. Prøv at genindlæs siden.");
-    }
-  }, [error]);
-
-  if (loading) return <TagsLoading />;
-  if (error) return null;
+function TagFilterList({ tags, error, loading }) {
+  if (loading || error) return null;
   if (tags.length === 0) return <div>Der er desværre ikke nogle filtre</div>;
 
   return (

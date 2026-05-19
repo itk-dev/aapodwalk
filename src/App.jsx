@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useLayoutEffect, useState, useMemo } from "react";
 import { Switch, Route, Link, useLocation } from "react-router-dom";
 import LatLongContext from "./context/latitude-longitude-context";
 import PermissionContext from "./context/permission-context";
@@ -104,9 +104,9 @@ function App() {
     }
   }, [openStreetMapConsent]);
 
-  // Reset scroll on every route change so the user lands at the top of the new view
-  // (back navigation, forward navigation, deep link — useEffect on pathname covers all).
-  useEffect(() => {
+  // Reset scroll on every route change so the user lands at the top of the new view.
+  // useLayoutEffect runs before the browser paints, avoiding a flash at the old scroll position.
+  useLayoutEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
@@ -156,32 +156,34 @@ function App() {
                   [error, errorText, info, infoText],
                 )}
               >
-                <Switch>
-                  <Route path="/route/:id">
-                    <RoutePage />
-                  </Route>
-                  <Route path="/points/:id">
-                    <RoutePoints />
-                  </Route>
-                  <Route path="/faq">
-                    <FAQ />
-                  </Route>
-                  <Route path="/personal-information-policy">
-                    <PersonalInformationPolicyPage />
-                  </Route>
-                  <Route path="/navigation-help">
-                    <NavigationHelp />
-                  </Route>
-                  <Route path="/info">
-                    <Info />
-                  </Route>
-                  <Route path="/see-on-map/:latitude/:longitude">
-                    <SeeOnMap />
-                  </Route>
-                  <Route path="/">
-                    <FrontPage />
-                  </Route>
-                </Switch>
+                <div key={pathname} className="page-fade-in h-full">
+                  <Switch>
+                    <Route path="/route/:id">
+                      <RoutePage />
+                    </Route>
+                    <Route path="/points/:id">
+                      <RoutePoints />
+                    </Route>
+                    <Route path="/faq">
+                      <FAQ />
+                    </Route>
+                    <Route path="/personal-information-policy">
+                      <PersonalInformationPolicyPage />
+                    </Route>
+                    <Route path="/navigation-help">
+                      <NavigationHelp />
+                    </Route>
+                    <Route path="/info">
+                      <Info />
+                    </Route>
+                    <Route path="/see-on-map/:latitude/:longitude">
+                      <SeeOnMap />
+                    </Route>
+                    <Route path="/">
+                      <FrontPage />
+                    </Route>
+                  </Switch>
+                </div>
                 <MapConsentBanner />
               </MessageContext>
             </main>
