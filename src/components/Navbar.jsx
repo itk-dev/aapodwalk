@@ -34,7 +34,7 @@ const Navbar = () => {
       {showRouteTitle && (
         <div className="relative mt-2">
           <h1 className="text-center text-base font-bold truncate px-14">{selectedRoute.title}</h1>
-          {isOnRouteNavigation && <GpsSignalIndicator className="absolute right-0 top-1/2 -translate-y-1/2" />}
+          {isOnRouteNavigation && <GpsSignalIndicator className="absolute right-0 top-1/2 -translate-y-1/2 w-9" />}
         </div>
       )}
     </nav>
