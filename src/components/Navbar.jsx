@@ -5,11 +5,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Logo from "../icons/logo.svg?url";
 import RouteContext from "../context/RouteContext";
 import BackButton from "./BackButton";
+import GpsSignalIndicator from "./GpsSignalIndicator";
 
 const Navbar = () => {
   const { pathname } = useLocation();
   const { selectedRoute } = useContext(RouteContext);
-  const showRouteTitle = pathname.startsWith("/points/") && selectedRoute?.title;
+  const isOnRouteNavigation = pathname.startsWith("/points/");
+  const showRouteTitle = isOnRouteNavigation && selectedRoute?.title;
 
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 p-3 bg-zinc-100 dark:bg-zinc-800 shadow-md">
@@ -29,7 +31,12 @@ const Navbar = () => {
           <span className="sr-only">FAQ</span>
         </Link>
       </div>
-      {showRouteTitle && <h1 className="text-center text-base font-bold truncate px-14 mt-2">{selectedRoute.title}</h1>}
+      {showRouteTitle && (
+        <div className="relative mt-2">
+          <h1 className="text-center text-base font-bold truncate px-14">{selectedRoute.title}</h1>
+          {isOnRouteNavigation && <GpsSignalIndicator className="absolute right-0 top-1/2 -translate-y-1/2" />}
+        </div>
+      )}
     </nav>
   );
 };

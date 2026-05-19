@@ -29,13 +29,23 @@ function App() {
   const [infoText, setInfoText] = useState("");
   const [lat, setLat] = useState(null);
   const [long, setLong] = useState(null);
+  // Heading (degrees clockwise from true north), speed (m/s) and accuracy (m)
+  // from the GPS — used by DirectionArrow to prefer course-over-ground over the
+  // magnetic compass when the user is walking, since the compass is unreliable
+  // in urban canyons and near steel/electronics.
+  const [gpsHeading, setGpsHeading] = useState(null);
+  const [speed, setSpeed] = useState(null);
+  const [accuracy, setAccuracy] = useState(null);
 
   const contextLatLong = useMemo(
     () => ({
       lat,
       long,
+      gpsHeading,
+      speed,
+      accuracy,
     }),
-    [lat, long],
+    [lat, long, gpsHeading, speed, accuracy],
   );
 
   const permissionDeniedBanner = (
@@ -69,6 +79,11 @@ function App() {
         setInfoText("");
         setLat(position.coords.latitude);
         setLong(position.coords.longitude);
+        // heading is NaN when speed === 0 and null when the platform can't supply it;
+        // normalise both to null so consumers can do a single Number.isFinite check.
+        setGpsHeading(Number.isFinite(position.coords.heading) ? position.coords.heading : null);
+        setSpeed(Number.isFinite(position.coords.speed) ? position.coords.speed : null);
+        setAccuracy(Number.isFinite(position.coords.accuracy) ? position.coords.accuracy : null);
       },
       (err) => {
         if (err.code === err.PERMISSION_DENIED) {

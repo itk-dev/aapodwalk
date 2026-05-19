@@ -94,8 +94,14 @@ export function useDeviceOrientationAutoPermission() {
   }, []);
 }
 
+// When the user is moving at least this fast, GPS course-over-ground is a more
+// reliable source of heading than the magnetic compass (which gets badly
+// distorted next to large buildings, steel rebar and electronics). Walking pace
+// is ~1.0-1.4 m/s, so 0.5 catches a slow stroll without latching onto noise.
+const GPS_HEADING_MIN_SPEED_MS = 0.5;
+
 function DirectionArrow({ latitude, longitude, classes }) {
-  const { lat, long } = useContext(LatLongContext);
+  const { lat, long, gpsHeading, speed } = useContext(LatLongContext);
   const [compass, setCompass] = useState(null);
   const [permissionState, setPermissionState] = useState(getInitialPermissionState);
   const sawUsableHeading = useRef(false);
@@ -104,6 +110,12 @@ function DirectionArrow({ latitude, longitude, classes }) {
     () => getBearingBetweenCoordinates(lat, long, latitude, longitude),
     [lat, long, latitude, longitude],
   );
+
+  // Prefer GPS heading when the user is actually walking — it's derived from
+  // successive position fixes, so it sidesteps magnetic interference. Fall back
+  // to the device compass when standing still (GPS heading is meaningless then).
+  const isMoving = typeof speed === "number" && speed >= GPS_HEADING_MIN_SPEED_MS;
+  const effectiveHeading = isMoving && typeof gpsHeading === "number" ? gpsHeading : compass;
 
   // Pick up permission resolution dispatched by useDeviceOrientationAutoPermission
   // (or any other code path that updates the cache), so the arrow starts working
@@ -145,15 +157,11 @@ function DirectionArrow({ latitude, longitude, classes }) {
     };
   }, [permissionState]);
 
-  if (permissionState !== "granted") {
+  if (bearing === null || effectiveHeading === null) {
     return null;
   }
 
-  if (bearing === null || compass === null) {
-    return null;
-  }
-
-  const rotation = bearing - compass;
+  const rotation = bearing - effectiveHeading;
 
   // Outer span owns positioning (Tailwind translate utilities); inner span owns the
   // rotation. Splitting them avoids the inline `transform` overriding Tailwind's
