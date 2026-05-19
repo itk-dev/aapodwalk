@@ -10,9 +10,7 @@ function RouteList({ routes: rawRoutes, error, loading }) {
 
   const routes = useMemo(() => {
     if (!rawRoutes || rawRoutes.length === 0) return [];
-    return selectedTag === null
-      ? sortByProximity(rawRoutes, lat, long)
-      : routesFilteredByTag(rawRoutes, selectedTag);
+    return selectedTag === null ? sortByProximity(rawRoutes, lat, long) : routesFilteredByTag(rawRoutes, selectedTag);
   }, [rawRoutes, selectedTag, lat, long]);
 
   if (loading || error) return null;
