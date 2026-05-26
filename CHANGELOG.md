@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## Unreleased
 
+- Improve GPS permission guidance
+  - Rewrite `NavigationHelp.jsx` to be organized by operating system (iOS, Android,
+    desktop) rather than by browser, since the location permission lives at the OS level
+  - Add `GpsPermissionRequest.jsx` on the FAQ help page so the user can re-trigger the
+    geolocation prompt without leaving the app; the control is rendered as an iPhone-
+    style toggle pill that reflects the current permission state and triggers the
+    request when toggled on
+  - Handle `POSITION_UNAVAILABLE`, `TIMEOUT`, insecure-context and "geolocation hung"
+    cases explicitly with distinct guidance instead of a generic error
+  - Make the navbar question-mark button a toggle for the FAQ overlay (switches to a
+    cross icon when FAQ is open)
+  - Update the permission-denied info banner to point at FAQ instead of the navigation
+    help page directly
 - [PR-82](https://github.com/itk-dev/aapodwalk/pull/82)
   - Added html5 player for playing media.
 - [PR-81](https://github.com/itk-dev/aapodwalk/pull/81)
