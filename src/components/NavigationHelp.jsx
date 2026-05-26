@@ -32,8 +32,7 @@ const NavigationHelp = () => {
           Tryk på <span className="font-extrabold">Lokalitetstjenester</span> og slå dem til, hvis de er slået fra.
         </li>
         <li>
-          Find den browser du bruger til Podwalk (typisk{" "}
-          <span className="font-extrabold">Safari-websteder</span> eller{" "}
+          Find den browser du bruger til Podwalk (typisk <span className="font-extrabold">Safari-websteder</span> eller{" "}
           <span className="font-extrabold">Chrome</span>) på listen og tryk på den.
         </li>
         <li>
@@ -88,7 +87,10 @@ const NavigationHelp = () => {
         du spurgt igen næste gang.
       </p>
       <p className="pt-3">
-        <Link className="underline" to="https://support.google.com/chrome/answer/142065?hl=da&co=GENIE.Platform%3DAndroid">
+        <Link
+          className="underline"
+          to="https://support.google.com/chrome/answer/142065?hl=da&co=GENIE.Platform%3DAndroid"
+        >
           Læs Googles vejledning til lokation i Chrome
         </Link>
       </p>

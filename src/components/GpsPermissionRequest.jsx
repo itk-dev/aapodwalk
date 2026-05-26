@@ -91,8 +91,7 @@ function GpsPermissionRequest() {
 
   const isGranted = status === STATUS.GRANTED;
   const isRequesting = status === STATUS.REQUESTING;
-  const pillUnsupported =
-    status === STATUS.NO_GEOLOCATION || status === STATUS.INSECURE;
+  const pillUnsupported = status === STATUS.NO_GEOLOCATION || status === STATUS.INSECURE;
 
   function togglePill() {
     if (isRequesting || pillUnsupported) return;
