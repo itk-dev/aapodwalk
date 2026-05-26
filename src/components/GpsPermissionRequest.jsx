@@ -140,9 +140,7 @@ function GpsPermissionRequest() {
               isGranted ? "translate-x-6" : "translate-x-1"
             }`}
           >
-            {isBlocked && (
-              <FontAwesomeIcon icon={faLock} aria-hidden="true" className="text-zinc-500 text-[10px]" />
-            )}
+            {isBlocked && <FontAwesomeIcon icon={faLock} aria-hidden="true" className="text-zinc-500 text-[10px]" />}
           </span>
         </button>
         <span className="font-normal text-sm">{pillLabel}</span>
