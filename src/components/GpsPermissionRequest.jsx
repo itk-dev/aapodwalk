@@ -35,8 +35,11 @@ function GpsPermissionRequest() {
       .query({ name: "geolocation" })
       .then((result) => {
         if (cancelled) return;
+        // Only trust the API for "granted" — iOS Safari (especially in standalone
+        // PWA mode) is known to report "denied" for sites that have never been
+        // asked, which would lock the pill before the user ever sees a prompt.
+        // DENIED is only set from the actual getCurrentPosition error callback.
         if (result.state === "granted") setStatus(STATUS.GRANTED);
-        else if (result.state === "denied") setStatus(STATUS.DENIED);
       })
       .catch(() => {});
     return () => {
