@@ -51,10 +51,12 @@ function App() {
   const permissionDeniedBanner = (
     <span>
       Du har ikke accepteret, at vi må få adgang til din lokation. For at denne applikation skal fungere, skal den bruge
-      din lokation. Hvis du vil vide mere om hvordan du giver denne adgang, kan du besøge{" "}
-      <Link className="underline" to="/navigation-help">
-        Hjælp til navigation
-      </Link>
+      din lokation. Åbn{" "}
+      <Link className="underline" to="/faq">
+        Hjælp og vejledning
+      </Link>{" "}
+      og tryk på <span className="font-extrabold">Bed om adgang til lokation</span> — der finder du også vejledningen
+      til iPhone og Android, hvis browseren ikke spørger igen.
     </span>
   );
 
