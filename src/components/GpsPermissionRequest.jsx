@@ -1,5 +1,7 @@
 import { React, useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faLock } from "@fortawesome/free-solid-svg-icons";
 
 const STATUS = {
   IDLE: "idle",
@@ -91,10 +93,12 @@ function GpsPermissionRequest() {
 
   const isGranted = status === STATUS.GRANTED;
   const isRequesting = status === STATUS.REQUESTING;
+  const isBlocked = status === STATUS.DENIED;
   const pillUnsupported = status === STATUS.NO_GEOLOCATION || status === STATUS.INSECURE;
+  const pillDisabled = isRequesting || pillUnsupported || isBlocked;
 
   function togglePill() {
-    if (isRequesting || pillUnsupported) return;
+    if (pillDisabled) return;
     if (isGranted) {
       setGrantedHintVisible((visible) => !visible);
     } else {
@@ -105,6 +109,7 @@ function GpsPermissionRequest() {
   let pillLabel;
   if (isRequesting) pillLabel = "Venter på svar…";
   else if (isGranted) pillLabel = "Adgang slået til";
+  else if (isBlocked) pillLabel = "Blokeret — kan kun slås til via telefonens indstillinger";
   else pillLabel = "Adgang slået fra — tryk for at slå til";
 
   return (
@@ -122,16 +127,20 @@ function GpsPermissionRequest() {
           aria-checked={isGranted}
           aria-label="Lokationsadgang"
           onClick={togglePill}
-          disabled={isRequesting || pillUnsupported}
+          disabled={pillDisabled}
           className={`relative inline-flex h-7 w-12 shrink-0 items-center rounded-full transition-colors ${
             isGranted ? "bg-emerald-600" : "bg-zinc-400 dark:bg-zinc-600"
-          } ${isRequesting || pillUnsupported ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
+          } ${pillDisabled ? "opacity-60 cursor-not-allowed" : "cursor-pointer"}`}
         >
           <span
-            className={`inline-block h-5 w-5 transform rounded-full bg-white shadow transition-transform ${
+            className={`inline-flex h-5 w-5 items-center justify-center transform rounded-full bg-white shadow transition-transform ${
               isGranted ? "translate-x-6" : "translate-x-1"
             }`}
-          />
+          >
+            {isBlocked && (
+              <FontAwesomeIcon icon={faLock} aria-hidden="true" className="text-zinc-500 text-[10px]" />
+            )}
+          </span>
         </button>
         <span className="font-normal text-sm">{pillLabel}</span>
       </div>
