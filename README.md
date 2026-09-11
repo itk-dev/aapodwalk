@@ -1,3 +1,11 @@
+> [!Important]
+> ### This project is no longer actively maintained.
+> The source code in this repository is no longer maintained. No replacement is offered. 
+> 
+> **Final Release**: The final stable release is version [1.0.9](https://github.com/itk-dev/aapodwalk/releases/tag/1.0.9)
+> 
+<br>
+
 # Podwalk
 
 This is the frontend of a project that creates guided audio tours.
